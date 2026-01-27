@@ -1,13 +1,13 @@
 ---
 title: Test Architect (TEA)
-description: Risk-based test strategy, automation guidance, and release gate decisions for quality-driven development
+description: Risk-based testing workflows, automation guidance, and release gates for BMad Method
 template: splash
 hero:
   title: Test Architect (TEA)
-  tagline: Risk-based test strategy, automation guidance, and release gate decisions for quality-driven development
+  tagline: Risk-based testing workflows, automation guidance, and release gates for BMad Method
   actions:
     - text: Quick Start
-      link: https://bmad-code-org.github.io/bmad-method-test-architecture-enterprise/tutorials/tea-lite-quickstart/
+      link: https://bmad-code-org.github.io/tutorials/tea-lite-quickstart/
       icon: right-arrow
       variant: primary
     - text: View on GitHub
@@ -17,15 +17,13 @@ hero:
 
 ## What is TEA?
 
-TEA (Test Architect) is a standalone BMAD module that delivers expert test architecture guidance through 8 comprehensive workflows. It provides risk-based test strategy, automation planning, and measurable quality gates for software projects of any size.
+TEA (Test Architect) is a BMAD module for testing strategy and automation. It provides eight workflows covering setup, design, automation, review, and release gates.
 
 ## Why TEA?
 
 - **Risk-Based Testing**: P0-P3 prioritization based on probability and impact
-- **Consistent Outputs**: Knowledge-base driven guidance ensures standardized results
-- **Measurable Quality**: Objective scoring (0-100) for test coverage and quality
-- **Release Gates**: Go/No-Go decisions backed by requirements traceability
-- **Framework Agnostic**: Works with Playwright, Cypress, and other test frameworks
+- **Consistent Outputs**: Knowledge-base guidance keeps standards consistent
+- **Release Gates**: Clear go/no-go decisions with traceability
 
 ## Core Workflows
 
@@ -42,10 +40,10 @@ TEA (Test Architect) is a standalone BMAD module that delivers expert test archi
 
 ## Getting Started
 
-Choose your engagement model:
+Pick a path:
 
 - **TEA Lite**: Start with [Test Automation](/how-to/workflows/run-automate) only (30 minutes)
-- **Full TEA**: Complete [Quick Start Tutorial](https://bmad-code-org.github.io/bmad-method-test-architecture-enterprise/tutorials/tea-lite-quickstart/) (1-2 hours)
+- **Full TEA**: Complete the [Quick Start Tutorial](https://bmad-code-org.github.io/tutorials/tea-lite-quickstart/) (1-2 hours)
 - **Enterprise**: Integrate all 8 workflows into your development process
 
 ## Quick Install
@@ -58,14 +56,14 @@ npx bmad-method install
 Then trigger workflows via chat:
 
 ```
-tea              # Load TEA agent
-test-design      # Run Test Design workflow
+tea         # Load TEA agent
+test-design # Run Test Design workflow
 ```
 
 ## Learn More
 
 <div class="sl-flex">
-  <a href="https://bmad-code-org.github.io/bmad-method-test-architecture-enterprise/tutorials/tea-lite-quickstart/" class="action primary">
+  <a href="https://bmad-code-org.github.io/tutorials/tea-lite-quickstart/" class="action primary">
     Quick Start Tutorial →
   </a>
   <a href="/explanation/tea-overview/" class="action secondary">
@@ -73,39 +71,9 @@ test-design      # Run Test Design workflow
   </a>
 </div>
 
-## Key Features
-
-### 🎯 Risk-Based Testing
-
-TEA evaluates test priorities using a probability × impact matrix, focusing effort where it matters most.
-
-### 📚 Knowledge Base System
-
-34 curated testing patterns loaded dynamically per workflow ensure consistent, high-quality outputs.
-
-### ⚡ Subprocess Architecture
-
-Parallel test generation for API and E2E tests speeds up workflow execution while maintaining quality.
-
-### 📊 Measurable Quality
-
-Objective 0-100 scoring across 5 quality dimensions: Determinism, Isolation, Maintainability, Coverage, Performance.
-
-### 🚪 Release Gates
-
-Requirements traceability with automated gap analysis provides clear Go/No-Go recommendations.
-
-## Engagement Models
-
-- **No TEA**: Continue with your existing testing approach
-- **TEA Solo**: Use TEA standalone on non-BMAD projects
-- **TEA Lite**: Fast onboarding with Test Automation workflow only
-- **Integrated**: Full TEA integration with BMAD Method (Phases 3-4)
-- **Enterprise**: Complete quality governance with all 8 workflows
-
 ## Documentation Structure
 
-- **[Tutorials](https://bmad-code-org.github.io/bmad-method-test-architecture-enterprise/tutorials/tea-lite-quickstart/)**: Learn TEA step-by-step
+- **[Tutorials](https://bmad-code-org.github.io/tutorials/tea-lite-quickstart/)**: Learn TEA step-by-step
 - **[How-To Guides](/how-to/workflows/run-test-design)**: Task-focused instructions
 - **[Explanation](/explanation/tea-overview)**: Understand concepts and architecture
 - **[Reference](/reference/commands)**: Commands, configuration, knowledge base
@@ -119,4 +87,4 @@ Requirements traceability with automated gap analysis provides clear Go/No-Go re
 
 ---
 
-Ready to improve your test architecture? Start with the [Quick Start Tutorial](https://bmad-code-org.github.io/bmad-method-test-architecture-enterprise/tutorials/tea-lite-quickstart/).
+Start with the [Quick Start Tutorial](https://bmad-code-org.github.io/tutorials/tea-lite-quickstart/).
