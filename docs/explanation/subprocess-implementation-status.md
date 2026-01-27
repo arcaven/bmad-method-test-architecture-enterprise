@@ -1,3 +1,8 @@
+---
+title: Subprocess Implementation Status
+description: Status of subprocess implementation across workflows
+---
+
 # Subprocess Pattern Implementation Status
 
 **Date**: 2026-01-27

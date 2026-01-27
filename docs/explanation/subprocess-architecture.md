@@ -1,3 +1,8 @@
+---
+title: Subprocess Architecture
+description: Parallel execution pattern for TEA workflows
+---
+
 # Subprocess Architecture for TEA Workflows
 
 **Version**: 1.0

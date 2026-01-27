@@ -1,3 +1,8 @@
+---
+title: TEA Step-File Architecture
+description: Explanation of step-file architecture for 100% LLM compliance
+---
+
 # TEA Step-File Architecture
 
 **Version**: 1.0

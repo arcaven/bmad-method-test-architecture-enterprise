@@ -1,8 +1,9 @@
 ---
-title: 'BMad Glossary'
+title: 'TEA Glossary'
+description: Terminology reference for Test Architect (TEA)
 ---
 
-Terminology reference for the BMad Method.
+Terminology reference for Test Architect (TEA).
 
 ## Core Concepts
 

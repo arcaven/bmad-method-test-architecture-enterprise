@@ -3,6 +3,7 @@
 
 ignores:
   - node_modules/**
+  - website/node_modules/**
   - test/fixtures/**
   - CODE_OF_CONDUCT.md
   - _bmad/**
