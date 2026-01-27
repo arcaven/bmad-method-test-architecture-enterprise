@@ -39,7 +39,7 @@ Quick reference for all 8 TEA (Test Architect) workflows. For detailed step-by-s
 - `.env.example`, `.nvmrc`
 - Sample tests with best practices
 
-**How-To Guide:** [Setup Test Framework](/docs/tea/how-to/workflows/setup-test-framework.md)
+**How-To Guide:** [Setup Test Framework](/docs/how-to/workflows/setup-test-framework.md)
 
 ---
 
@@ -63,7 +63,7 @@ Quick reference for all 8 TEA (Test Architect) workflows. For detailed step-by-s
 - Burn-in loops for flakiness detection
 - Secrets checklist
 
-**How-To Guide:** [Setup CI Pipeline](/docs/tea/how-to/workflows/setup-ci.md)
+**How-To Guide:** [Setup CI Pipeline](/docs/how-to/workflows/setup-ci.md)
 
 ---
 
@@ -117,7 +117,7 @@ Quick reference for all 8 TEA (Test Architect) workflows. For detailed step-by-s
 
 **MCP Enhancement:** Exploratory mode (live browser UI discovery)
 
-**How-To Guide:** [Run Test Design](/docs/tea/how-to/workflows/run-test-design.md)
+**How-To Guide:** [Run Test Design](/docs/how-to/workflows/run-test-design.md)
 
 ---
 
@@ -141,7 +141,7 @@ Quick reference for all 8 TEA (Test Architect) workflows. For detailed step-by-s
 
 **MCP Enhancement:** Recording mode (for skeleton UI only - rare)
 
-**How-To Guide:** [Run ATDD](/docs/tea/how-to/workflows/run-atdd.md)
+**How-To Guide:** [Run ATDD](/docs/how-to/workflows/run-atdd.md)
 
 ---
 
@@ -165,7 +165,7 @@ Quick reference for all 8 TEA (Test Architect) workflows. For detailed step-by-s
 
 **MCP Enhancement:** Healing + Recording modes (fix tests, verify selectors)
 
-**How-To Guide:** [Run Automate](/docs/tea/how-to/workflows/run-automate.md)
+**How-To Guide:** [Run Automate](/docs/how-to/workflows/run-automate.md)
 
 ---
 
@@ -196,7 +196,7 @@ Quick reference for all 8 TEA (Test Architect) workflows. For detailed step-by-s
 - Structure: 10 points
 - Performance: 10 points
 
-**How-To Guide:** [Run Test Review](/docs/tea/how-to/workflows/run-test-review.md)
+**How-To Guide:** [Run Test Review](/docs/how-to/workflows/run-test-review.md)
 
 ---
 
@@ -220,7 +220,7 @@ Quick reference for all 8 TEA (Test Architect) workflows. For detailed step-by-s
 - Mitigation plans
 - Gate decision inputs
 
-**How-To Guide:** [Run NFR Assessment](/docs/tea/how-to/workflows/run-nfr-assess.md)
+**How-To Guide:** [Run NFR Assessment](/docs/how-to/workflows/run-nfr-assess.md)
 
 ---
 
@@ -253,7 +253,7 @@ Quick reference for all 8 TEA (Test Architect) workflows. For detailed step-by-s
 - P1 coverage: ≥90% for PASS, 80-89% for CONCERNS, <80% FAIL
 - Overall coverage: ≥80% required
 
-**How-To Guide:** [Run Trace](/docs/tea/how-to/workflows/run-trace.md)
+**How-To Guide:** [Run Trace](/docs/how-to/workflows/run-trace.md)
 
 ---
 
@@ -276,24 +276,24 @@ Quick reference for all 8 TEA (Test Architect) workflows. For detailed step-by-s
 
 **How-To Guides (Detailed Instructions):**
 
-- [Setup Test Framework](/docs/tea/how-to/workflows/setup-test-framework.md)
-- [Setup CI Pipeline](/docs/tea/how-to/workflows/setup-ci.md)
-- [Run Test Design](/docs/tea/how-to/workflows/run-test-design.md)
-- [Run ATDD](/docs/tea/how-to/workflows/run-atdd.md)
-- [Run Automate](/docs/tea/how-to/workflows/run-automate.md)
-- [Run Test Review](/docs/tea/how-to/workflows/run-test-review.md)
-- [Run NFR Assessment](/docs/tea/how-to/workflows/run-nfr-assess.md)
-- [Run Trace](/docs/tea/how-to/workflows/run-trace.md)
+- [Setup Test Framework](/docs/how-to/workflows/setup-test-framework.md)
+- [Setup CI Pipeline](/docs/how-to/workflows/setup-ci.md)
+- [Run Test Design](/docs/how-to/workflows/run-test-design.md)
+- [Run ATDD](/docs/how-to/workflows/run-atdd.md)
+- [Run Automate](/docs/how-to/workflows/run-automate.md)
+- [Run Test Review](/docs/how-to/workflows/run-test-review.md)
+- [Run NFR Assessment](/docs/how-to/workflows/run-nfr-assess.md)
+- [Run Trace](/docs/how-to/workflows/run-trace.md)
 
 **Explanation:**
 
-- [TEA Overview](/docs/tea/explanation/tea-overview.md) - Complete TEA lifecycle
-- [Engagement Models](/docs/tea/explanation/engagement-models.md) - When to use which workflows
+- [TEA Overview](/docs/explanation/tea-overview.md) - Complete TEA lifecycle
+- [Engagement Models](/docs/explanation/engagement-models.md) - When to use which workflows
 
 **Reference:**
 
-- [TEA Configuration](/docs/tea/reference/configuration.md) - Config options
-- [Knowledge Base Index](/docs/tea/reference/knowledge-base.md) - Pattern fragments
+- [TEA Configuration](/docs/reference/configuration.md) - Config options
+- [Knowledge Base Index](/docs/reference/knowledge-base.md) - Pattern fragments
 
 ---
 

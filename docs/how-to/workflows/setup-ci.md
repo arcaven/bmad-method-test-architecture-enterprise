@@ -742,19 +742,19 @@ npm run test:burn-in tests/flaky.spec.ts
 
 ## Related Guides
 
-- [How to Set Up Test Framework](/docs/tea/how-to/workflows/setup-test-framework.md) - Run first
-- [How to Run Test Review](/docs/tea/how-to/workflows/run-test-review.md) - Audit CI tests
-- [Integrate Playwright Utils](/docs/tea/how-to/customization/integrate-playwright-utils.md) - Burn-in utility
+- [How to Set Up Test Framework](/docs/how-to/workflows/setup-test-framework.md) - Run first
+- [How to Run Test Review](/docs/how-to/workflows/run-test-review.md) - Audit CI tests
+- [Integrate Playwright Utils](/docs/how-to/customization/integrate-playwright-utils.md) - Burn-in utility
 
 ## Understanding the Concepts
 
-- [Test Quality Standards](/docs/tea/explanation/test-quality-standards.md) - Why determinism matters
-- [Network-First Patterns](/docs/tea/explanation/network-first-patterns.md) - Avoid CI flakiness
+- [Test Quality Standards](/docs/explanation/test-quality-standards.md) - Why determinism matters
+- [Network-First Patterns](/docs/explanation/network-first-patterns.md) - Avoid CI flakiness
 
 ## Reference
 
-- [Command: \*ci](/docs/tea/reference/commands.md#ci) - Full command reference
-- [TEA Configuration](/docs/tea/reference/configuration.md) - CI-related config options
+- [Command: \*ci](/docs/reference/commands.md#ci) - Full command reference
+- [TEA Configuration](/docs/reference/configuration.md) - CI-related config options
 
 ---
 

@@ -325,7 +325,7 @@ test('should update bio via API', async ({ apiRequest, authToken }) => {
 });
 ```
 
-**Note:** `authToken` requires auth-session fixture setup. See [Integrate Playwright Utils](/docs/tea/how-to/customization/integrate-playwright-utils.md#auth-session).
+**Note:** `authToken` requires auth-session fixture setup. See [Integrate Playwright Utils](/docs/how-to/customization/integrate-playwright-utils.md#auth-session).
 
 ### 2. Add Avatar Upload Tests
 
@@ -932,19 +932,19 @@ Result: PARTIAL coverage (3/4 criteria)
 
 ## Related Guides
 
-- [How to Run Test Design](/docs/tea/how-to/workflows/run-test-design.md) - Provides requirements for traceability
-- [How to Run Test Review](/docs/tea/how-to/workflows/run-test-review.md) - Quality scores feed gate
-- [How to Run NFR Assessment](/docs/tea/how-to/workflows/run-nfr-assess.md) - NFR status feeds gate
+- [How to Run Test Design](/docs/how-to/workflows/run-test-design.md) - Provides requirements for traceability
+- [How to Run Test Review](/docs/how-to/workflows/run-test-review.md) - Quality scores feed gate
+- [How to Run NFR Assessment](/docs/how-to/workflows/run-nfr-assess.md) - NFR status feeds gate
 
 ## Understanding the Concepts
 
-- [Risk-Based Testing](/docs/tea/explanation/risk-based-testing.md) - Why P0 vs P3 matters
-- [TEA Overview](/docs/tea/explanation/tea-overview.md) - Gate decisions in context
+- [Risk-Based Testing](/docs/explanation/risk-based-testing.md) - Why P0 vs P3 matters
+- [TEA Overview](/docs/explanation/tea-overview.md) - Gate decisions in context
 
 ## Reference
 
-- [Command: \*trace](/docs/tea/reference/commands.md#trace) - Full command reference
-- [TEA Configuration](/docs/tea/reference/configuration.md) - Config options
+- [Command: \*trace](/docs/reference/commands.md#trace) - Full command reference
+- [TEA Configuration](/docs/reference/configuration.md) - Config options
 
 ---
 

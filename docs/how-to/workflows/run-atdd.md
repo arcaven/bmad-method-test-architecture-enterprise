@@ -402,7 +402,7 @@ If you have MCP servers configured (`tea_use_mcp_enhancements: true`), TEA can u
 
 **Note:** ATDD is for features that don't exist yet, so recording mode (verify selectors with live UI) only applies if you have skeleton/mockup UI already implemented. For typical ATDD (no UI yet), TEA infers selectors from best practices.
 
-See [Enable MCP Enhancements](/docs/tea/how-to/customization/enable-tea-mcp-enhancements.md) for setup.
+See [Enable MCP Enhancements](/docs/how-to/customization/enable-tea-mcp-enhancements.md) for setup.
 
 ### Focus on P0/P1 Scenarios
 
@@ -439,21 +439,21 @@ Don't modify these patterns - they prevent flakiness!
 
 ## Related Guides
 
-- [How to Run Test Design](/docs/tea/how-to/workflows/run-test-design.md) - Plan before generating
-- [How to Run Automate](/docs/tea/how-to/workflows/run-automate.md) - Tests for existing features
-- [How to Set Up Test Framework](/docs/tea/how-to/workflows/setup-test-framework.md) - Initial setup
+- [How to Run Test Design](/docs/how-to/workflows/run-test-design.md) - Plan before generating
+- [How to Run Automate](/docs/how-to/workflows/run-automate.md) - Tests for existing features
+- [How to Set Up Test Framework](/docs/how-to/workflows/setup-test-framework.md) - Initial setup
 
 ## Understanding the Concepts
 
-- [Testing as Engineering](/docs/tea/explanation/testing-as-engineering.md) - **Why TEA generates quality tests** (foundational)
-- [Risk-Based Testing](/docs/tea/explanation/risk-based-testing.md) - Why P0 vs P3 matters
-- [Test Quality Standards](/docs/tea/explanation/test-quality-standards.md) - What makes tests good
-- [Network-First Patterns](/docs/tea/explanation/network-first-patterns.md) - Avoiding flakiness
+- [Testing as Engineering](/docs/explanation/testing-as-engineering.md) - **Why TEA generates quality tests** (foundational)
+- [Risk-Based Testing](/docs/explanation/risk-based-testing.md) - Why P0 vs P3 matters
+- [Test Quality Standards](/docs/explanation/test-quality-standards.md) - What makes tests good
+- [Network-First Patterns](/docs/explanation/network-first-patterns.md) - Avoiding flakiness
 
 ## Reference
 
-- [Command: \*atdd](/docs/tea/reference/commands.md#atdd) - Full command reference
-- [TEA Configuration](/docs/tea/reference/configuration.md) - MCP and Playwright Utils options
+- [Command: \*atdd](/docs/reference/commands.md#atdd) - Full command reference
+- [TEA Configuration](/docs/reference/configuration.md) - MCP and Playwright Utils options
 
 ---
 

@@ -6,7 +6,7 @@ description: Understanding the Test Architect (TEA) agent and its role in BMad M
 The Test Architect (TEA) is a specialized agent focused on quality strategy, test automation, and release gates in BMad Method projects.
 
 :::tip[Design Philosophy]
-TEA was built to solve AI-generated tests that rot in review. For the problem statement and design principles, see [Testing as Engineering](/docs/tea/explanation/testing-as-engineering.md). For setup, see [Setup Test Framework](/docs/tea/how-to/workflows/setup-test-framework.md).
+TEA was built to solve AI-generated tests that rot in review. For the problem statement and design principles, see [Testing as Engineering](/docs/explanation/testing-as-engineering.md). For setup, see [Setup Test Framework](/docs/how-to/workflows/setup-test-framework.md).
 :::
 
 ## Overview
@@ -31,7 +31,7 @@ BMad does not mandate TEA. There are five valid ways to use it (or skip it). Pic
 
 - Simplest way to use TEA - just use `automate` to test existing features.
 - Perfect for learning TEA fundamentals in 30 minutes.
-- See [TEA Lite Quickstart Tutorial](/docs/tea/tutorials/tea-lite-quickstart.md).
+- See [TEA Lite Quickstart Tutorial](/docs/tutorials/tea-lite-quickstart.md).
 
 3. **Integrated: Greenfield - BMad Method (Simple/Standard Work)**
    - Phase 3: system-level `test-design`, then `framework` and `ci`.
@@ -286,14 +286,14 @@ These cheat sheets map TEA workflows to the **BMad Method and Enterprise tracks*
 
 **Related how-to guides:**
 
-- [How to Run Test Design](/docs/tea/how-to/workflows/run-test-design.md)
-- [How to Set Up a Test Framework](/docs/tea/how-to/workflows/setup-test-framework.md)
-- [How to Run ATDD](/docs/tea/how-to/workflows/run-atdd.md)
-- [How to Run Automate](/docs/tea/how-to/workflows/run-automate.md)
-- [How to Run Test Review](/docs/tea/how-to/workflows/run-test-review.md)
-- [How to Set Up CI Pipeline](/docs/tea/how-to/workflows/setup-ci.md)
-- [How to Run NFR Assessment](/docs/tea/how-to/workflows/run-nfr-assess.md)
-- [How to Run Trace](/docs/tea/how-to/workflows/run-trace.md)
+- [How to Run Test Design](/docs/how-to/workflows/run-test-design.md)
+- [How to Set Up a Test Framework](/docs/how-to/workflows/setup-test-framework.md)
+- [How to Run ATDD](/docs/how-to/workflows/run-atdd.md)
+- [How to Run Automate](/docs/how-to/workflows/run-automate.md)
+- [How to Run Test Review](/docs/how-to/workflows/run-test-review.md)
+- [How to Set Up CI Pipeline](/docs/how-to/workflows/setup-ci.md)
+- [How to Run NFR Assessment](/docs/how-to/workflows/run-nfr-assess.md)
+- [How to Run Trace](/docs/how-to/workflows/run-trace.md)
 
 ## Deep Dive Concepts
 
@@ -301,22 +301,22 @@ Want to understand TEA principles and patterns in depth?
 
 **Core Principles:**
 
-- [Risk-Based Testing](/docs/tea/explanation/risk-based-testing.md) - Probability × impact scoring, P0-P3 priorities
-- [Test Quality Standards](/docs/tea/explanation/test-quality-standards.md) - Definition of Done, determinism, isolation
-- [Knowledge Base System](/docs/tea/explanation/knowledge-base-system.md) - Context engineering with tea-index.csv
+- [Risk-Based Testing](/docs/explanation/risk-based-testing.md) - Probability × impact scoring, P0-P3 priorities
+- [Test Quality Standards](/docs/explanation/test-quality-standards.md) - Definition of Done, determinism, isolation
+- [Knowledge Base System](/docs/explanation/knowledge-base-system.md) - Context engineering with tea-index.csv
 
 **Technical Patterns:**
 
-- [Fixture Architecture](/docs/tea/explanation/fixture-architecture.md) - Pure function → fixture → composition
-- [Network-First Patterns](/docs/tea/explanation/network-first-patterns.md) - Eliminating flakiness with intercept-before-navigate
+- [Fixture Architecture](/docs/explanation/fixture-architecture.md) - Pure function → fixture → composition
+- [Network-First Patterns](/docs/explanation/network-first-patterns.md) - Eliminating flakiness with intercept-before-navigate
 
 **Engagement & Strategy:**
 
-- [Engagement Models](/docs/tea/explanation/engagement-models.md) - TEA Lite, TEA Solo, TEA Integrated (5 models explained)
+- [Engagement Models](/docs/explanation/engagement-models.md) - TEA Lite, TEA Solo, TEA Integrated (5 models explained)
 
 **Philosophy:**
 
-- [Testing as Engineering](/docs/tea/explanation/testing-as-engineering.md) - **Start here to understand WHY TEA exists** - The problem with AI-generated tests and TEA's three-part solution
+- [Testing as Engineering](/docs/explanation/testing-as-engineering.md) - **Start here to understand WHY TEA exists** - The problem with AI-generated tests and TEA's three-part solution
 
 ## Optional Integrations
 
@@ -369,57 +369,57 @@ Live browser verification for test design and automation.
 
 **New to TEA? Start with the tutorial:**
 
-- [TEA Lite Quickstart Tutorial](/docs/tea/tutorials/tea-lite-quickstart.md) - 30-minute beginner guide using TodoMVC
+- [TEA Lite Quickstart Tutorial](/docs/tutorials/tea-lite-quickstart.md) - 30-minute beginner guide using TodoMVC
 
 ### Workflow Guides (Task-Oriented)
 
 **All 8 TEA workflows with step-by-step instructions:**
 
-1. [How to Set Up a Test Framework with TEA](/docs/tea/how-to/workflows/setup-test-framework.md) - Scaffold Playwright or Cypress
-2. [How to Set Up CI Pipeline with TEA](/docs/tea/how-to/workflows/setup-ci.md) - Configure CI/CD with selective testing
-3. [How to Run Test Design with TEA](/docs/tea/how-to/workflows/run-test-design.md) - Risk-based test planning (system or epic)
-4. [How to Run ATDD with TEA](/docs/tea/how-to/workflows/run-atdd.md) - Generate failing tests before implementation
-5. [How to Run Automate with TEA](/docs/tea/how-to/workflows/run-automate.md) - Expand test coverage after implementation
-6. [How to Run Test Review with TEA](/docs/tea/how-to/workflows/run-test-review.md) - Audit test quality (0-100 scoring)
-7. [How to Run NFR Assessment with TEA](/docs/tea/how-to/workflows/run-nfr-assess.md) - Validate non-functional requirements
-8. [How to Run Trace with TEA](/docs/tea/how-to/workflows/run-trace.md) - Coverage traceability + gate decisions
+1. [How to Set Up a Test Framework with TEA](/docs/how-to/workflows/setup-test-framework.md) - Scaffold Playwright or Cypress
+2. [How to Set Up CI Pipeline with TEA](/docs/how-to/workflows/setup-ci.md) - Configure CI/CD with selective testing
+3. [How to Run Test Design with TEA](/docs/how-to/workflows/run-test-design.md) - Risk-based test planning (system or epic)
+4. [How to Run ATDD with TEA](/docs/how-to/workflows/run-atdd.md) - Generate failing tests before implementation
+5. [How to Run Automate with TEA](/docs/how-to/workflows/run-automate.md) - Expand test coverage after implementation
+6. [How to Run Test Review with TEA](/docs/how-to/workflows/run-test-review.md) - Audit test quality (0-100 scoring)
+7. [How to Run NFR Assessment with TEA](/docs/how-to/workflows/run-nfr-assess.md) - Validate non-functional requirements
+8. [How to Run Trace with TEA](/docs/how-to/workflows/run-trace.md) - Coverage traceability + gate decisions
 
 ### Customization & Integration
 
 **Optional enhancements to TEA workflows:**
 
-- [Integrate Playwright Utils](/docs/tea/how-to/customization/integrate-playwright-utils.md) - Production-ready fixtures and 9 utilities
-- [Enable TEA MCP Enhancements](/docs/tea/how-to/customization/enable-tea-mcp-enhancements.md) - Live browser verification, visual debugging
+- [Integrate Playwright Utils](/docs/how-to/customization/integrate-playwright-utils.md) - Production-ready fixtures and 9 utilities
+- [Enable TEA MCP Enhancements](/docs/how-to/customization/enable-tea-mcp-enhancements.md) - Live browser verification, visual debugging
 
 ### Use-Case Guides
 
 **Specialized guidance for specific contexts:**
 
-- [Using TEA with Existing Tests (Brownfield)](/docs/tea/how-to/brownfield/use-tea-with-existing-tests.md) - Incremental improvement, regression hotspots, baseline coverage
-- [Running TEA for Enterprise](/docs/tea/how-to/brownfield/use-tea-for-enterprise.md) - Compliance, NFR assessment, audit trails, SOC 2/HIPAA
+- [Using TEA with Existing Tests (Brownfield)](/docs/how-to/brownfield/use-tea-with-existing-tests.md) - Incremental improvement, regression hotspots, baseline coverage
+- [Running TEA for Enterprise](/docs/how-to/brownfield/use-tea-for-enterprise.md) - Compliance, NFR assessment, audit trails, SOC 2/HIPAA
 
 ### Concept Deep Dives (Understanding-Oriented)
 
 **Understand the principles and patterns:**
 
-- [Risk-Based Testing](/docs/tea/explanation/risk-based-testing.md) - Probability × impact scoring, P0-P3 priorities, mitigation strategies
-- [Test Quality Standards](/docs/tea/explanation/test-quality-standards.md) - Definition of Done, determinism, isolation, explicit assertions
-- [Fixture Architecture](/docs/tea/explanation/fixture-architecture.md) - Pure function → fixture → composition pattern
-- [Network-First Patterns](/docs/tea/explanation/network-first-patterns.md) - Intercept-before-navigate, eliminating flakiness
-- [Knowledge Base System](/docs/tea/explanation/knowledge-base-system.md) - Context engineering with tea-index.csv, 33 fragments
-- [Engagement Models](/docs/tea/explanation/engagement-models.md) - TEA Lite, TEA Solo, TEA Integrated (5 models explained)
+- [Risk-Based Testing](/docs/explanation/risk-based-testing.md) - Probability × impact scoring, P0-P3 priorities, mitigation strategies
+- [Test Quality Standards](/docs/explanation/test-quality-standards.md) - Definition of Done, determinism, isolation, explicit assertions
+- [Fixture Architecture](/docs/explanation/fixture-architecture.md) - Pure function → fixture → composition pattern
+- [Network-First Patterns](/docs/explanation/network-first-patterns.md) - Intercept-before-navigate, eliminating flakiness
+- [Knowledge Base System](/docs/explanation/knowledge-base-system.md) - Context engineering with tea-index.csv, 33 fragments
+- [Engagement Models](/docs/explanation/engagement-models.md) - TEA Lite, TEA Solo, TEA Integrated (5 models explained)
 
 ### Philosophy & Design
 
 **Why TEA exists and how it works:**
 
-- [Testing as Engineering](/docs/tea/explanation/testing-as-engineering.md) - **Start here to understand WHY** - The problem with AI-generated tests and TEA's three-part solution
+- [Testing as Engineering](/docs/explanation/testing-as-engineering.md) - **Start here to understand WHY** - The problem with AI-generated tests and TEA's three-part solution
 
 ### Reference (Quick Lookup)
 
 **Factual information for quick reference:**
 
-- [TEA Command Reference](/docs/tea/reference/commands.md) - All 8 workflows: inputs, outputs, phases, frequency
-- [TEA Configuration Reference](/docs/tea/reference/configuration.md) - Config options, file locations, setup examples
-- [Knowledge Base Index](/docs/tea/reference/knowledge-base.md) - 33 fragments categorized and explained
-- [Glossary - TEA Section](/docs/tea/glossary/index.md#test-architect-tea-concepts) - 20 TEA-specific terms defined
+- [TEA Command Reference](/docs/reference/commands.md) - All 8 workflows: inputs, outputs, phases, frequency
+- [TEA Configuration Reference](/docs/reference/configuration.md) - Config options, file locations, setup examples
+- [Knowledge Base Index](/docs/reference/knowledge-base.md) - 33 fragments categorized and explained
+- [Glossary - TEA Section](/docs/glossary/index.md#test-architect-tea-concepts) - 20 TEA-specific terms defined

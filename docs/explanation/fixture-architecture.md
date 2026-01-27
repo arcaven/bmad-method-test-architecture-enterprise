@@ -238,7 +238,7 @@ test('should update profile', async ({ apiRequest, authToken, log }) => {
 });
 ```
 
-**Note:** This example uses the vanilla pure function signature (`url`, `data`). Playwright Utils uses different parameter names (`path`, `body`). See [Integrate Playwright Utils](/docs/tea/how-to/customization/integrate-playwright-utils.md) for the utilities API.
+**Note:** This example uses the vanilla pure function signature (`url`, `data`). Playwright Utils uses different parameter names (`path`, `body`). See [Integrate Playwright Utils](/docs/how-to/customization/integrate-playwright-utils.md) for the utilities API.
 
 **Note:** `authToken` requires auth-session fixture setup with provider configuration. See [auth-session documentation](https://seontechnologies.github.io/playwright-utils/auth-session.html).
 
@@ -403,8 +403,8 @@ export const test = mergeTests(apiRequestTest, authSessionTest, logTest);
 
 For detailed fixture architecture patterns, see the knowledge base:
 
-- [Knowledge Base Index - Architecture & Fixtures](/docs/tea/reference/knowledge-base.md)
-- [Complete Knowledge Base Index](/docs/tea/reference/knowledge-base.md)
+- [Knowledge Base Index - Architecture & Fixtures](/docs/reference/knowledge-base.md)
+- [Complete Knowledge Base Index](/docs/reference/knowledge-base.md)
 
 ## When to Use This Pattern
 
@@ -448,36 +448,36 @@ function createTestUser(name: string) {
 
 **Core TEA Concepts:**
 
-- [Test Quality Standards](/docs/tea/explanation/test-quality-standards.md) - Quality standards fixtures enforce
-- [Knowledge Base System](/docs/tea/explanation/knowledge-base-system.md) - Fixture patterns in knowledge base
+- [Test Quality Standards](/docs/explanation/test-quality-standards.md) - Quality standards fixtures enforce
+- [Knowledge Base System](/docs/explanation/knowledge-base-system.md) - Fixture patterns in knowledge base
 
 **Technical Patterns:**
 
-- [Network-First Patterns](/docs/tea/explanation/network-first-patterns.md) - Network fixtures explained
-- [Risk-Based Testing](/docs/tea/explanation/risk-based-testing.md) - Fixture complexity matches risk
+- [Network-First Patterns](/docs/explanation/network-first-patterns.md) - Network fixtures explained
+- [Risk-Based Testing](/docs/explanation/risk-based-testing.md) - Fixture complexity matches risk
 
 **Overview:**
 
-- [TEA Overview](/docs/tea/explanation/tea-overview.md) - Fixture architecture in workflows
-- [Testing as Engineering](/docs/tea/explanation/testing-as-engineering.md) - Why fixtures matter
+- [TEA Overview](/docs/explanation/tea-overview.md) - Fixture architecture in workflows
+- [Testing as Engineering](/docs/explanation/testing-as-engineering.md) - Why fixtures matter
 
 ## Practical Guides
 
 **Setup Guides:**
 
-- [How to Set Up Test Framework](/docs/tea/how-to/workflows/setup-test-framework.md) - TEA scaffolds fixtures
-- [Integrate Playwright Utils](/docs/tea/how-to/customization/integrate-playwright-utils.md) - Production-ready fixtures
+- [How to Set Up Test Framework](/docs/how-to/workflows/setup-test-framework.md) - TEA scaffolds fixtures
+- [Integrate Playwright Utils](/docs/how-to/customization/integrate-playwright-utils.md) - Production-ready fixtures
 
 **Workflow Guides:**
 
-- [How to Run ATDD](/docs/tea/how-to/workflows/run-atdd.md) - Using fixtures in tests
-- [How to Run Automate](/docs/tea/how-to/workflows/run-automate.md) - Fixture composition examples
+- [How to Run ATDD](/docs/how-to/workflows/run-atdd.md) - Using fixtures in tests
+- [How to Run Automate](/docs/how-to/workflows/run-automate.md) - Fixture composition examples
 
 ## Reference
 
-- [TEA Command Reference](/docs/tea/reference/commands.md) - `framework` command
-- [Knowledge Base Index](/docs/tea/reference/knowledge-base.md) - Fixture architecture fragments
-- [Glossary](/docs/tea/glossary/index.md#test-architect-tea-concepts) - Fixture architecture term
+- [TEA Command Reference](/docs/reference/commands.md) - `framework` command
+- [Knowledge Base Index](/docs/reference/knowledge-base.md) - Fixture architecture fragments
+- [Glossary](/docs/glossary/index.md#test-architect-tea-concepts) - Fixture architecture term
 
 ---
 

@@ -290,7 +290,7 @@ test('should mark todo as complete', async ({ page, apiRequest }) => {
 - Built-in schema validation
 - Cleaner, more maintainable code
 
-See [Integrate Playwright Utils](/docs/tea/how-to/customization/integrate-playwright-utils.md) to enable this.
+See [Integrate Playwright Utils](/docs/how-to/customization/integrate-playwright-utils.md) to enable this.
 
 ## Step 4: Run and Validate (5 minutes)
 
@@ -379,7 +379,7 @@ This tutorial used the `automate` workflow to generate tests for **existing feat
 - Want failing tests BEFORE implementation
 - Following red → green → refactor cycle
 
-See [How to Run ATDD](/docs/tea/how-to/workflows/run-atdd.md) for the test-drive development (TDD) approach.
+See [How to Run ATDD](/docs/how-to/workflows/run-atdd.md) for the test-drive development (TDD) approach.
 
 ## Next Steps
 
@@ -387,22 +387,22 @@ See [How to Run ATDD](/docs/tea/how-to/workflows/run-atdd.md) for the test-drive
 
 **How-To Guides** (task-oriented):
 
-- [How to Run Test Design](/docs/tea/how-to/workflows/run-test-design.md) - Deep dive into risk assessment
-- [How to Run ATDD](/docs/tea/how-to/workflows/run-atdd.md) - Generate failing tests first (TDD)
-- [How to Set Up CI Pipeline](/docs/tea/how-to/workflows/setup-ci.md) - Automate test execution
-- [How to Review Test Quality](/docs/tea/how-to/workflows/run-test-review.md) - Audit test quality
+- [How to Run Test Design](/docs/how-to/workflows/run-test-design.md) - Deep dive into risk assessment
+- [How to Run ATDD](/docs/how-to/workflows/run-atdd.md) - Generate failing tests first (TDD)
+- [How to Set Up CI Pipeline](/docs/how-to/workflows/setup-ci.md) - Automate test execution
+- [How to Review Test Quality](/docs/how-to/workflows/run-test-review.md) - Audit test quality
 
 **Explanation** (understanding-oriented):
 
-- [TEA Overview](/docs/tea/explanation/tea-overview.md) - Complete TEA capabilities
-- [Testing as Engineering](/docs/tea/explanation/testing-as-engineering.md) - **Why TEA exists** (problem + solution)
-- [Risk-Based Testing](/docs/tea/explanation/risk-based-testing.md) - How risk scoring works
+- [TEA Overview](/docs/explanation/tea-overview.md) - Complete TEA capabilities
+- [Testing as Engineering](/docs/explanation/testing-as-engineering.md) - **Why TEA exists** (problem + solution)
+- [Risk-Based Testing](/docs/explanation/risk-based-testing.md) - How risk scoring works
 
 **Reference** (quick lookup):
 
-- [TEA Command Reference](/docs/tea/reference/commands.md) - All 8 TEA workflows
-- [TEA Configuration](/docs/tea/reference/configuration.md) - Config options
-- [Glossary](/docs/tea/glossary/index.md) - TEA terminology
+- [TEA Command Reference](/docs/reference/commands.md) - All 8 TEA workflows
+- [TEA Configuration](/docs/reference/configuration.md) - Config options
+- [Glossary](/docs/glossary/index.md) - TEA terminology
 
 ### Try TEA Solo
 
@@ -412,7 +412,7 @@ Ready for standalone usage without full BMad Method? Use TEA Solo:
 - Bring your own requirements
 - Use on non-BMad projects
 
-See [TEA Overview](/docs/tea/explanation/tea-overview.md) for engagement models.
+See [TEA Overview](/docs/explanation/tea-overview.md) for engagement models.
 
 ### Go Full TEA Integrated
 

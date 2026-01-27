@@ -149,10 +149,10 @@ Terminology reference for the BMad Method.
 
 ## See Also
 
-- [TEA Overview](/docs/tea/explanation/tea-overview.md) - Complete TEA capabilities
-- [TEA Knowledge Base](/docs/tea/reference/knowledge-base.md) - Fragment index
-- [TEA Command Reference](/docs/tea/reference/commands.md) - Workflow reference
-- [TEA Configuration](/docs/tea/reference/configuration.md) - Config options
+- [TEA Overview](/docs/explanation/tea-overview.md) - Complete TEA capabilities
+- [TEA Knowledge Base](/docs/reference/knowledge-base.md) - Fragment index
+- [TEA Command Reference](/docs/reference/commands.md) - Workflow reference
+- [TEA Configuration](/docs/reference/configuration.md) - Config options
 
 ---
 

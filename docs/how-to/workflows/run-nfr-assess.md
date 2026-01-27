@@ -712,19 +712,19 @@ Assess categories incrementally, not all at once.
 
 ## Related Guides
 
-- [How to Run Trace](/docs/tea/how-to/workflows/run-trace.md) - Gate decision complements NFR
-- [How to Run Test Review](/docs/tea/how-to/workflows/run-test-review.md) - Quality complements NFR
-- [Run TEA for Enterprise](/docs/tea/how-to/brownfield/use-tea-for-enterprise.md) - Enterprise workflow
+- [How to Run Trace](/docs/how-to/workflows/run-trace.md) - Gate decision complements NFR
+- [How to Run Test Review](/docs/how-to/workflows/run-test-review.md) - Quality complements NFR
+- [Run TEA for Enterprise](/docs/how-to/brownfield/use-tea-for-enterprise.md) - Enterprise workflow
 
 ## Understanding the Concepts
 
-- [Risk-Based Testing](/docs/tea/explanation/risk-based-testing.md) - Risk assessment principles
-- [TEA Overview](/docs/tea/explanation/tea-overview.md) - NFR in release gates
+- [Risk-Based Testing](/docs/explanation/risk-based-testing.md) - Risk assessment principles
+- [TEA Overview](/docs/explanation/tea-overview.md) - NFR in release gates
 
 ## Reference
 
-- [Command: \*nfr-assess](/docs/tea/reference/commands.md#nfr-assess) - Full command reference
-- [TEA Configuration](/docs/tea/reference/configuration.md) - Enterprise config options
+- [Command: \*nfr-assess](/docs/reference/commands.md#nfr-assess) - Full command reference
+- [TEA Configuration](/docs/reference/configuration.md) - Enterprise config options
 
 ---
 

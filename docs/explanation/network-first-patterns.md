@@ -831,53 +831,53 @@ test('test 2', async ({ page, interceptNetworkCall }) => {
 - Glob pattern matching (`**/api/**`)
 - Consistent API across all tests
 
-See [Integrate Playwright Utils](/docs/tea/how-to/customization/integrate-playwright-utils.md#intercept-network-call) for setup.
+See [Integrate Playwright Utils](/docs/how-to/customization/integrate-playwright-utils.md#intercept-network-call) for setup.
 
 ## Technical Implementation
 
 For detailed network-first patterns, see the knowledge base:
 
-- [Knowledge Base Index - Network & Reliability](/docs/tea/reference/knowledge-base.md)
-- [Complete Knowledge Base Index](/docs/tea/reference/knowledge-base.md)
+- [Knowledge Base Index - Network & Reliability](/docs/reference/knowledge-base.md)
+- [Complete Knowledge Base Index](/docs/reference/knowledge-base.md)
 
 ## Related Concepts
 
 **Core TEA Concepts:**
 
-- [Test Quality Standards](/docs/tea/explanation/test-quality-standards.md) - Determinism requires network-first
-- [Risk-Based Testing](/docs/tea/explanation/risk-based-testing.md) - High-risk features need reliable tests
+- [Test Quality Standards](/docs/explanation/test-quality-standards.md) - Determinism requires network-first
+- [Risk-Based Testing](/docs/explanation/risk-based-testing.md) - High-risk features need reliable tests
 
 **Technical Patterns:**
 
-- [Fixture Architecture](/docs/tea/explanation/fixture-architecture.md) - Network utilities as fixtures
-- [Knowledge Base System](/docs/tea/explanation/knowledge-base-system.md) - Network patterns in knowledge base
+- [Fixture Architecture](/docs/explanation/fixture-architecture.md) - Network utilities as fixtures
+- [Knowledge Base System](/docs/explanation/knowledge-base-system.md) - Network patterns in knowledge base
 
 **Overview:**
 
-- [TEA Overview](/docs/tea/explanation/tea-overview.md) - Network-first in workflows
-- [Testing as Engineering](/docs/tea/explanation/testing-as-engineering.md) - Why flakiness matters
+- [TEA Overview](/docs/explanation/tea-overview.md) - Network-first in workflows
+- [Testing as Engineering](/docs/explanation/testing-as-engineering.md) - Why flakiness matters
 
 ## Practical Guides
 
 **Workflow Guides:**
 
-- [How to Run Test Review](/docs/tea/how-to/workflows/run-test-review.md) - Review for hard waits
-- [How to Run ATDD](/docs/tea/how-to/workflows/run-atdd.md) - Generate network-first tests
-- [How to Run Automate](/docs/tea/how-to/workflows/run-automate.md) - Expand with network patterns
+- [How to Run Test Review](/docs/how-to/workflows/run-test-review.md) - Review for hard waits
+- [How to Run ATDD](/docs/how-to/workflows/run-atdd.md) - Generate network-first tests
+- [How to Run Automate](/docs/how-to/workflows/run-automate.md) - Expand with network patterns
 
 **Use-Case Guides:**
 
-- [Using TEA with Existing Tests](/docs/tea/how-to/brownfield/use-tea-with-existing-tests.md) - Fix flaky legacy tests
+- [Using TEA with Existing Tests](/docs/how-to/brownfield/use-tea-with-existing-tests.md) - Fix flaky legacy tests
 
 **Customization:**
 
-- [Integrate Playwright Utils](/docs/tea/how-to/customization/integrate-playwright-utils.md) - Network utilities (recorder, interceptor, error monitor)
+- [Integrate Playwright Utils](/docs/how-to/customization/integrate-playwright-utils.md) - Network utilities (recorder, interceptor, error monitor)
 
 ## Reference
 
-- [TEA Command Reference](/docs/tea/reference/commands.md) - All workflows use network-first
-- [Knowledge Base Index](/docs/tea/reference/knowledge-base.md) - Network-first fragment
-- [Glossary](/docs/tea/glossary/index.md#test-architect-tea-concepts) - Network-first pattern term
+- [TEA Command Reference](/docs/reference/commands.md) - All workflows use network-first
+- [Knowledge Base Index](/docs/reference/knowledge-base.md) - Network-first fragment
+- [Glossary](/docs/glossary/index.md#test-architect-tea-concepts) - Network-first pattern term
 
 ---
 

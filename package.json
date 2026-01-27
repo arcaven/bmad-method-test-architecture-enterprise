@@ -54,7 +54,8 @@
       "npm run format:fix:staged"
     ],
     "*.md": [
-      "markdownlint-cli2"
+      "markdownlint-cli2 --fix",
+      "npm run format:fix:staged"
     ]
   },
   "c8": {

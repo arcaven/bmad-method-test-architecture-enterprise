@@ -715,52 +715,52 @@ Non-critical features (UI tweaks):
 
 Each model uses different TEA workflows. See:
 
-- [TEA Overview](/docs/tea/explanation/tea-overview.md) - Model details
-- [TEA Command Reference](/docs/tea/reference/commands.md) - Workflow reference
-- [TEA Configuration](/docs/tea/reference/configuration.md) - Setup options
+- [TEA Overview](/docs/explanation/tea-overview.md) - Model details
+- [TEA Command Reference](/docs/reference/commands.md) - Workflow reference
+- [TEA Configuration](/docs/reference/configuration.md) - Setup options
 
 ## Related Concepts
 
 **Core TEA Concepts:**
 
-- [Risk-Based Testing](/docs/tea/explanation/risk-based-testing.md) - Risk assessment in different models
-- [Test Quality Standards](/docs/tea/explanation/test-quality-standards.md) - Quality across all models
-- [Knowledge Base System](/docs/tea/explanation/knowledge-base-system.md) - Consistent patterns across models
+- [Risk-Based Testing](/docs/explanation/risk-based-testing.md) - Risk assessment in different models
+- [Test Quality Standards](/docs/explanation/test-quality-standards.md) - Quality across all models
+- [Knowledge Base System](/docs/explanation/knowledge-base-system.md) - Consistent patterns across models
 
 **Technical Patterns:**
 
-- [Fixture Architecture](/docs/tea/explanation/fixture-architecture.md) - Infrastructure in different models
-- [Network-First Patterns](/docs/tea/explanation/network-first-patterns.md) - Reliability in all models
+- [Fixture Architecture](/docs/explanation/fixture-architecture.md) - Infrastructure in different models
+- [Network-First Patterns](/docs/explanation/network-first-patterns.md) - Reliability in all models
 
 **Overview:**
 
-- [TEA Overview](/docs/tea/explanation/tea-overview.md) - 5 engagement models with cheat sheets
-- [Testing as Engineering](/docs/tea/explanation/testing-as-engineering.md) - Design philosophy
+- [TEA Overview](/docs/explanation/tea-overview.md) - 5 engagement models with cheat sheets
+- [Testing as Engineering](/docs/explanation/testing-as-engineering.md) - Design philosophy
 
 ## Practical Guides
 
 **Getting Started:**
 
-- [TEA Lite Quickstart Tutorial](/docs/tea/tutorials/tea-lite-quickstart.md) - Model 3: TEA Lite
+- [TEA Lite Quickstart Tutorial](/docs/tutorials/tea-lite-quickstart.md) - Model 3: TEA Lite
 
 **Use-Case Guides:**
 
-- [Using TEA with Existing Tests](/docs/tea/how-to/brownfield/use-tea-with-existing-tests.md) - Model 5: Brownfield
-- [Running TEA for Enterprise](/docs/tea/how-to/brownfield/use-tea-for-enterprise.md) - Enterprise integration
+- [Using TEA with Existing Tests](/docs/how-to/brownfield/use-tea-with-existing-tests.md) - Model 5: Brownfield
+- [Running TEA for Enterprise](/docs/how-to/brownfield/use-tea-for-enterprise.md) - Enterprise integration
 
 **All Workflow Guides:**
 
-- [How to Run Test Design](/docs/tea/how-to/workflows/run-test-design.md) - Used in TEA Solo and Integrated
-- [How to Run ATDD](/docs/tea/how-to/workflows/run-atdd.md)
-- [How to Run Automate](/docs/tea/how-to/workflows/run-automate.md)
-- [How to Run Test Review](/docs/tea/how-to/workflows/run-test-review.md)
-- [How to Run Trace](/docs/tea/how-to/workflows/run-trace.md)
+- [How to Run Test Design](/docs/how-to/workflows/run-test-design.md) - Used in TEA Solo and Integrated
+- [How to Run ATDD](/docs/how-to/workflows/run-atdd.md)
+- [How to Run Automate](/docs/how-to/workflows/run-automate.md)
+- [How to Run Test Review](/docs/how-to/workflows/run-test-review.md)
+- [How to Run Trace](/docs/how-to/workflows/run-trace.md)
 
 ## Reference
 
-- [TEA Command Reference](/docs/tea/reference/commands.md) - All workflows explained
-- [TEA Configuration](/docs/tea/reference/configuration.md) - Config per model
-- [Glossary](/docs/tea/glossary/index.md#test-architect-tea-concepts) - TEA Lite, TEA Solo, TEA Integrated terms
+- [TEA Command Reference](/docs/reference/commands.md) - All workflows explained
+- [TEA Configuration](/docs/reference/configuration.md) - Config per model
+- [Glossary](/docs/glossary/index.md#test-architect-tea-concepts) - TEA Lite, TEA Solo, TEA Integrated terms
 
 ---
 

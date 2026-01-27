@@ -269,7 +269,7 @@ Risk scores inform test priorities (but aren't the only factor):
 - **Test Levels:** E2E smoke test only
 - **Example:** Theme customization, experimental features
 
-**Note:** Priorities consider risk scores plus business context (usage frequency, user impact, etc.). See [Test Priorities Matrix](/docs/tea/reference/knowledge-base.md#quality-standards) for complete criteria.
+**Note:** Priorities consider risk scores plus business context (usage frequency, user impact, etc.). See [Test Priorities Matrix](/docs/reference/knowledge-base.md#quality-standards) for complete criteria.
 
 ### 3. Mitigation Plans
 
@@ -493,8 +493,8 @@ describe('User profile - High Value (P1)', () => {
 
 For detailed risk governance patterns, see the knowledge base:
 
-- [Knowledge Base Index - Risk & Gates](/docs/tea/reference/knowledge-base.md)
-- [TEA Command Reference - `test-design`](/docs/tea/reference/commands.md#test-design)
+- [Knowledge Base Index - Risk & Gates](/docs/reference/knowledge-base.md)
+- [TEA Command Reference - `test-design`](/docs/reference/commands.md#test-design)
 
 ### Risk Scoring Matrix
 
@@ -591,37 +591,37 @@ flowchart TD
 
 **Core TEA Concepts:**
 
-- [Test Quality Standards](/docs/tea/explanation/test-quality-standards.md) - Quality complements risk assessment
-- [Engagement Models](/docs/tea/explanation/engagement-models.md) - When risk-based testing matters most
-- [Knowledge Base System](/docs/tea/explanation/knowledge-base-system.md) - How risk patterns are loaded
+- [Test Quality Standards](/docs/explanation/test-quality-standards.md) - Quality complements risk assessment
+- [Engagement Models](/docs/explanation/engagement-models.md) - When risk-based testing matters most
+- [Knowledge Base System](/docs/explanation/knowledge-base-system.md) - How risk patterns are loaded
 
 **Technical Patterns:**
 
-- [Fixture Architecture](/docs/tea/explanation/fixture-architecture.md) - Building risk-appropriate test infrastructure
-- [Network-First Patterns](/docs/tea/explanation/network-first-patterns.md) - Quality patterns for high-risk features
+- [Fixture Architecture](/docs/explanation/fixture-architecture.md) - Building risk-appropriate test infrastructure
+- [Network-First Patterns](/docs/explanation/network-first-patterns.md) - Quality patterns for high-risk features
 
 **Overview:**
 
-- [TEA Overview](/docs/tea/explanation/tea-overview.md) - Risk assessment in TEA lifecycle
-- [Testing as Engineering](/docs/tea/explanation/testing-as-engineering.md) - Design philosophy
+- [TEA Overview](/docs/explanation/tea-overview.md) - Risk assessment in TEA lifecycle
+- [Testing as Engineering](/docs/explanation/testing-as-engineering.md) - Design philosophy
 
 ## Practical Guides
 
 **Workflow Guides:**
 
-- [How to Run Test Design](/docs/tea/how-to/workflows/run-test-design.md) - Apply risk scoring
-- [How to Run Trace](/docs/tea/how-to/workflows/run-trace.md) - Gate decisions based on risk
-- [How to Run NFR Assessment](/docs/tea/how-to/workflows/run-nfr-assess.md) - NFR risk assessment
+- [How to Run Test Design](/docs/how-to/workflows/run-test-design.md) - Apply risk scoring
+- [How to Run Trace](/docs/how-to/workflows/run-trace.md) - Gate decisions based on risk
+- [How to Run NFR Assessment](/docs/how-to/workflows/run-nfr-assess.md) - NFR risk assessment
 
 **Use-Case Guides:**
 
-- [Running TEA for Enterprise](/docs/tea/how-to/brownfield/use-tea-for-enterprise.md) - Enterprise risk management
+- [Running TEA for Enterprise](/docs/how-to/brownfield/use-tea-for-enterprise.md) - Enterprise risk management
 
 ## Reference
 
-- [TEA Command Reference](/docs/tea/reference/commands.md) - `test-design`, `nfr-assess`, `trace`
-- [Knowledge Base Index](/docs/tea/reference/knowledge-base.md) - Risk governance fragments
-- [Glossary](/docs/tea/glossary/index.md#test-architect-tea-concepts) - Risk-based testing term
+- [TEA Command Reference](/docs/reference/commands.md) - `test-design`, `nfr-assess`, `trace`
+- [Knowledge Base Index](/docs/reference/knowledge-base.md) - Risk governance fragments
+- [Glossary](/docs/glossary/index.md#test-architect-tea-concepts) - Risk-based testing term
 
 ---
 
