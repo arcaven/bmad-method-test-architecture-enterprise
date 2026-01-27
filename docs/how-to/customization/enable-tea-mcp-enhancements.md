@@ -106,7 +106,7 @@ Add to your IDE's MCP configuration:
 }
 ```
 
-See [TEA Overview](/docs/tea/explanation/tea-overview.md#playwright-mcp-enhancements) for IDE-specific config locations.
+See [TEA Overview](/docs/explanation/tea-overview.md#playwright-mcp-enhancements) for IDE-specific config locations.
 
 ### 2. Enable in BMAD
 
@@ -427,28 +427,28 @@ tea_use_mcp_enhancements: false
 
 **Getting Started:**
 
-- [TEA Lite Quickstart Tutorial](/docs/tea/tutorials/tea-lite-quickstart.md) - Learn TEA basics first
+- [TEA Lite Quickstart Tutorial](/docs/tutorials/tea-lite-quickstart.md) - Learn TEA basics first
 
 **Workflow Guides (MCP-Enhanced):**
 
-- [How to Run Test Design](/docs/tea/how-to/workflows/run-test-design.md) - Exploratory mode with browser
-- [How to Run ATDD](/docs/tea/how-to/workflows/run-atdd.md) - Recording mode for accurate selectors
-- [How to Run Automate](/docs/tea/how-to/workflows/run-automate.md) - Healing mode for debugging
+- [How to Run Test Design](/docs/how-to/workflows/run-test-design.md) - Exploratory mode with browser
+- [How to Run ATDD](/docs/how-to/workflows/run-atdd.md) - Recording mode for accurate selectors
+- [How to Run Automate](/docs/how-to/workflows/run-automate.md) - Healing mode for debugging
 
 **Other Customization:**
 
-- [Integrate Playwright Utils](/docs/tea/how-to/customization/integrate-playwright-utils.md) - Production-ready utilities
+- [Integrate Playwright Utils](/docs/how-to/customization/integrate-playwright-utils.md) - Production-ready utilities
 
 ## Understanding the Concepts
 
-- [TEA Overview](/docs/tea/explanation/tea-overview.md) - MCP enhancements in lifecycle
-- [Engagement Models](/docs/tea/explanation/engagement-models.md) - When to use MCP enhancements
+- [TEA Overview](/docs/explanation/tea-overview.md) - MCP enhancements in lifecycle
+- [Engagement Models](/docs/explanation/engagement-models.md) - When to use MCP enhancements
 
 ## Reference
 
-- [TEA Configuration](/docs/tea/reference/configuration.md) - tea_use_mcp_enhancements option
-- [TEA Command Reference](/docs/tea/reference/commands.md) - MCP-enhanced workflows
-- [Glossary](/docs/tea/glossary/index.md#test-architect-tea-concepts) - MCP Enhancements term
+- [TEA Configuration](/docs/reference/configuration.md) - tea_use_mcp_enhancements option
+- [TEA Command Reference](/docs/reference/commands.md) - MCP-enhanced workflows
+- [Glossary](/docs/glossary/index.md#test-architect-tea-concepts) - MCP Enhancements term
 
 ---
 

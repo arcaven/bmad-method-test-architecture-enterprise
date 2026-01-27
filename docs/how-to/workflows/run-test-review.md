@@ -381,10 +381,10 @@ test('should show validation error for expired card', async ({ page }) => {});
 
 TEA reviewed against these patterns:
 
-- [test-quality.md](/docs/tea/reference/knowledge-base.md#test-quality) - Execution limits, isolation
-- [network-first.md](/docs/tea/reference/knowledge-base.md#network-first) - Deterministic waits
-- [timing-debugging.md](/docs/tea/reference/knowledge-base.md#timing-debugging) - Race conditions
-- [selector-resilience.md](/docs/tea/reference/knowledge-base.md#selector-resilience) - Robust selectors
+- [test-quality.md](/docs/reference/knowledge-base.md) - Execution limits, isolation
+- [network-first.md](/docs/reference/knowledge-base.md) - Deterministic waits
+- [timing-debugging.md](/docs/reference/knowledge-base.md) - Race conditions
+- [selector-resilience.md](/docs/reference/knowledge-base.md) - Robust selectors
 
 ````
 
@@ -618,20 +618,20 @@ Don't try to fix everything at once.
 
 ## Related Guides
 
-- [How to Run ATDD](/docs/tea/how-to/workflows/run-atdd.md) - Generate tests to review
-- [How to Run Automate](/docs/tea/how-to/workflows/run-automate.md) - Expand coverage to review
-- [How to Run Trace](/docs/tea/how-to/workflows/run-trace.md) - Coverage complements quality
+- [How to Run ATDD](/docs/how-to/workflows/run-atdd.md) - Generate tests to review
+- [How to Run Automate](/docs/how-to/workflows/run-automate.md) - Expand coverage to review
+- [How to Run Trace](/docs/how-to/workflows/run-trace.md) - Coverage complements quality
 
 ## Understanding the Concepts
 
-- [Test Quality Standards](/docs/tea/explanation/test-quality-standards.md) - What makes tests good
-- [Network-First Patterns](/docs/tea/explanation/network-first-patterns.md) - Avoiding flakiness
-- [Fixture Architecture](/docs/tea/explanation/fixture-architecture.md) - Reusable patterns
+- [Test Quality Standards](/docs/explanation/test-quality-standards.md) - What makes tests good
+- [Network-First Patterns](/docs/explanation/network-first-patterns.md) - Avoiding flakiness
+- [Fixture Architecture](/docs/explanation/fixture-architecture.md) - Reusable patterns
 
 ## Reference
 
-- [Command: \*test-review](/docs/tea/reference/commands.md#test-review) - Full command reference
-- [Knowledge Base Index](/docs/tea/reference/knowledge-base.md) - Patterns TEA reviews against
+- [Command: \*test-review](/docs/reference/commands.md#test-review) - Full command reference
+- [Knowledge Base Index](/docs/reference/knowledge-base.md) - Patterns TEA reviews against
 
 ---
 

@@ -1,5 +1,7 @@
 code: tea
 name: "Test Architect"
+header: "Test Architect: quality strategy, automation, and release gates"
+subheader: "Risk-based testing workflows for BMad Method/Enterprise with optional Playwright/MCP enhancements"
 description: "Master Test Architect for quality strategy, test automation, and release gates"
 default_selected: false
 

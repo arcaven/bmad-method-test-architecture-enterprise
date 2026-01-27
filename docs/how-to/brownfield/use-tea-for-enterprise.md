@@ -539,32 +539,32 @@ testWithAuth('admin can access admin endpoint', async ({ apiRequest, authToken, 
 
 **Workflow Guides:**
 
-- [How to Run NFR Assessment](/docs/tea/how-to/workflows/run-nfr-assess.md) - Deep dive on NFRs
-- [How to Run Trace](/docs/tea/how-to/workflows/run-trace.md) - Gate decisions with evidence
-- [How to Run Test Review](/docs/tea/how-to/workflows/run-test-review.md) - Quality audits
-- [How to Run Test Design](/docs/tea/how-to/workflows/run-test-design.md) - Compliance-focused planning
+- [How to Run NFR Assessment](/docs/how-to/workflows/run-nfr-assess.md) - Deep dive on NFRs
+- [How to Run Trace](/docs/how-to/workflows/run-trace.md) - Gate decisions with evidence
+- [How to Run Test Review](/docs/how-to/workflows/run-test-review.md) - Quality audits
+- [How to Run Test Design](/docs/how-to/workflows/run-test-design.md) - Compliance-focused planning
 
 **Use-Case Guides:**
 
-- [Using TEA with Existing Tests](/docs/tea/how-to/brownfield/use-tea-with-existing-tests.md) - Brownfield patterns
+- [Using TEA with Existing Tests](/docs/how-to/brownfield/use-tea-with-existing-tests.md) - Brownfield patterns
 
 **Customization:**
 
-- [Integrate Playwright Utils](/docs/tea/how-to/customization/integrate-playwright-utils.md) - Production-ready utilities
+- [Integrate Playwright Utils](/docs/how-to/customization/integrate-playwright-utils.md) - Production-ready utilities
 
 ## Understanding the Concepts
 
-- [Engagement Models](/docs/tea/explanation/engagement-models.md) - Enterprise model explained
-- [Risk-Based Testing](/docs/tea/explanation/risk-based-testing.md) - Probability × impact scoring
-- [Test Quality Standards](/docs/tea/explanation/test-quality-standards.md) - Enterprise quality thresholds
-- [TEA Overview](/docs/tea/explanation/tea-overview.md) - Complete TEA lifecycle
+- [Engagement Models](/docs/explanation/engagement-models.md) - Enterprise model explained
+- [Risk-Based Testing](/docs/explanation/risk-based-testing.md) - Probability × impact scoring
+- [Test Quality Standards](/docs/explanation/test-quality-standards.md) - Enterprise quality thresholds
+- [TEA Overview](/docs/explanation/tea-overview.md) - Complete TEA lifecycle
 
 ## Reference
 
-- [TEA Command Reference](/docs/tea/reference/commands.md) - All 8 workflows
-- [TEA Configuration](/docs/tea/reference/configuration.md) - Enterprise config options
-- [Knowledge Base Index](/docs/tea/reference/knowledge-base.md) - Testing patterns
-- [Glossary](/docs/tea/glossary/index.md#test-architect-tea-concepts) - TEA terminology
+- [TEA Command Reference](/docs/reference/commands.md) - All 8 workflows
+- [TEA Configuration](/docs/reference/configuration.md) - Enterprise config options
+- [Knowledge Base Index](/docs/reference/knowledge-base.md) - Testing patterns
+- [Glossary](/docs/glossary/index.md#test-architect-tea-concepts) - TEA terminology
 
 ---
 

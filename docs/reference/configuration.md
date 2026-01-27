@@ -104,7 +104,7 @@ npm install -D @seontechnologies/playwright-utils
 
 **Related:**
 
-- [Integrate Playwright Utils Guide](/docs/tea/how-to/customization/integrate-playwright-utils.md)
+- [Integrate Playwright Utils Guide](/docs/how-to/customization/integrate-playwright-utils.md)
 - [Playwright Utils on npm](https://www.npmjs.com/package/@seontechnologies/playwright-utils)
 
 ---
@@ -188,8 +188,8 @@ tea_use_mcp_enhancements: false
 
 **Related:**
 
-- [Enable MCP Enhancements Guide](/docs/tea/how-to/customization/enable-tea-mcp-enhancements.md)
-- [TEA Overview - MCP Section](/docs/tea/explanation/tea-overview.md#playwright-mcp-enhancements)
+- [Enable MCP Enhancements Guide](/docs/how-to/customization/enable-tea-mcp-enhancements.md)
+- [TEA Overview - MCP Section](/docs/explanation/tea-overview.md#playwright-mcp-enhancements)
 - [Playwright MCP on npm](https://www.npmjs.com/package/@playwright/mcp)
 
 ---
@@ -603,7 +603,7 @@ tea_use_mcp_enhancements: true # Recommended
 
 - Playwright Utils: Production-ready fixtures and utilities
 - MCP enhancements: Live browser verification, visual debugging
-- Together: The three-part stack (see [Testing as Engineering](/docs/tea/explanation/testing-as-engineering.md))
+- Together: The three-part stack (see [Testing as Engineering](/docs/explanation/testing-as-engineering.md))
 
 **Prerequisites:**
 
@@ -709,20 +709,20 @@ document_output_language: english
 
 ### How-To Guides
 
-- [Set Up Test Framework](/docs/tea/how-to/workflows/setup-test-framework.md)
-- [Integrate Playwright Utils](/docs/tea/how-to/customization/integrate-playwright-utils.md)
-- [Enable MCP Enhancements](/docs/tea/how-to/customization/enable-tea-mcp-enhancements.md)
+- [Set Up Test Framework](/docs/how-to/workflows/setup-test-framework.md)
+- [Integrate Playwright Utils](/docs/how-to/customization/integrate-playwright-utils.md)
+- [Enable MCP Enhancements](/docs/how-to/customization/enable-tea-mcp-enhancements.md)
 
 ### Reference
 
-- [TEA Command Reference](/docs/tea/reference/commands.md)
-- [Knowledge Base Index](/docs/tea/reference/knowledge-base.md)
-- [Glossary](/docs/tea/glossary/index.md)
+- [TEA Command Reference](/docs/reference/commands.md)
+- [Knowledge Base Index](/docs/reference/knowledge-base.md)
+- [Glossary](/docs/glossary/index.md)
 
 ### Explanation
 
-- [TEA Overview](/docs/tea/explanation/tea-overview.md)
-- [Testing as Engineering](/docs/tea/explanation/testing-as-engineering.md)
+- [TEA Overview](/docs/explanation/tea-overview.md)
+- [Testing as Engineering](/docs/explanation/testing-as-engineering.md)
 
 ---
 

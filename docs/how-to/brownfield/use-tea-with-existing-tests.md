@@ -195,7 +195,7 @@ test('checkout completes', async ({ page, interceptNetworkCall }) => {
 - Glob pattern matching (`**/api/checkout`)
 - Cleaner, more maintainable code
 
-**For automatic error detection,** use `network-error-monitor` fixture separately. See [Integrate Playwright Utils](/docs/tea/how-to/customization/integrate-playwright-utils.md#network-error-monitor).
+**For automatic error detection,** use `network-error-monitor` fixture separately. See [Integrate Playwright Utils](/docs/how-to/customization/integrate-playwright-utils.md#network-error-monitor).
 
 **Priority 3: P1 Requirements**
 
@@ -534,7 +534,7 @@ After: 15 minutes with sharding + selective testing
 
 - Smart selective testing based on git diff
 - Volume control (run percentage of affected tests)
-- See [Integrate Playwright Utils](/docs/tea/how-to/customization/integrate-playwright-utils.md#burn-in)
+- See [Integrate Playwright Utils](/docs/how-to/customization/integrate-playwright-utils.md#burn-in)
 
 ### "We Have Tests But They Always Fail"
 
@@ -603,28 +603,28 @@ trace Phase 2 - Gate decision
 
 **Workflow Guides:**
 
-- [How to Run Trace](/docs/tea/how-to/workflows/run-trace.md) - Baseline coverage analysis
-- [How to Run Test Review](/docs/tea/how-to/workflows/run-test-review.md) - Quality audit
-- [How to Run Automate](/docs/tea/how-to/workflows/run-automate.md) - Fill coverage gaps
-- [How to Run Test Design](/docs/tea/how-to/workflows/run-test-design.md) - Risk assessment
+- [How to Run Trace](/docs/how-to/workflows/run-trace.md) - Baseline coverage analysis
+- [How to Run Test Review](/docs/how-to/workflows/run-test-review.md) - Quality audit
+- [How to Run Automate](/docs/how-to/workflows/run-automate.md) - Fill coverage gaps
+- [How to Run Test Design](/docs/how-to/workflows/run-test-design.md) - Risk assessment
 
 **Customization:**
 
-- [Integrate Playwright Utils](/docs/tea/how-to/customization/integrate-playwright-utils.md) - Modernize tests with utilities
+- [Integrate Playwright Utils](/docs/how-to/customization/integrate-playwright-utils.md) - Modernize tests with utilities
 
 ## Understanding the Concepts
 
-- [Engagement Models](/docs/tea/explanation/engagement-models.md) - Brownfield model explained
-- [Test Quality Standards](/docs/tea/explanation/test-quality-standards.md) - What makes tests good
-- [Network-First Patterns](/docs/tea/explanation/network-first-patterns.md) - Fix flakiness
-- [Risk-Based Testing](/docs/tea/explanation/risk-based-testing.md) - Prioritize improvements
+- [Engagement Models](/docs/explanation/engagement-models.md) - Brownfield model explained
+- [Test Quality Standards](/docs/explanation/test-quality-standards.md) - What makes tests good
+- [Network-First Patterns](/docs/explanation/network-first-patterns.md) - Fix flakiness
+- [Risk-Based Testing](/docs/explanation/risk-based-testing.md) - Prioritize improvements
 
 ## Reference
 
-- [TEA Command Reference](/docs/tea/reference/commands.md) - All 8 workflows
-- [TEA Configuration](/docs/tea/reference/configuration.md) - Config options
-- [Knowledge Base Index](/docs/tea/reference/knowledge-base.md) - Testing patterns
-- [Glossary](/docs/tea/glossary/index.md#test-architect-tea-concepts) - TEA terminology
+- [TEA Command Reference](/docs/reference/commands.md) - All 8 workflows
+- [TEA Configuration](/docs/reference/configuration.md) - Config options
+- [Knowledge Base Index](/docs/reference/knowledge-base.md) - Testing patterns
+- [Glossary](/docs/glossary/index.md#test-architect-tea-concepts) - TEA terminology
 
 ---
 

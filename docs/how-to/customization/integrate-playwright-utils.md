@@ -814,31 +814,31 @@ expect(status).toBe(200);
 
 **Getting Started:**
 
-- [TEA Lite Quickstart Tutorial](/docs/tea/tutorials/tea-lite-quickstart.md) - Learn TEA basics
-- [How to Set Up Test Framework](/docs/tea/how-to/workflows/setup-test-framework.md) - Initial framework setup
+- [TEA Lite Quickstart Tutorial](/docs/tutorials/tea-lite-quickstart.md) - Learn TEA basics
+- [How to Set Up Test Framework](/docs/how-to/workflows/setup-test-framework.md) - Initial framework setup
 
 **Workflow Guides:**
 
-- [How to Run ATDD](/docs/tea/how-to/workflows/run-atdd.md) - Generate tests with utilities
-- [How to Run Automate](/docs/tea/how-to/workflows/run-automate.md) - Expand coverage with utilities
-- [How to Run Test Review](/docs/tea/how-to/workflows/run-test-review.md) - Review against PW-Utils patterns
+- [How to Run ATDD](/docs/how-to/workflows/run-atdd.md) - Generate tests with utilities
+- [How to Run Automate](/docs/how-to/workflows/run-automate.md) - Expand coverage with utilities
+- [How to Run Test Review](/docs/how-to/workflows/run-test-review.md) - Review against PW-Utils patterns
 
 **Other Customization:**
 
-- [Enable MCP Enhancements](/docs/tea/how-to/customization/enable-tea-mcp-enhancements.md) - Live browser verification
+- [Enable MCP Enhancements](/docs/how-to/customization/enable-tea-mcp-enhancements.md) - Live browser verification
 
 ## Understanding the Concepts
 
-- [Testing as Engineering](/docs/tea/explanation/testing-as-engineering.md) - **Why Playwright Utils matters** (part of TEA's three-part solution)
-- [Fixture Architecture](/docs/tea/explanation/fixture-architecture.md) - Pure function → fixture pattern
-- [Network-First Patterns](/docs/tea/explanation/network-first-patterns.md) - Network utilities explained
-- [Test Quality Standards](/docs/tea/explanation/test-quality-standards.md) - Patterns PW-Utils enforces
+- [Testing as Engineering](/docs/explanation/testing-as-engineering.md) - **Why Playwright Utils matters** (part of TEA's three-part solution)
+- [Fixture Architecture](/docs/explanation/fixture-architecture.md) - Pure function → fixture pattern
+- [Network-First Patterns](/docs/explanation/network-first-patterns.md) - Network utilities explained
+- [Test Quality Standards](/docs/explanation/test-quality-standards.md) - Patterns PW-Utils enforces
 
 ## Reference
 
-- [TEA Configuration](/docs/tea/reference/configuration.md) - tea_use_playwright_utils option
-- [Knowledge Base Index](/docs/tea/reference/knowledge-base.md) - Playwright Utils fragments
-- [Glossary](/docs/tea/glossary/index.md#test-architect-tea-concepts) - Playwright Utils term
+- [TEA Configuration](/docs/reference/configuration.md) - tea_use_playwright_utils option
+- [Knowledge Base Index](/docs/reference/knowledge-base.md) - Playwright Utils fragments
+- [Glossary](/docs/glossary/index.md#test-architect-tea-concepts) - Playwright Utils term
 - [Official PW-Utils Docs](https://seontechnologies.github.io/playwright-utils/) - Complete API reference
 
 ---

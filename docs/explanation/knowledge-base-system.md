@@ -553,46 +553,46 @@ test('job completion', async ({ apiRequest, recurse }) => {
 
 For details on the knowledge base index, see:
 
-- [Knowledge Base Index](/docs/tea/reference/knowledge-base.md)
-- [TEA Configuration](/docs/tea/reference/configuration.md)
+- [Knowledge Base Index](/docs/reference/knowledge-base.md)
+- [TEA Configuration](/docs/reference/configuration.md)
 
 ## Related Concepts
 
 **Core TEA Concepts:**
 
-- [Test Quality Standards](/docs/tea/explanation/test-quality-standards.md) - Standards in knowledge base
-- [Risk-Based Testing](/docs/tea/explanation/risk-based-testing.md) - Risk patterns in knowledge base
-- [Engagement Models](/docs/tea/explanation/engagement-models.md) - Knowledge base across all models
+- [Test Quality Standards](/docs/explanation/test-quality-standards.md) - Standards in knowledge base
+- [Risk-Based Testing](/docs/explanation/risk-based-testing.md) - Risk patterns in knowledge base
+- [Engagement Models](/docs/explanation/engagement-models.md) - Knowledge base across all models
 
 **Technical Patterns:**
 
-- [Fixture Architecture](/docs/tea/explanation/fixture-architecture.md) - Fixture patterns in knowledge base
-- [Network-First Patterns](/docs/tea/explanation/network-first-patterns.md) - Network patterns in knowledge base
+- [Fixture Architecture](/docs/explanation/fixture-architecture.md) - Fixture patterns in knowledge base
+- [Network-First Patterns](/docs/explanation/network-first-patterns.md) - Network patterns in knowledge base
 
 **Overview:**
 
-- [TEA Overview](/docs/tea/explanation/tea-overview.md) - Knowledge base in workflows
-- [Testing as Engineering](/docs/tea/explanation/testing-as-engineering.md) - **Foundation: Context engineering philosophy** (why knowledge base solves AI test problems)
+- [TEA Overview](/docs/explanation/tea-overview.md) - Knowledge base in workflows
+- [Testing as Engineering](/docs/explanation/testing-as-engineering.md) - **Foundation: Context engineering philosophy** (why knowledge base solves AI test problems)
 
 ## Practical Guides
 
 **All Workflow Guides Use Knowledge Base:**
 
-- [How to Run Test Design](/docs/tea/how-to/workflows/run-test-design.md)
-- [How to Run ATDD](/docs/tea/how-to/workflows/run-atdd.md)
-- [How to Run Automate](/docs/tea/how-to/workflows/run-automate.md)
-- [How to Run Test Review](/docs/tea/how-to/workflows/run-test-review.md)
+- [How to Run Test Design](/docs/how-to/workflows/run-test-design.md)
+- [How to Run ATDD](/docs/how-to/workflows/run-atdd.md)
+- [How to Run Automate](/docs/how-to/workflows/run-automate.md)
+- [How to Run Test Review](/docs/how-to/workflows/run-test-review.md)
 
 **Integration:**
 
-- [Integrate Playwright Utils](/docs/tea/how-to/customization/integrate-playwright-utils.md) - PW-Utils in knowledge base
+- [Integrate Playwright Utils](/docs/how-to/customization/integrate-playwright-utils.md) - PW-Utils in knowledge base
 
 ## Reference
 
-- [Knowledge Base Index](/docs/tea/reference/knowledge-base.md) - Complete fragment index
-- [TEA Command Reference](/docs/tea/reference/commands.md) - Which workflows load which fragments
-- [TEA Configuration](/docs/tea/reference/configuration.md) - Config affects fragment loading
-- [Glossary](/docs/tea/glossary/index.md#test-architect-tea-concepts) - Context engineering, knowledge fragment terms
+- [Knowledge Base Index](/docs/reference/knowledge-base.md) - Complete fragment index
+- [TEA Command Reference](/docs/reference/commands.md) - Which workflows load which fragments
+- [TEA Configuration](/docs/reference/configuration.md) - Config affects fragment loading
+- [Glossary](/docs/glossary/index.md#test-architect-tea-concepts) - Context engineering, knowledge fragment terms
 
 ---
 

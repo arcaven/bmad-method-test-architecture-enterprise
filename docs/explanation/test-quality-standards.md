@@ -919,46 +919,46 @@ test('should work with optional button', async ({ page }) => {
 
 For detailed test quality patterns, see:
 
-- [Test Quality Fragment](/docs/tea/reference/knowledge-base.md#quality-standards)
-- [Test Levels Framework Fragment](/docs/tea/reference/knowledge-base.md#quality-standards)
-- [Complete Knowledge Base Index](/docs/tea/reference/knowledge-base.md)
+- [Test Quality Fragment](/docs/reference/knowledge-base.md#quality-standards)
+- [Test Levels Framework Fragment](/docs/reference/knowledge-base.md#quality-standards)
+- [Complete Knowledge Base Index](/docs/reference/knowledge-base.md)
 
 ## Related Concepts
 
 **Core TEA Concepts:**
 
-- [Risk-Based Testing](/docs/tea/explanation/risk-based-testing.md) - Quality scales with risk
-- [Knowledge Base System](/docs/tea/explanation/knowledge-base-system.md) - How standards are enforced
-- [Engagement Models](/docs/tea/explanation/engagement-models.md) - Quality in different models
+- [Risk-Based Testing](/docs/explanation/risk-based-testing.md) - Quality scales with risk
+- [Knowledge Base System](/docs/explanation/knowledge-base-system.md) - How standards are enforced
+- [Engagement Models](/docs/explanation/engagement-models.md) - Quality in different models
 
 **Technical Patterns:**
 
-- [Network-First Patterns](/docs/tea/explanation/network-first-patterns.md) - Determinism explained
-- [Fixture Architecture](/docs/tea/explanation/fixture-architecture.md) - Isolation through fixtures
+- [Network-First Patterns](/docs/explanation/network-first-patterns.md) - Determinism explained
+- [Fixture Architecture](/docs/explanation/fixture-architecture.md) - Isolation through fixtures
 
 **Overview:**
 
-- [TEA Overview](/docs/tea/explanation/tea-overview.md) - Quality standards in lifecycle
-- [Testing as Engineering](/docs/tea/explanation/testing-as-engineering.md) - Why quality matters
+- [TEA Overview](/docs/explanation/tea-overview.md) - Quality standards in lifecycle
+- [Testing as Engineering](/docs/explanation/testing-as-engineering.md) - Why quality matters
 
 ## Practical Guides
 
 **Workflow Guides:**
 
-- [How to Run Test Review](/docs/tea/how-to/workflows/run-test-review.md) - Audit against these standards
-- [How to Run ATDD](/docs/tea/how-to/workflows/run-atdd.md) - Generate quality tests
-- [How to Run Automate](/docs/tea/how-to/workflows/run-automate.md) - Expand with quality
+- [How to Run Test Review](/docs/how-to/workflows/run-test-review.md) - Audit against these standards
+- [How to Run ATDD](/docs/how-to/workflows/run-atdd.md) - Generate quality tests
+- [How to Run Automate](/docs/how-to/workflows/run-automate.md) - Expand with quality
 
 **Use-Case Guides:**
 
-- [Using TEA with Existing Tests](/docs/tea/how-to/brownfield/use-tea-with-existing-tests.md) - Improve legacy quality
-- [Running TEA for Enterprise](/docs/tea/how-to/brownfield/use-tea-for-enterprise.md) - Enterprise quality thresholds
+- [Using TEA with Existing Tests](/docs/how-to/brownfield/use-tea-with-existing-tests.md) - Improve legacy quality
+- [Running TEA for Enterprise](/docs/how-to/brownfield/use-tea-for-enterprise.md) - Enterprise quality thresholds
 
 ## Reference
 
-- [TEA Command Reference](/docs/tea/reference/commands.md) - `test-review` command
-- [Knowledge Base Index](/docs/tea/reference/knowledge-base.md) - Test quality fragment
-- [Glossary](/docs/tea/glossary/index.md#test-architect-tea-concepts) - TEA terminology
+- [TEA Command Reference](/docs/reference/commands.md) - `test-review` command
+- [Knowledge Base Index](/docs/reference/knowledge-base.md) - Test quality fragment
+- [Glossary](/docs/glossary/index.md#test-architect-tea-concepts) - TEA terminology
 
 ---
 

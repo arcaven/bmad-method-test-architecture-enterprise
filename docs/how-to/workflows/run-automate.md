@@ -578,7 +578,7 @@ If you have MCP servers configured (`tea_use_mcp_enhancements: true`), TEA can u
 - **Healing mode:** Fix broken selectors, update assertions, enhance with trace analysis
 - **Recording mode:** Verify selectors with live browser, capture network requests
 
-No prompts - TEA uses MCPs automatically when available. See [Enable MCP Enhancements](/docs/tea/how-to/customization/enable-tea-mcp-enhancements.md) for setup.
+No prompts - TEA uses MCPs automatically when available. See [Enable MCP Enhancements](/docs/how-to/customization/enable-tea-mcp-enhancements.md) for setup.
 
 ### Generate Tests Incrementally
 
@@ -665,25 +665,25 @@ Generate tests for scenarios NOT covered by those files
 
 If you have MCP servers configured, TEA verifies selectors against live browser. Otherwise, TEA generates accessible selectors (`getByRole`, `getByLabel`) by default.
 
-Setup: Answer "Yes" to MCPs in BMad installer + configure MCP servers in your IDE. See [Enable MCP Enhancements](/docs/tea/how-to/customization/enable-tea-mcp-enhancements.md).
+Setup: Answer "Yes" to MCPs in BMad installer + configure MCP servers in your IDE. See [Enable MCP Enhancements](/docs/how-to/customization/enable-tea-mcp-enhancements.md).
 
 ## Related Guides
 
-- [How to Run Test Design](/docs/tea/how-to/workflows/run-test-design.md) - Plan before generating
-- [How to Run ATDD](/docs/tea/how-to/workflows/run-atdd.md) - Failing tests before implementation
-- [How to Run Test Review](/docs/tea/how-to/workflows/run-test-review.md) - Audit generated quality
+- [How to Run Test Design](/docs/how-to/workflows/run-test-design.md) - Plan before generating
+- [How to Run ATDD](/docs/how-to/workflows/run-atdd.md) - Failing tests before implementation
+- [How to Run Test Review](/docs/how-to/workflows/run-test-review.md) - Audit generated quality
 
 ## Understanding the Concepts
 
-- [Testing as Engineering](/docs/tea/explanation/testing-as-engineering.md) - **Why TEA generates quality tests** (foundational)
-- [Risk-Based Testing](/docs/tea/explanation/risk-based-testing.md) - Why prioritize P0 over P3
-- [Test Quality Standards](/docs/tea/explanation/test-quality-standards.md) - What makes tests good
-- [Fixture Architecture](/docs/tea/explanation/fixture-architecture.md) - Reusable test patterns
+- [Testing as Engineering](/docs/explanation/testing-as-engineering.md) - **Why TEA generates quality tests** (foundational)
+- [Risk-Based Testing](/docs/explanation/risk-based-testing.md) - Why prioritize P0 over P3
+- [Test Quality Standards](/docs/explanation/test-quality-standards.md) - What makes tests good
+- [Fixture Architecture](/docs/explanation/fixture-architecture.md) - Reusable test patterns
 
 ## Reference
 
-- [Command: \*automate](/docs/tea/reference/commands.md#automate) - Full command reference
-- [TEA Configuration](/docs/tea/reference/configuration.md) - MCP and Playwright Utils options
+- [Command: \*automate](/docs/reference/commands.md#automate) - Full command reference
+- [TEA Configuration](/docs/reference/configuration.md) - MCP and Playwright Utils options
 
 ---
 
