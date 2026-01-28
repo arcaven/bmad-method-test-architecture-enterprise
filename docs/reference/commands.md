@@ -1,14 +1,15 @@
 ---
 title: 'TEA Command Reference'
-description: Quick reference for all 8 TEA workflows - inputs, outputs, and links to detailed guides
+description: Quick reference for all 9 TEA workflows - inputs, outputs, and links to detailed guides
 ---
 
 # TEA Command Reference
 
-Quick reference for all 8 TEA (Test Engineering Architect) workflows. For detailed step-by-step guides, see the how-to documentation.
+Quick reference for all 9 TEA (Test Engineering Architect) workflows. For detailed step-by-step guides, see the how-to documentation.
 
 ## Quick Index
 
+- [`teach-me-testing`](#teach-me-testing) - Learn testing (TEA Academy)
 - [`framework`](#framework) - Scaffold test framework
 - [`ci`](#ci) - Setup CI/CD pipeline
 - [`test-design`](#test-design) - Risk-based test planning
@@ -17,6 +18,51 @@ Quick reference for all 8 TEA (Test Engineering Architect) workflows. For detail
 - [`test-review`](#test-review) - Quality audit
 - [`nfr-assess`](#nfr-assess) - NFR assessment
 - [`trace`](#trace) - Coverage traceability
+
+---
+
+## teach-me-testing
+
+**Purpose:** Interactive learning companion - teaches testing fundamentals through advanced practices
+
+**Phase:** Learning / Onboarding (before all other phases)
+
+**Frequency:** Once per learner (can revisit sessions anytime)
+
+**Key Inputs:**
+
+- Role (QA, Dev, Lead, VP)
+- Experience level (beginner, intermediate, experienced)
+- Learning goals
+
+**Key Outputs:**
+
+- Progress tracking file (`teaching-progress/{user}-tea-progress.yaml`)
+- Session notes for each completed session
+- Completion certificate (after all 7 sessions)
+- Learning artifacts (notes, test examples)
+
+**7 Sessions:**
+
+1. Quick Start (30 min) - TEA Lite intro, engagement models
+2. Core Concepts (45 min) - Risk-based testing, P0-P3, DoD
+3. Architecture (60 min) - Fixtures, network-first, data factories
+4. Test Design (60 min) - Risk assessment, coverage planning
+5. ATDD & Automate (60 min) - TDD red-green, test generation
+6. Quality & Trace (45 min) - Test review, traceability, metrics
+7. Advanced Patterns (ongoing) - 34 knowledge fragments exploration
+
+**Features:**
+
+- Multi-session with state persistence (pause/resume anytime)
+- Non-linear (jump to any session based on experience)
+- Quiz validation (≥70% to pass)
+- Role-adapted examples (QA/Dev/Lead/VP)
+- Automatic progress tracking
+
+**How-To Guide:** [Learn Testing with TEA Academy](/docs/how-to/workflows/teach-me-testing.md)
+
+**Tutorial:** [Learn Testing with TEA Academy](/docs/tutorials/learn-testing-tea-academy.md)
 
 ---
 
@@ -259,16 +305,17 @@ Quick reference for all 8 TEA (Test Engineering Architect) workflows. For detail
 
 ## Summary Table
 
-| Command       | Phase      | Frequency                 | Primary Output             |
-| ------------- | ---------- | ------------------------- | -------------------------- |
-| `framework`   | 3          | Once                      | Test infrastructure        |
-| `ci`          | 3          | Once                      | CI/CD pipeline             |
-| `test-design` | 3, 4       | System + per epic         | Test design doc            |
-| `atdd`        | 4          | Per story (optional)      | Failing tests              |
-| `automate`    | 4          | Per story                 | Passing tests              |
-| `test-review` | 4, Gate    | Per epic/release          | Quality report             |
-| `nfr-assess`  | 2, Gate    | Per release               | NFR assessment             |
-| `trace`       | 2, 4, Gate | Baseline + refresh + gate | Coverage matrix + decision |
+| Command            | Phase      | Frequency                 | Primary Output             |
+| ------------------ | ---------- | ------------------------- | -------------------------- |
+| `teach-me-testing` | Learning   | Once per learner          | Progress + notes + cert    |
+| `framework`        | 3          | Once                      | Test infrastructure        |
+| `ci`               | 3          | Once                      | CI/CD pipeline             |
+| `test-design`      | 3, 4       | System + per epic         | Test design doc            |
+| `atdd`             | 4          | Per story (optional)      | Failing tests              |
+| `automate`         | 4          | Per story                 | Passing tests              |
+| `test-review`      | 4, Gate    | Per epic/release          | Quality report             |
+| `nfr-assess`       | 2, Gate    | Per release               | NFR assessment             |
+| `trace`            | 2, 4, Gate | Baseline + refresh + gate | Coverage matrix + decision |
 
 ---
 
@@ -276,6 +323,7 @@ Quick reference for all 8 TEA (Test Engineering Architect) workflows. For detail
 
 **How-To Guides (Detailed Instructions):**
 
+- [Learn Testing with TEA Academy](/docs/how-to/workflows/teach-me-testing.md)
 - [Setup Test Framework](/docs/how-to/workflows/setup-test-framework.md)
 - [Setup CI Pipeline](/docs/how-to/workflows/setup-ci.md)
 - [Run Test Design](/docs/how-to/workflows/run-test-design.md)

@@ -225,7 +225,7 @@ _bmad/tea/
 ├── agents/
 │   └── tea.agent.yaml
 ├── workflows/
-│   └── testarch/       # 8 workflows
+│   └── testarch/       # 9 workflows
 └── testarch/
     ├── tea-index.csv   # Knowledge base index
     └── knowledge/      # 34 fragments
@@ -235,9 +235,9 @@ _bmad/tea/
 
 Despite the migration, these aspects remain **unchanged**:
 
-✅ **Short Trigger Commands**: `TF`, `CI`, `TD`, `AT`, `TA`, `RV`, `TR`, `NR` work exactly the same
+✅ **Short Trigger Commands**: `TMT`, `TF`, `CI`, `TD`, `AT`, `TA`, `RV`, `TR`, `NR` work exactly the same
 
-✅ **Workflow Behavior**: All 8 workflows function identically
+✅ **Workflow Behavior**: All 9 workflows function identically
 
 ✅ **Knowledge Base**: Same 34 knowledge fragments with identical content
 

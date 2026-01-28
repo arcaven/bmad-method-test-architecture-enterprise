@@ -46,19 +46,19 @@
   },
   "lint-staged": {
     "*.{js,cjs,mjs}": [
-      "npm run lint:fix",
-      "npm run format:fix:staged"
+      "eslint --fix",
+      "prettier --write --ignore-unknown"
     ],
     "*.yaml": [
       "eslint --fix",
-      "npm run format:fix:staged"
+      "prettier --write --ignore-unknown"
     ],
     "*.json": [
-      "npm run format:fix:staged"
+      "prettier --write --ignore-unknown"
     ],
     "*.md": [
       "markdownlint-cli2 --fix",
-      "npm run format:fix:staged"
+      "prettier --write --ignore-unknown"
     ]
   },
   "c8": {

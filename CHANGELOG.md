@@ -111,7 +111,7 @@ All workflows implement the **trivariate step pattern** (Create/Edit/Validate):
 
 - **Diataxis-Compliant Structure**: 29 markdown files across 4 categories
   - **Tutorials**: TEA Lite 30-minute quickstart
-  - **How-To Guides**: 8 workflow guides + 4 customization guides
+  - **How-To Guides**: 9 workflow guides + 4 customization guides
   - **Explanation**: 11 concept docs (engagement models, risk-based testing, knowledge base system, etc.)
   - **Reference**: 3 reference docs (commands, configuration, knowledge base index)
   - **Glossary**: Comprehensive terminology reference
@@ -125,7 +125,7 @@ All workflows implement the **trivariate step pattern** (Create/Edit/Validate):
 - **TEA Solo**: Standalone use on non-BMAD projects
 - **TEA Lite**: Fast onboarding with `automate` workflow only
 - **Integrated**: Full TEA integration with BMAD Method (Phases 3-4 + release gates)
-- **Enterprise**: Complete quality governance with all 8 workflows
+- **Enterprise**: Complete quality governance with all 9 workflows
 
 #### Testing & Quality
 
@@ -189,7 +189,7 @@ For users migrating from BMM-embedded TEA, see [`docs/MIGRATION.md`](docs/MIGRAT
 ### Technical Details
 
 - **Lines of Code**: ~20K lines (workflows, knowledge base, documentation)
-- **Step Files**: 134 total step files across 8 workflows
+- **Step Files**: 134 total step files across 9 workflows
 - **Knowledge Fragments**: 34 reusable testing patterns
 - **Documentation Files**: 204 markdown files
 - **Test Coverage**: 85 automated tests (100% passing)
@@ -208,7 +208,7 @@ _Future releases will be documented here._
 
 - **1.0.0** (2026-01-XX) - TEA Module Independence Release
   - Standalone module extraction from BMAD Method
-  - 8 workflows with subprocess architecture
+  - 9 workflows with subprocess architecture
   - 34 knowledge base fragments
   - Complete documentation suite
 

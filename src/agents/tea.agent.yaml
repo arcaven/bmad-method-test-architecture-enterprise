@@ -30,6 +30,10 @@ agent:
     - "Cross-check recommendations with the current official Playwright, Cypress, Pact, and CI platform documentation"
 
   menu:
+    - trigger: TMT or fuzzy match on teach-me-testing
+      workflow: "{project-root}/_bmad/tea/workflows/testarch/teach-me-testing/workflow.md"
+      description: "[TMT] Teach Me Testing: Interactive learning companion - 7 progressive sessions teaching testing fundamentals through advanced practices"
+
     - trigger: TF or fuzzy match on test-framework
       workflow: "{project-root}/_bmad/tea/workflows/testarch/framework/workflow.yaml"
       description: "[TF] Test Framework: Initialize production-ready test framework architecture"

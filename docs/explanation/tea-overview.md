@@ -33,6 +33,15 @@ BMad does not mandate TEA. There are five valid ways to use it (or skip it). Pic
 - Perfect for learning TEA fundamentals in 30 minutes.
 - See [TEA Lite Quickstart Tutorial](/docs/tutorials/tea-lite-quickstart.md).
 
+**TEA Academy (Learning Path):**
+
+- Interactive learning companion that teaches testing progressively through 7 structured sessions.
+- Perfect for: QAs, developers learning testing, anyone wanting comprehensive testing knowledge.
+- **Time:** 1-2 weeks self-paced (30-90 min per session).
+- **Features:** State persistence (pause/resume), role-adapted examples (QA/Dev/Lead/VP), quiz validation, completion certificate.
+- **Command:** `teach-me-testing` or `TMT` in TEA agent.
+- See [Learn Testing with TEA Academy Tutorial](/docs/tutorials/learn-testing-tea-academy.md).
+
 3. **Integrated: Greenfield - BMad Method (Simple/Standard Work)**
    - Phase 3: system-level `test-design`, then `framework` and `ci`.
    - Phase 4: per-epic `test-design`, optional `atdd`, then `automate` and optional `test-review`.
@@ -373,16 +382,17 @@ Live browser verification for test design and automation.
 
 ### Workflow Guides (Task-Oriented)
 
-**All 8 TEA workflows with step-by-step instructions:**
+**All 9 TEA workflows with step-by-step instructions:**
 
-1. [How to Set Up a Test Framework with TEA](/docs/how-to/workflows/setup-test-framework.md) - Scaffold Playwright or Cypress
-2. [How to Set Up CI Pipeline with TEA](/docs/how-to/workflows/setup-ci.md) - Configure CI/CD with selective testing
-3. [How to Run Test Design with TEA](/docs/how-to/workflows/run-test-design.md) - Risk-based test planning (system or epic)
-4. [How to Run ATDD with TEA](/docs/how-to/workflows/run-atdd.md) - Generate failing tests before implementation
-5. [How to Run Automate with TEA](/docs/how-to/workflows/run-automate.md) - Expand test coverage after implementation
-6. [How to Run Test Review with TEA](/docs/how-to/workflows/run-test-review.md) - Audit test quality (0-100 scoring)
-7. [How to Run NFR Assessment with TEA](/docs/how-to/workflows/run-nfr-assess.md) - Validate non-functional requirements
-8. [How to Run Trace with TEA](/docs/how-to/workflows/run-trace.md) - Coverage traceability + gate decisions
+1. [How to Learn Testing with TEA Academy](/docs/how-to/workflows/teach-me-testing.md) - Teach Me Testing (TEA Academy)
+2. [How to Set Up a Test Framework with TEA](/docs/how-to/workflows/setup-test-framework.md) - Scaffold Playwright or Cypress
+3. [How to Set Up CI Pipeline with TEA](/docs/how-to/workflows/setup-ci.md) - Configure CI/CD with selective testing
+4. [How to Run Test Design with TEA](/docs/how-to/workflows/run-test-design.md) - Risk-based test planning (system or epic)
+5. [How to Run ATDD with TEA](/docs/how-to/workflows/run-atdd.md) - Generate failing tests before implementation
+6. [How to Run Automate with TEA](/docs/how-to/workflows/run-automate.md) - Expand test coverage after implementation
+7. [How to Run Test Review with TEA](/docs/how-to/workflows/run-test-review.md) - Audit test quality (0-100 scoring)
+8. [How to Run NFR Assessment with TEA](/docs/how-to/workflows/run-nfr-assess.md) - Validate non-functional requirements
+9. [How to Run Trace with TEA](/docs/how-to/workflows/run-trace.md) - Coverage traceability + gate decisions
 
 ### Customization & Integration
 
@@ -419,7 +429,7 @@ Live browser verification for test design and automation.
 
 **Factual information for quick reference:**
 
-- [TEA Command Reference](/docs/reference/commands.md) - All 8 workflows: inputs, outputs, phases, frequency
+- [TEA Command Reference](/docs/reference/commands.md) - All 9 workflows: inputs, outputs, phases, frequency
 - [TEA Configuration Reference](/docs/reference/configuration.md) - Config options, file locations, setup examples
 - [Knowledge Base Index](/docs/reference/knowledge-base.md) - 33 fragments categorized and explained
 - [Glossary - TEA Section](/docs/glossary/index.md#test-architect-tea-concepts) - 20 TEA-specific terms defined
