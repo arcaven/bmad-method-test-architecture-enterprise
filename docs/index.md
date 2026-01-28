@@ -17,7 +17,7 @@ hero:
 
 ## What is TEA?
 
-TEA (Test Engineering Architect) is a BMAD module for testing strategy and automation. It provides eight workflows covering setup, design, automation, review, and release gates.
+TEA (Test Engineering Architect) is a BMAD module for testing strategy and automation. It provides nine workflows covering learning, setup, design, automation, review, and release gates.
 
 - **Workflow‑Driven**: Multiple workflows covering covering day to day activities of a test architect.
 - **Consistent Outputs**: Knowledge-base guidance keeps standards consistent, no matter the agent being used.
@@ -42,6 +42,7 @@ test-design # Run Test Design workflow
 
 Pick a path:
 
+- **New to Testing?** Start with [TEA Academy](/tutorials/learn-testing-tea-academy) - Learn testing from fundamentals to advanced practices (7 sessions, 1-2 weeks)
 - **TEA Lite**: Start with [Test Automation](/how-to/workflows/run-automate) only (30 minutes)
 - **Full TEA**: Start with the [TEA Overview](/explanation/tea-overview) for the complete workflow map
 - **Enterprise**: Choose [Greenfield](/how-to/brownfield/use-tea-for-enterprise) or [Brownfield](/how-to/brownfield/use-tea-with-existing-tests)
@@ -50,6 +51,7 @@ Pick a path:
 
 | Workflow                                                  | Trigger | Purpose                                |
 | --------------------------------------------------------- | ------- | -------------------------------------- |
+| [Teach Me Testing](/how-to/workflows/teach-me-testing)    | TMT     | Learn testing (7 sessions, 1-2 weeks)  |
 | [Framework Setup](/how-to/workflows/setup-test-framework) | TF      | Scaffold test framework                |
 | [CI/CD Integration](/how-to/workflows/setup-ci)           | CI      | Set up quality pipeline                |
 | [Test Design](/how-to/workflows/run-test-design)          | TD      | Risk-based test planning               |

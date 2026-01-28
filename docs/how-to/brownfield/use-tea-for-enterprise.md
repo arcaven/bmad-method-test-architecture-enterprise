@@ -561,7 +561,7 @@ testWithAuth('admin can access admin endpoint', async ({ apiRequest, authToken, 
 
 ## Reference
 
-- [TEA Command Reference](/docs/reference/commands.md) - All 8 workflows
+- [TEA Command Reference](/docs/reference/commands.md) - All 9 workflows
 - [TEA Configuration](/docs/reference/configuration.md) - Enterprise config options
 - [Knowledge Base Index](/docs/reference/knowledge-base.md) - Testing patterns
 - [Glossary](/docs/glossary/index.md#test-architect-tea-concepts) - TEA terminology

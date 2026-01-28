@@ -105,6 +105,7 @@ export default defineConfig({
             {
               label: 'Workflows',
               items: [
+                { label: 'Teach Me Testing', slug: 'how-to/workflows/teach-me-testing' },
                 { label: 'Set Up Test Framework', slug: 'how-to/workflows/setup-test-framework' },
                 { label: 'Set Up CI Pipeline', slug: 'how-to/workflows/setup-ci' },
                 { label: 'Test Design', slug: 'how-to/workflows/run-test-design' },

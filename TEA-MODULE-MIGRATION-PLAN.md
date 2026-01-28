@@ -2424,14 +2424,11 @@ npm run docs:dev
 
 **Checklist** (in BMAD-METHOD repo):
 
-- [ ] Create backup: `git tag pre-tea-migration`
 - [ ] Remove `src/bmm/agents/tea.agent.yaml`
 - [ ] Remove `src/bmm/workflows/testarch/` directory
 - [ ] Remove `src/bmm/testarch/` knowledge base
 - [ ] Add redirect: `docs/tea/README.md` → "TEA moved to standalone module"
 - [ ] Update BMAD README: List TEA as standalone module
-- [ ] Version bump: BMAD v7.0.0 (breaking change)
-- [ ] Test: BMM alone works, BMM + TEA works together
 
 **Why Wait**: Premature cleanup = breaking change for BMM users without migration path.
 

@@ -90,7 +90,7 @@ async function runTests() {
       assert(teaAgent.agent.persona !== undefined, 'TEA agent has persona section');
       assert(teaAgent.agent.critical_actions !== undefined, 'TEA agent has critical_actions');
       assert(teaAgent.agent.menu !== undefined, 'TEA agent has menu');
-      assert(Array.isArray(teaAgent.agent.menu) && teaAgent.agent.menu.length === 8, 'TEA agent menu has 8 workflows');
+      assert(Array.isArray(teaAgent.agent.menu) && teaAgent.agent.menu.length === 9, 'TEA agent menu has 9 workflows');
 
       // Verify no BMM references
       const yamlContent = await fs.readFile(teaAgentPath, 'utf8');
@@ -135,6 +135,15 @@ async function runTests() {
   // Test 4: Workflow Structure
   // ============================================================
   console.log(`${colors.yellow}Test Suite 4: Workflow Structure${colors.reset}\n`);
+
+  const teachMeWorkflowPath = path.join(projectRoot, 'src/workflows/testarch/teach-me-testing/workflow.md');
+  if (await fs.pathExists(teachMeWorkflowPath)) {
+    const teachMeContent = await fs.readFile(teachMeWorkflowPath, 'utf8');
+    assert(teachMeContent.length > 0, 'teach-me-testing/workflow.md exists');
+    assert(!teachMeContent.includes('_bmad/bmm/'), 'teach-me-testing has no _bmad/bmm/ references');
+  } else {
+    assert(false, 'teach-me-testing workflow exists', 'src/workflows/testarch/teach-me-testing/workflow.md not found');
+  }
 
   const workflowNames = ['framework', 'ci', 'test-design', 'atdd', 'automate', 'test-review', 'nfr-assess', 'trace'];
 

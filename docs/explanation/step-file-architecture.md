@@ -604,6 +604,6 @@ When running workflows, users see:
 ---
 
 **Status**: Production-ready, 100% LLM compliance achieved
-**Validation**: All 8 workflows score 100% on BMad Builder validation
+**Validation**: All 9 workflows score 100% on BMad Builder validation
 **Testing**: All workflows tested with real projects, zero improvisation issues
 **Next Steps**: Implement subprocess patterns (see subprocess-architecture.md)
