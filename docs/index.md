@@ -44,7 +44,7 @@ Pick a path:
 
 - **TEA Lite**: Start with [Test Automation](/how-to/workflows/run-automate) only (30 minutes)
 - **Full TEA**: Start with the [TEA Overview](/explanation/tea-overview) for the complete workflow map
-- **Enterprise**: Choose [Greenfield](http://localhost:4321/how-to/brownfield/use-tea-for-enterprise) or [Brownfield](http://localhost:4321/how-to/brownfield/use-tea-with-existing-tests/)
+- **Enterprise**: Choose [Greenfield](/how-to/brownfield/use-tea-for-enterprise) or [Brownfield](/how-to/brownfield/use-tea-with-existing-tests)
 
 ## Core Workflows
 
