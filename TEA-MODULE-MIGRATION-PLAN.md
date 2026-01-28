@@ -130,7 +130,7 @@ TEA is currently embedded in the BMM (BMad Method) module but needs to be standa
 ### What Success Looks Like
 
 - TEA installable as standalone module via BMAD CLI
-- All 8 workflows work perfectly with 100% LLM compliance
+- All 9 workflows work perfectly with 100% LLM compliance
 - Documentation site live at test-architect.bmad-method.org
 - Published to NPM as 1.0.0
 - Zero critical bugs
@@ -365,7 +365,7 @@ All knowledge is documented in this plan, but you should understand:
 
 ### Assumptions
 
-- TEA functionality remains unchanged (same 8 workflows, same behavior)
+- TEA functionality remains unchanged (same 9 workflows, same behavior)
 - No breaking changes to BMAD core during migration
 - Brian available for installer/compiler issues
 - BMad Builder module available for workflow validation (Phase 5)
@@ -379,7 +379,7 @@ All knowledge is documented in this plan, but you should understand:
 
 - **Documentation**: 25 files (`docs/tea/`)
 - **Agent Definition**: 1 file (`src/bmm/agents/tea.agent.yaml`)
-- **Workflows**: 33 files across 8 workflows (`src/bmm/workflows/testarch/`)
+- **Workflows**: 33 files across 9 workflows (`src/bmm/workflows/testarch/`)
 - **Knowledge Base**: 35 files (tea-index.csv + 34 fragments)
 - **Repository Tooling**: ~50+ config/script files (see Phase 0)
 
@@ -1152,7 +1152,7 @@ party: './default-party.csv'
 
 - [x] `src/module.yaml` exists and is valid YAML ✅
 - [x] All directory structure created (run: `ls -R src/`) ✅
-- [x] `src/module-help.csv` created with 8 TEA workflows ✅ (9 lines including header)
+- [x] `src/module-help.csv` created with 9 TEA workflows ✅ (10 lines including header)
 - [x] Module configuration includes all required variables ✅
 
 **Directory Check**:
@@ -1167,7 +1167,7 @@ find src -type d
 **Verification Results**:
 ✅ module.yaml valid YAML
 ✅ All directories created
-✅ module-help.csv has 8 TEA workflows
+✅ module-help.csv has 9 TEA workflows
 ✅ Configuration variables: test_artifacts, tea_use_playwright_utils, tea_use_mcp_enhancements, test_framework, risk_threshold, test_design_output, test_review_output, trace_output
 
 **Status**: Phase 1 COMPLETE - Ready for content migration
@@ -1184,7 +1184,7 @@ find src -type d
 **Key Actions**:
 
 - Copy tea.agent.yaml and update metadata
-- Copy all 8 workflows (framework, ci, test-design, atdd, automate, test-review, nfr-assess, trace)
+- Copy all 9 workflows (teach-me-testing, framework, ci, test-design, atdd, automate, test-review, nfr-assess, trace)
 - Copy tea-index.csv and all 34 knowledge fragments
 - Copy all documentation (tutorials, how-to, explanation, reference, glossary)
   **Verification**: File count matches (94 files total in Phase 2)
@@ -1200,7 +1200,7 @@ find src -type d
 **Context**: This is the core migration phase - moving 103 files from BMAD-METHOD to the TEA module repo. We migrate:
 
 - 1 agent definition (tea.agent.yaml)
-- 33 workflow files (8 workflows with instructions, checklists, templates)
+- 33 workflow files (9 workflows with instructions, checklists, templates)
 - 35 knowledge base files (CSV + 34 fragments)
 - 25 documentation files (tutorials, how-to, explanation, reference, glossary)
 
@@ -1250,7 +1250,7 @@ git status  # Ensure Phase 0-1 committed
 - `metadata.id`: `_bmad/bmm/...` → `_bmad/tea/...`
 - `metadata.module`: `bmm` → `tea`
 - `critical_actions` paths: All `/_bmad/bmm/` → `/_bmad/tea/`
-- `menu` workflow paths: All 8 workflow paths updated
+- `menu` workflow paths: All 9 workflow paths updated
 
 **Common Mistakes to Avoid**:
 
@@ -1304,12 +1304,12 @@ git status  # Ensure Phase 0-1 committed
   menu:
     - trigger: TF
       workflow: '{project-root}/_bmad/tea/workflows/testarch/framework/workflow.yaml'
-  # Repeat for all 8 workflows
+  # Repeat for all 9 workflows
   ```
 
 ---
 
-### 2.2 Workflow Migration (8 workflows, 33 files)
+### 2.2 Workflow Migration (9 workflows, 33 files)
 
 **Source**: `BMAD-METHOD/src/bmm/workflows/testarch/`
 **Target**: `tea-repo/src/workflows/testarch/`
@@ -1555,7 +1555,7 @@ Copy all files from `BMAD-METHOD/src/bmm/testarch/knowledge/` to target `src/tes
 
 #### 2.4.4 Reference (3 files)
 
-- [x] Copy `reference/commands.md` - All 8 TEA workflows
+- [x] Copy `reference/commands.md` - All 9 TEA workflows
 - [x] Copy `reference/configuration.md` - Config options
 - [x] Copy `reference/knowledge-base.md` - 34 fragment index
 
@@ -1580,7 +1580,7 @@ Copy all files from `BMAD-METHOD/src/bmm/testarch/knowledge/` to target `src/tes
 **Critical Verifications**:
 
 - [x] Agent file exists: `src/agents/tea.agent.yaml`
-- [x] All 8 workflows copied: `find src/workflows/testarch -name "workflow.yaml" | wc -l` should return 8
+- [x] All 9 workflows copied: `find src/workflows/testarch -mindepth 1 -maxdepth 1 -type d | wc -l` should return 9
 - [x] Knowledge base complete: `find src/testarch/knowledge -name "*.md" | wc -l` should return 34
 - [x] tea-index.csv exists: `wc -l src/testarch/tea-index.csv` should return 35 (header + 34)
 - [x] Documentation copied: `find docs -name "*.md" | wc -l` should return 25+
@@ -1728,7 +1728,7 @@ Create `tools/verify-paths.js`:
 - Add TEA entry to BMAD's external-official-modules.yaml
 - Test installer recognizes TEA module
 - Verify installation in fresh project
-- Test all 8 workflow triggers work
+- Test all 9 workflow triggers work
   **Verification**: `npx bmad-method install` shows "Test Architect" option
   **Time Investment**: Light (configuration + testing)
 
@@ -1801,7 +1801,7 @@ modules:
 - [x] Installer test: `npx bmad-method install` shows "Test Architect" in module menu (MURAT)
 - [x] Installation test in fresh project completes successfully (MURAT)
 - [x] Workflow triggers work: Try `/bmad:tea:automate` or `TA` trigger (AGENT - after Murat's install)
-- [x] All 8 workflows accessible after installation (AGENT - after Murat's install)
+- [x] All 9 workflows accessible after installation (AGENT - after Murat's install)
 
 **Installation Verification**:
 
@@ -1810,7 +1810,7 @@ modules:
 npx bmad-method install
 # Select "Test Architect"
 # Verify: ls _bmad/tea/agents/tea.md exists
-# Verify: ls _bmad/tea/workflows/testarch/ shows 8 workflows
+# Verify: ls _bmad/tea/workflows/testarch/ shows 9 workflows
 ```
 
 **Action Required**:
@@ -1851,7 +1851,7 @@ npx bmad-method install
 
 **🎯 Agent Role in Phase 5**:
 
-1. Prepare list of 8 workflows and their current file structure
+1. Prepare list of 9 workflows and their current file structure
 2. Document known LLM non-compliance issues
 3. Hand off to Murat with context
 4. **WAIT** for Murat to complete step file conversion
@@ -2318,7 +2318,7 @@ Source: `BMAD-METHOD/.github/ISSUE_TEMPLATE/`
   - [x] Update documentation link to test-architect.bmad-method.org
   - [x] Remove Discord links (changed to GitHub Discussions)
 - [x] Copy `issue.md` - Bug report template
-  - [x] Adapt for TEA context (8 workflows, knowledge base)
+  - [x] Adapt for TEA context (9 workflows, knowledge base)
   - [x] Update reproduction steps template
 - [x] Copy `feature_request.md` - Feature request template
   - [x] Adapt for TEA module features
@@ -2403,7 +2403,7 @@ npm run docs:dev
 
 1. ⏳ Publish to NPM: Run `npm run release:beta` (see README release guide)
 2. ⏳ Test installation: `npx bmad-method install` → Select "Test Architect"
-3. ⏳ Validate all 8 workflows work end-to-end
+3. ⏳ Validate all 9 workflows work end-to-end
 4. ⏳ Monitor for critical bugs (recommended: 2-4 weeks)
 5. ⏳ Publish stable v1.0.0: Run `npm run release:major`
 6. ⏳ Allow migration period for BMM users
@@ -2484,7 +2484,7 @@ npm run release:major  # → v1.0.0
 **Quinn vs TEA**:
 
 - Quinn: 1 workflow, beginner-friendly, built-in BMM
-- TEA: 8 workflows, enterprise-grade, standalone module
+- TEA: 9 workflows, enterprise-grade, standalone module
 
 **Status**: Optional enhancement, not blocking TEA migration.
 
@@ -2525,7 +2525,7 @@ Potential improvements after v1.0.0 stable release:
 ### Migration Complete When:
 
 - [ ] TEA module installable via BMAD installer (⏳ requires NPM publish)
-- [x] All 8 workflows functional in new module
+- [x] All 9 workflows functional in new module
 - [x] Knowledge base system working (tea-index.csv + 34 fragments)
 - [x] All documentation migrated and published
 - [x] Website live at test-architect.bmad-method.org
@@ -2553,8 +2553,8 @@ Potential improvements after v1.0.0 stable release:
 ### User Experience Criteria:
 
 - [x] Beginner can complete TEA Lite tutorial in 30 minutes (tutorial exists)
-- [x] Intermediate user can run full lifecycle in < 2 hours (8 workflows ready)
-- [x] Expert user finds all 8 workflows intuitive (comprehensive docs)
+- [x] Intermediate user can run full lifecycle in < 2 hours (9 workflows ready)
+- [x] Expert user finds all 9 workflows intuitive (comprehensive docs)
 - [x] Migration from BMM-embedded TEA takes < 15 minutes (MIGRATION.md guide)
 - [ ] Installation success rate > 95% (⏳ measure after NPM publish)
 - [ ] User satisfaction score > 4/5 (⏳ measure after release)
@@ -3124,7 +3124,7 @@ npm publish               # Publish to NPM
 ```
 BMAD-METHOD/
 ├── src/bmm/agents/tea.agent.yaml              # Agent definition
-├── src/bmm/workflows/testarch/                # 8 workflows (33 files)
+├── src/bmm/workflows/testarch/                # 9 workflows (33 files)
 ├── src/bmm/testarch/                          # Knowledge base (35 files)
 ├── docs/tea/                                  # Documentation (25 files)
 ├── tools/cli/external-official-modules.yaml   # Installer registry
@@ -3346,7 +3346,7 @@ During migration, you may need to ask Murat:
 
 - TEA appears in BMAD installer
 - Installation completes successfully
-- All 8 workflows accessible
+- All 9 workflows accessible
 
 **✅ Milestone 4: LLM Compliant**
 
@@ -3383,7 +3383,7 @@ During migration, you may need to ask Murat:
 **Source Files** (69 files):
 
 - Agent: 1
-- Workflows: 33 (8 workflows, avg 4 files each)
+- Workflows: 33 (9 workflows, avg 4 files each)
 - Knowledge Base: 35 (tea-index.csv + 34 fragments)
 
 **Repository Tooling** (~50 files - see Phase 0 for details)
@@ -3611,7 +3611,7 @@ Study these for migration patterns.
 2. **module-help.csv format** - Changed to actual BMAD schema
    - Was: `type,id,title,description,category,tags`
    - Now: `module,phase,name,code,sequence,workflow-file,command,required,agent,options,description,output-location,outputs,`
-   - Added all 8 TEA workflows with correct format
+   - Added all 9 TEA workflows with correct format
 3. **tea-index.csv format** - Changed to actual format
    - Was: `fragment_id,filename,tags,description,workflow_usage`
    - Now: `id,name,description,tags,fragment_file`
