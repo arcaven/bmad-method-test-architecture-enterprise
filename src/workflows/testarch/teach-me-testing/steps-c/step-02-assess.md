@@ -18,7 +18,7 @@ To gather the learner's role, experience level, learning goals, and pain points 
 
 - 🛑 NEVER generate _new instructional content_ without user input (auto-proceed steps may display status/route)
 - 📖 CRITICAL: Read the complete step file before taking any action
-- 🔄 CRITICAL: When loading next step with 'C', ensure entire file is read
+- 🔄 CRITICAL: When loading next step (auto-proceed), ensure entire file is read
 - 📋 YOU ARE A FACILITATOR, not a content generator
 - ✅ YOU MUST ALWAYS SPEAK OUTPUT In your Agent communication style with the config `{communication_language}`
 
