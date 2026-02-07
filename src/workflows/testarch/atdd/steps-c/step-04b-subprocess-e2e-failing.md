@@ -57,7 +57,30 @@ Story: User Registration
 - System shows error if email already exists
 ```
 
-### 2. Generate FAILING E2E Test Files
+### 2. Browser Interaction (Selector Verification)
+
+**Automation mode:** `config.browser_automation`
+
+If `auto` or `cli` (skip if CLI unavailable — fall back to MCP or generate from best practices):
+
+- Open the target page first, then verify selectors with a snapshot:
+  `playwright-cli -s=tea-atdd open <target_url>`
+  `playwright-cli -s=tea-atdd snapshot` → map refs to Playwright locators
+  - ref `{role: "button", name: "Submit"}` → `page.getByRole('button', { name: 'Submit' })`
+  - ref `{role: "textbox", name: "Email"}` → `page.getByRole('textbox', { name: 'Email' })`
+- `playwright-cli -s=tea-atdd close` when done
+
+> **Session Hygiene:** Always close sessions using `playwright-cli -s=tea-atdd close`. Do NOT use `close-all` — it kills every session on the machine and breaks parallel execution.
+
+If `mcp`:
+
+- Use MCP tools for selector verification (current behavior)
+
+If `none`:
+
+- Generate selectors from best practices without browser verification
+
+### 3. Generate FAILING E2E Test Files
 
 For each user journey, create test file in `tests/e2e/[feature].spec.ts`:
 
@@ -113,7 +136,7 @@ test.describe('[Story Name] E2E User Journey (ATDD)', () => {
 - `test.skip()` documents this is intentional (TDD red phase)
 - Once UI is implemented, remove `test.skip()` to verify green phase
 
-### 3. Track Fixture Needs
+### 4. Track Fixture Needs
 
 Identify fixtures needed for E2E tests:
 

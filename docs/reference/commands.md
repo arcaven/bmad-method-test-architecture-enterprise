@@ -50,7 +50,7 @@ Quick reference for all 9 TEA (Test Engineering Architect) workflows. For detail
 4. Test Design (60 min) - Risk assessment, coverage planning
 5. ATDD & Automate (60 min) - TDD red-green, test generation
 6. Quality & Trace (45 min) - Test review, traceability, metrics
-7. Advanced Patterns (ongoing) - 34 knowledge fragments exploration
+7. Advanced Patterns (ongoing) - 35 knowledge fragments exploration
 
 **Features:**
 

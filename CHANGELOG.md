@@ -93,7 +93,7 @@ All workflows implement the **trivariate step pattern** (Create/Edit/Validate):
 
 #### Knowledge Base System
 
-- **34 Knowledge Fragments** organized by category:
+- **35 Knowledge Fragments** organized by category:
   - Architecture & Fixtures (5 fragments)
   - Data & Setup (3 fragments)
   - Network & Reliability (5 fragments)
@@ -200,7 +200,27 @@ For users migrating from BMM-embedded TEA, see [`docs/MIGRATION.md`](docs/MIGRAT
 
 ## [Unreleased]
 
-_Future releases will be documented here._
+### Added
+
+- **Playwright CLI Integration**: New `playwright-cli.md` knowledge fragment (35 total)
+- **Browser Automation Config**: New `tea_browser_automation` config with 4 modes: `auto`, `cli`, `mcp`, `none`
+- **Auto Mode Heuristic**: Smart CLI/MCP selection per workflow action with fallback
+- **How-To Guide**: `docs/how-to/customization/configure-browser-automation.md`
+- **Knowledge Test Script**: `test:knowledge` npm script added to test chain
+
+### Changed
+
+- **Breaking**: `tea_use_mcp_enhancements` (boolean) replaced by `tea_browser_automation` (string)
+  - `true` -> `"auto"` (recommended), `false` -> `"none"`
+- All workflow preflight steps updated to read `tea_browser_automation`
+- All browser-touching workflow steps updated with CLI/MCP/auto branching
+- Subprocess context passes `browser_automation` instead of `use_mcp_enhancements`
+- Module subheader updated to reference Playwright CLI
+
+### Deprecated
+
+- `tea_use_mcp_enhancements` flag — use `tea_browser_automation` instead
+- `enable-tea-mcp-enhancements.md` guide — redirects to `configure-browser-automation.md`
 
 ---
 
