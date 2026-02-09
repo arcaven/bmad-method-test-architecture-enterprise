@@ -73,11 +73,9 @@
   "dependencies": {
     "@clack/prompts": "^0.11.0",
     "boxen": "^5.1.2",
-    "chalk": "^4.1.2",
     "cli-table3": "^0.6.5",
     "commander": "^14.0.0",
     "csv-parse": "^6.1.0",
-    "fs-extra": "^11.3.0",
     "glob": "^11.0.3",
     "ignore": "^7.0.5",
     "js-yaml": "^4.1.0",

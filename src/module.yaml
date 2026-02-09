@@ -94,3 +94,7 @@ trace_output:
   prompt: "Where should traceability reports be stored?"
   default: "traceability"
   result: "{test_artifacts}/{value}"
+
+# Directories to create during installation (declarative, no code execution)
+directories:
+  - "{test_artifacts}"

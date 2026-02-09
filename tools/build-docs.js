@@ -334,7 +334,7 @@ async function generatePromptsBundle(downloadsDir) {
   if (!fs.existsSync(srcDir)) return;
 
   const zipPath = path.join(downloadsDir, 'tea-prompts.zip');
-  await createZipArchive(srcDir, zipPath, ['docs', '.DS_Store', '__pycache__', 'node_modules', '_module-installer']);
+  await createZipArchive(srcDir, zipPath, ['docs', '.DS_Store', '__pycache__', 'node_modules']);
 
   const size = Math.floor(fs.statSync(zipPath).size / 1024);
   console.log(`    tea-prompts.zip (${size}K)`);
