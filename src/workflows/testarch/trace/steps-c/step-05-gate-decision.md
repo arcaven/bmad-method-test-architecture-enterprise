@@ -201,6 +201,30 @@ fs.writeFileSync('{outputFile}', reportContent, 'utf8');
 
 ---
 
+### 6. Save Progress
+
+**Save this step's accumulated work to `{outputFile}`.**
+
+- **If `{outputFile}` does not exist** (first save), create it using the workflow template (if available) with YAML frontmatter:
+
+  ```yaml
+  ---
+  stepsCompleted: ['step-05-gate-decision']
+  lastStep: 'step-05-gate-decision'
+  lastSaved: '{date}'
+  ---
+  ```
+
+  Then write this step's output below the frontmatter.
+
+- **If `{outputFile}` already exists**, update:
+  - Add `'step-05-gate-decision'` to `stepsCompleted` array
+  - Set `lastStep: 'step-05-gate-decision'`
+  - Set `lastSaved: '{date}'`
+  - Append this step's output to the appropriate section of the document.
+
+---
+
 ## EXIT CONDITION
 
 **WORKFLOW COMPLETE when:**
