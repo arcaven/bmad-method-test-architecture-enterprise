@@ -209,6 +209,103 @@ tea_browser_automation: 'none'
 
 ---
 
+### test_stack_type
+
+Detected or configured project stack type. Controls CI pipeline generation and framework selection.
+
+**Schema Location:** `src/module.yaml` (TEA module config)
+
+**User Config:** `_bmad/tea/config.yaml`
+
+**Type:** `string`
+
+**Default:** `"auto"`
+
+**Options:** `"auto"` | `"frontend"` | `"backend"` | `"fullstack"`
+
+**Purpose:** Determines stack-specific behavior:
+
+| Stack Type  | Behavior                                                                         |
+| ----------- | -------------------------------------------------------------------------------- |
+| `auto`      | Auto-detect from project manifests (playwright.config, jest.config, etc.)        |
+| `frontend`  | Browser-based tests (Playwright/Cypress), browser install in CI, burn-in enabled |
+| `backend`   | API/unit tests (Jest/Vitest), no browser install, burn-in skipped by default     |
+| `fullstack` | Both frontend and backend tests, full CI pipeline                                |
+
+**Affects Workflows:**
+
+- `ci` - Stack-conditional pipeline stages (browser install, burn-in)
+- `framework` - Framework scaffold adapts to stack type
+
+**Example:**
+
+```yaml
+test_stack_type: 'fullstack'
+```
+
+---
+
+### ci_platform
+
+CI/CD platform for pipeline generation.
+
+**Schema Location:** `src/module.yaml` (TEA module config)
+
+**User Config:** `_bmad/tea/config.yaml`
+
+**Type:** `string`
+
+**Default:** `"auto"`
+
+**Options:** `"auto"` | `"github-actions"` | `"gitlab-ci"` | `"jenkins"` | `"azure-devops"` | `"harness"` | `"circle-ci"`
+
+**Purpose:** Controls which CI template is used for pipeline generation.
+
+When set to `"auto"`, TEA detects the platform by scanning for existing CI configuration files (`.github/workflows/`, `.gitlab-ci.yml`, `Jenkinsfile`, `azure-pipelines.yml`, `.harness/`, `.circleci/config.yml`) and falls back to inferring from the git remote.
+
+**Affects Workflows:**
+
+- `ci` - Template selection and output path
+
+**Example:**
+
+```yaml
+ci_platform: 'github-actions'
+```
+
+---
+
+### test_framework
+
+Detected or configured test framework preference.
+
+**Schema Location:** `src/module.yaml` (TEA module config)
+
+**User Config:** `_bmad/tea/config.yaml`
+
+**Type:** `string`
+
+**Default:** `"auto"`
+
+**Options:** `"auto"` | `"playwright"` | `"cypress"` | `"jest"` | `"vitest"` | `"pytest"` | `"junit"` | `"go-test"` | `"dotnet-test"` | `"rspec"` | `"other"`
+
+**Purpose:** Controls which test framework patterns TEA uses for code generation. When set to `"auto"`, TEA detects from project configuration files and manifests. Supports both frontend (Playwright, Cypress, Jest, Vitest) and backend (pytest, JUnit, Go test, dotnet test, RSpec) frameworks.
+
+**Affects Workflows:**
+
+- `framework` - Scaffold generation
+- `ci` - Test commands in pipeline
+- `atdd` - Test code generation patterns
+- `automate` - Test code generation patterns
+
+**Example:**
+
+```yaml
+test_framework: 'playwright'
+```
+
+---
+
 ## Core BMM Configuration (Inherited by TEA)
 
 TEA also uses core BMM configuration options from `_bmad/tea/config.yaml`:

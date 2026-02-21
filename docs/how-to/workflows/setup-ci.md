@@ -48,8 +48,10 @@ TEA will ask which platform you're using.
 
 - **GitHub Actions** (most common)
 - **GitLab CI**
+- **Jenkins** — Generates `Jenkinsfile` with parallel stages, artifact archiving, and post-failure handling
+- **Azure DevOps** — Generates `azure-pipelines.yml` with matrix strategy for sharding and Azure-specific caching
+- **Harness** — Generates `.harness/pipeline.yaml` with Kubernetes-based execution and parallel steps
 - **Circle CI**
-- **Jenkins**
 - **Other** (TEA provides generic template)
 
 **Example:**

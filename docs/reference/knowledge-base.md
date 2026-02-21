@@ -41,9 +41,9 @@ User runs a TEA workflow (e.g., `test-design`)
 TEA reads `src/testarch/tea-index.csv`:
 
 ```csv
-id,name,description,tags,fragment_file
-test-quality,Test Quality,Execution limits and isolation rules,"quality,standards",knowledge/test-quality.md
-risk-governance,Risk Governance,Risk scoring and gate decisions,"risk,governance",knowledge/risk-governance.md
+id,name,description,tags,tier,fragment_file
+test-quality,Test Quality,Execution limits and isolation rules,"quality,standards",core,knowledge/test-quality.md
+risk-governance,Risk Governance,Risk scoring and gate decisions,"risk,governance",core,knowledge/risk-governance.md
 ```
 
 ### 3. Dynamic Loading
@@ -217,9 +217,9 @@ Patterns for using `@seontechnologies/playwright-utils` package (9 utilities).
 **Structure:**
 
 ```csv
-id,name,description,tags,fragment_file
-test-quality,Test Quality,Execution limits and isolation rules,"quality,standards",knowledge/test-quality.md
-risk-governance,Risk Governance,Risk scoring and gate decisions,"risk,governance",knowledge/risk-governance.md
+id,name,description,tags,tier,fragment_file
+test-quality,Test Quality,Execution limits and isolation rules,"quality,standards",core,knowledge/test-quality.md
+risk-governance,Risk Governance,Risk scoring and gate decisions,"risk,governance",core,knowledge/risk-governance.md
 ```
 
 **Columns:**
@@ -228,7 +228,16 @@ risk-governance,Risk Governance,Risk scoring and gate decisions,"risk,governance
 - `name` - Human-readable fragment name
 - `description` - What the fragment covers
 - `tags` - Searchable tags (comma-separated)
+- `tier` - Loading priority (`core` = always loaded for matching workflow, `extended` = loaded on demand, `specialized` = loaded only when the specific use case matches)
 - `fragment_file` - Relative path to fragment markdown file
+
+**Loading Profiles:**
+
+Fragments are loaded based on workflow needs and tier priority:
+
+- **Core tier**: Automatically loaded when a workflow starts (e.g., `test-quality.md` for `test-review`)
+- **Extended tier**: Loaded when the workflow context requires them (e.g., `auth-session.md` when tests involve authentication)
+- **Specialized tier**: Only loaded when the specific use case matches (e.g., contract-testing for microservices, email-auth for email flows)
 
 **Fragment Location:** `src/testarch/knowledge/` (all 35 fragments in single directory)
 

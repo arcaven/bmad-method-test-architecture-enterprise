@@ -36,9 +36,11 @@ framework
 TEA will ask about:
 
 - Your tech stack (React, Node, etc.)
-- Preferred test framework (Playwright, Cypress, Jest)
-- Testing scope (E2E, integration, unit)
-- CI/CD platform (GitHub Actions, etc.)
+- Preferred test framework:
+  - **Frontend/Fullstack**: Playwright, Cypress
+  - **Backend**: Jest, Vitest
+- Testing scope (E2E, integration, unit, API)
+- CI/CD platform (GitHub Actions, GitLab CI, Jenkins, Azure DevOps, Harness, etc.)
 
 ### 4. Review Generated Output
 

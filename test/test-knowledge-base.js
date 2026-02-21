@@ -90,9 +90,18 @@ function runTests() {
 
     assert(records.length === 35, 'tea-index.csv has 35 fragment records', `Found ${records.length}`);
 
-    const requiredFields = ['id', 'name', 'description', 'tags', 'fragment_file'];
+    const requiredFields = ['id', 'name', 'description', 'tags', 'tier', 'fragment_file'];
     const missingFields = requiredFields.filter((field) => !Object.prototype.hasOwnProperty.call(records[0] || {}, field));
     assert(missingFields.length === 0, 'tea-index.csv has required columns', missingFields.join(', '));
+
+    // Validate tier values
+    const validTiers = new Set(['core', 'extended', 'specialized']);
+    const invalidTiers = records.filter((r) => !validTiers.has(r.tier));
+    assert(
+      invalidTiers.length === 0,
+      'All fragments have valid tier values (core/extended/specialized)',
+      invalidTiers.map((r) => `${r.id}: "${r.tier}"`).join(', '),
+    );
   } catch (error) {
     assert(false, 'tea-index.csv parsed successfully', error.message);
   }
