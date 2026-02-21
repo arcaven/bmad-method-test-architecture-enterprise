@@ -68,17 +68,17 @@ npx bmad-method install
 
 ## Workflows
 
-| Trigger | Command                      | Purpose                                       |
-| ------- | ---------------------------- | --------------------------------------------- |
-| TMT     | `/bmad:tea:teach-me-testing` | Teach Me Testing (TEA Academy)                |
-| TF      | `/bmad:tea:framework`        | Scaffold Playwright/Cypress test framework    |
-| CI      | `/bmad:tea:ci`               | Set up CI/CD quality pipeline                 |
-| TD      | `/bmad:tea:test-design`      | System-level or epic-level test design        |
-| AT      | `/bmad:tea:atdd`             | Generate failing acceptance tests + checklist |
-| TA      | `/bmad:tea:automate`         | Expand test automation coverage               |
-| RV      | `/bmad:tea:test-review`      | Review test quality and score                 |
-| TR      | `/bmad:tea:trace`            | Trace requirements to tests + gate decision   |
-| NR      | `/bmad:tea:nfr-assess`       | Assess non-functional requirements            |
+| Trigger | Command                      | Purpose                                                   |
+| ------- | ---------------------------- | --------------------------------------------------------- |
+| TMT     | `/bmad:tea:teach-me-testing` | Teach Me Testing (TEA Academy)                            |
+| TF      | `/bmad:tea:framework`        | Scaffold test framework (frontend, backend, or fullstack) |
+| CI      | `/bmad:tea:ci`               | Set up CI/CD quality pipeline (multi-platform)            |
+| TD      | `/bmad:tea:test-design`      | System-level or epic-level test design                    |
+| AT      | `/bmad:tea:atdd`             | Generate failing acceptance tests + checklist             |
+| TA      | `/bmad:tea:automate`         | Expand test automation coverage                           |
+| RV      | `/bmad:tea:test-review`      | Review test quality and score                             |
+| TR      | `/bmad:tea:trace`            | Trace requirements to tests + gate decision               |
+| NR      | `/bmad:tea:nfr-assess`       | Assess non-functional requirements                        |
 
 ## Configuration
 
@@ -87,7 +87,9 @@ TEA variables are defined in `src/module.yaml` and prompted during install:
 - `test_artifacts` — base output folder for test artifacts
 - `tea_use_playwright_utils` — enable Playwright Utils integration (boolean)
 - `tea_browser_automation` — browser automation mode: auto, cli, mcp, none (string)
-- `test_framework` — default framework preference (future)
+- `test_framework` — detected or configured test framework (Playwright, Cypress, Jest, Vitest, pytest, JUnit, Go test, dotnet test, RSpec)
+- `test_stack_type` — detected or configured stack type (frontend, backend, fullstack)
+- `ci_platform` — CI platform (auto, github-actions, gitlab-ci, jenkins, azure-devops, harness, circle-ci)
 - `risk_threshold` — risk cutoff for mandatory testing (future)
 - `test_design_output`, `test_review_output`, `trace_output` — subfolders under `test_artifacts`
 
