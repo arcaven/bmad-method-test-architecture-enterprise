@@ -1,7 +1,8 @@
 /**
  * Validate TEA workflow description quote style for Gemini compatibility.
  *
- * Rules for TEA workflow YAML files under src/workflows/testarch/<workflow>/workflow.yaml:
+ * Rules for TEA workflow definitions under src/workflows/testarch/<workflow>/workflow.yaml
+ * and teach-me-testing frontmatter in src/workflows/testarch/teach-me-testing/workflow.md:
  * - `description:` must be a single-line YAML scalar on one line
  * - the raw YAML scalar must be wrapped in single quotes
  * - parsed description text must not contain single-quote characters
@@ -30,11 +31,19 @@ function validateFile(filePath, projectRoot) {
   } catch (error) {
     return [`${relativePath}: Failed to read file: ${error.message}`];
   }
+  let yamlDoc = content;
+  if (filePath.endsWith('.md')) {
+    const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---(?:\n|$)/);
+    if (!frontmatterMatch) {
+      return [`${relativePath}: Missing YAML frontmatter block`];
+    }
+    yamlDoc = frontmatterMatch[1];
+  }
   /** @type {string | undefined} */
   let parsedDescription;
 
   try {
-    const parsed = yaml.parse(content);
+    const parsed = yaml.parse(yamlDoc);
     if (!parsed || typeof parsed.description !== 'string') {
       errors.push('YAML parsed but `description` is missing or not a string');
     } else {
@@ -45,7 +54,7 @@ function validateFile(filePath, projectRoot) {
     return [`${relativePath}: ${errors[0]}`];
   }
 
-  const descriptionMatch = content.match(/^\s*description:\s*(?:'((?:''|[^'])*)'|"((?:\\"|[^"])*)")\s*(?:#.*)?$/m);
+  const descriptionMatch = yamlDoc.match(/^\s*description:\s*(?:'((?:''|[^'])*)'|"((?:\\"|[^"])*)")\s*(?:#.*)?$/m);
   if (descriptionMatch) {
     const singleQuotedInner = descriptionMatch[1];
     const doubleQuotedInner = descriptionMatch[2];
@@ -55,7 +64,7 @@ function validateFile(filePath, projectRoot) {
       errors.push('`description:` value must be wrapped in single quotes');
     }
   } else {
-    if (/^\s*description:\s*/m.test(content)) {
+    if (/^\s*description:\s*/m.test(yamlDoc)) {
       errors.push('`description:` value must be wrapped in single quotes');
     } else {
       errors.push('Missing single-line `description:` field');
@@ -71,13 +80,18 @@ function validateFile(filePath, projectRoot) {
 
 async function main(customProjectRoot) {
   const projectRoot = customProjectRoot || path.join(__dirname, '..');
-  const files = await glob('src/workflows/testarch/*/workflow.yaml', {
+  const yamlFiles = await glob('src/workflows/testarch/*/workflow.yaml', {
     cwd: projectRoot,
     absolute: true,
   });
+  const mdFiles = await glob('src/workflows/testarch/teach-me-testing/workflow.md', {
+    cwd: projectRoot,
+    absolute: true,
+  });
+  const files = [...yamlFiles, ...mdFiles];
 
   if (files.length === 0) {
-    console.error('No TEA workflow YAML files found at src/workflows/testarch/*/workflow.yaml');
+    console.error('No TEA workflow definitions found under src/workflows/testarch/');
     process.exit(1);
   }
 
