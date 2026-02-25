@@ -198,9 +198,11 @@ const opts: VerifierOptions = {
 ### Right: Separate auth into createRequestFilter
 
 ```typescript
-// ✅ Clean separation
+// ✅ Clean separation — pre-resolve async token, then use synchronous generator
+const token = await fetchAuthToken(); // Resolve async token BEFORE creating filter
+
 const requestFilter = createRequestFilter({
-  tokenGenerator: () => fetchAuthToken(),
+  tokenGenerator: () => token, // Synchronous — returns pre-fetched value
 });
 
 const opts = buildVerifierOptions({

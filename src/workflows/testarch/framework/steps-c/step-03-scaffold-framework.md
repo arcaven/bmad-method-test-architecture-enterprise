@@ -59,7 +59,7 @@ Create the idiomatic test directory for the detected language:
 - **Ruby (RSpec)**: `spec/` with `spec/unit/`, `spec/integration/`, `spec/api/`, `spec/support/`
 - **Rust**: `tests/` for integration tests, inline `#[cfg(test)]` modules for unit tests
 
-**If `tea_use_pactjs_utils` is enabled** (and `{detected_stack}` is `backend` or `fullstack`):
+**If `config.tea_use_pactjs_utils` is enabled** (and `{detected_stack}` is `backend` or `fullstack`):
 
 Create contract testing directory structure:
 
@@ -180,7 +180,7 @@ Create helpers for:
 - Auth helpers
 - Test data factories (language-idiomatic patterns)
 
-**If `tea_use_pactjs_utils` is enabled** (and `{detected_stack}` is `backend` or `fullstack`):
+**If `config.tea_use_pactjs_utils` is enabled** (and `{detected_stack}` is `backend` or `fullstack`):
 
 Create contract test samples in `pact/` directory:
 

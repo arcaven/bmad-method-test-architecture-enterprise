@@ -141,7 +141,7 @@ Enable Pact.js Utils integration for production-ready contract testing utilities
 
 **Type:** `boolean`
 
-**Default:** `false`
+**Default:** `true`
 
 **Installer Prompt:**
 
@@ -201,7 +201,7 @@ Pact MCP strategy for broker interaction during contract testing workflows.
 
 **Type:** `string`
 
-**Default:** `"none"`
+**Default:** `"mcp"`
 
 **Options:** `"mcp"` | `"none"`
 

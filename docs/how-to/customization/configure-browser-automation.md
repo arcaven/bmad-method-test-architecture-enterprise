@@ -62,7 +62,7 @@ Add these MCP server entries to your tool's configuration file:
 }
 ```
 
-The `smartbear` server is optional — only needed if you use the [Pact MCP integration](/docs/how-to/customization/configure-browser-automation.md#related) for contract testing workflows. See the [pact-mcp knowledge fragment](../../src/testarch/knowledge/pact-mcp.md) for details.
+The `smartbear` server is optional — only needed if you use the [Pact MCP integration](/docs/how-to/customization/configure-browser-automation.md#related) for contract testing workflows. See the [pact-mcp knowledge fragment](/docs/reference/knowledge-base.md#pact-contract-testing-integration) for details.
 
 #### Where to put the config
 
