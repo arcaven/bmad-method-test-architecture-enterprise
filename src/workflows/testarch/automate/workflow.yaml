@@ -1,5 +1,6 @@
 # Test Architect workflow: automate
 name: testarch-automate
+# prettier-ignore
 description: 'Expand test automation coverage for codebase. Use when the user says "lets expand test coverage" or "I want to automate tests"'
 
 # Critical variables from config

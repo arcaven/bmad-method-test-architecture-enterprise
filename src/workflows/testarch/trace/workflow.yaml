@@ -1,5 +1,6 @@
 # Test Architect workflow: trace (enhanced with gate decision)
 name: testarch-trace
+# prettier-ignore
 description: 'Generate traceability matrix and quality gate decision. Use when the user says "lets create traceability matrix" or "I want to analyze test coverage"'
 
 # Critical variables from config
