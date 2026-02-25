@@ -24,7 +24,12 @@ const yaml = require('yaml');
 function validateFile(filePath, projectRoot) {
   const errors = [];
   const relativePath = path.relative(projectRoot, filePath).replaceAll('\\', '/');
-  const content = fs.readFileSync(filePath, 'utf8');
+  let content;
+  try {
+    content = fs.readFileSync(filePath, 'utf8');
+  } catch (error) {
+    return [`${relativePath}: Failed to read file: ${error.message}`];
+  }
   /** @type {string | undefined} */
   let parsedDescription;
 
@@ -40,15 +45,21 @@ function validateFile(filePath, projectRoot) {
     return [`${relativePath}: ${errors[0]}`];
   }
 
-  const descriptionMatch = content.match(/^description:\s*(.+)\s*$/m);
+  const descriptionMatch = content.match(/^\s*description:\s*(?:'((?:''|[^'])*)'|"((?:\\"|[^"])*)")\s*(?:#.*)?$/m);
   if (descriptionMatch) {
-    const rawValue = descriptionMatch[1];
+    const singleQuotedInner = descriptionMatch[1];
+    const doubleQuotedInner = descriptionMatch[2];
+    const quote = singleQuotedInner === undefined ? '"' : "'";
 
-    if (!(rawValue.startsWith("'") && rawValue.endsWith("'"))) {
+    if (quote !== "'") {
       errors.push('`description:` value must be wrapped in single quotes');
     }
   } else {
-    errors.push('Missing single-line `description:` field');
+    if (/^\s*description:\s*/m.test(content)) {
+      errors.push('`description:` value must be wrapped in single quotes');
+    } else {
+      errors.push('Missing single-line `description:` field');
+    }
   }
 
   if (typeof parsedDescription === 'string' && parsedDescription.includes("'")) {
