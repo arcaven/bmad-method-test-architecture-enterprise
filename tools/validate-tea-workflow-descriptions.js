@@ -4,7 +4,8 @@
  * Rules for TEA workflow YAML files under src/workflows/testarch/<workflow>/workflow.yaml:
  * - `description:` must be a single-line YAML scalar on one line
  * - the raw YAML scalar must be wrapped in single quotes
- * - quoted examples inside the description must use double quotes (no `'example'` substrings)
+ * - parsed description text must not contain single-quote characters
+ *   (use double quotes for examples, e.g. "quote here")
  *
  * Usage: node tools/validate-tea-workflow-descriptions.js [project_root]
  * Exit codes: 0 = success, 1 = validation failures
@@ -24,11 +25,15 @@ function validateFile(filePath, projectRoot) {
   const errors = [];
   const relativePath = path.relative(projectRoot, filePath).replaceAll('\\', '/');
   const content = fs.readFileSync(filePath, 'utf8');
+  /** @type {string | undefined} */
+  let parsedDescription;
 
   try {
     const parsed = yaml.parse(content);
     if (!parsed || typeof parsed.description !== 'string') {
       errors.push('YAML parsed but `description` is missing or not a string');
+    } else {
+      parsedDescription = parsed.description;
     }
   } catch (error) {
     errors.push(`YAML parse error: ${error.message}`);
@@ -39,17 +44,15 @@ function validateFile(filePath, projectRoot) {
   if (descriptionMatch) {
     const rawValue = descriptionMatch[1];
 
-    if (rawValue.startsWith("'") && rawValue.endsWith("'")) {
-      const inner = rawValue.slice(1, -1);
-
-      if (/'[^']+'/.test(inner)) {
-        errors.push('Found single-quoted substring inside description; use double quotes for examples');
-      }
-    } else {
+    if (!(rawValue.startsWith("'") && rawValue.endsWith("'"))) {
       errors.push('`description:` value must be wrapped in single quotes');
     }
   } else {
     errors.push('Missing single-line `description:` field');
+  }
+
+  if (typeof parsedDescription === 'string' && parsedDescription.includes("'")) {
+    errors.push('Parsed `description` contains a single quote character; use double quotes for examples');
   }
 
   return errors.map((error) => `${relativePath}: ${error}`);
