@@ -84,11 +84,11 @@ Instead of inferring behavior from documentation alone, these interfaces allow a
 
 The three components form a quality pipeline:
 
-| Stage        | Component                                  | Action                                                      |
-| ------------ | ------------------------------------------ | ----------------------------------------------------------- |
-| Standards    | Playwright-Utils + pactjs-utils            | Provides production-ready patterns for UI and contract test |
-| Process      | TEA Workflows                              | Enforces systematic test planning and review                |
-| Verification | Playwright CLI + Playwright MCP + Pact MCP | Validates tests and contracts against live systems          |
+| Stage        | Component                                  | Action                                                       |
+| ------------ | ------------------------------------------ | ------------------------------------------------------------ |
+| Standards    | Playwright-Utils + pactjs-utils            | Provides production-ready patterns for UI and contract tests |
+| Process      | TEA Workflows                              | Enforces systematic test planning and review                 |
+| Verification | Playwright CLI + Playwright MCP + Pact MCP | Validates tests and contracts against live systems           |
 
 **Before (AI-only):** 20 tests with redundant coverage, incorrect assertions, and flaky behavior.
 
