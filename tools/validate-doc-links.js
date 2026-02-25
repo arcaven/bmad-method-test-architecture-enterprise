@@ -279,7 +279,7 @@ function applyFixes(content, issues) {
     if (issue.status === 'auto-fixable' && issue.suggestedFix) {
       const oldLink = `[${issue.linkText}](${issue.href})`;
       const newLink = `[${issue.linkText}](${issue.suggestedFix})`;
-      updated = updated.replace(oldLink, newLink);
+      updated = updated.replaceAll(oldLink, newLink);
     }
   }
 

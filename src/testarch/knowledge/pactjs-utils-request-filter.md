@@ -198,20 +198,27 @@ const opts: VerifierOptions = {
 ### Right: Separate auth into createRequestFilter
 
 ```typescript
-// ✅ Clean separation
-const requestFilter = createRequestFilter({
-  tokenGenerator: () => fetchAuthToken(),
-});
+// ✅ Clean separation — async setup wraps token fetch (CommonJS-safe)
+async function setupVerifierOptions() {
+  const token = await fetchAuthToken(); // Resolve async token BEFORE creating filter
 
-const opts = buildVerifierOptions({
-  provider: 'my-api',
-  port: '3001',
-  includeMainAndDeployed: true,
-  requestFilter,
-  stateHandlers: {
-    /* ... */
-  },
-});
+  const requestFilter = createRequestFilter({
+    tokenGenerator: () => token, // Synchronous — returns pre-fetched value
+  });
+
+  return buildVerifierOptions({
+    provider: 'my-api',
+    port: '3001',
+    includeMainAndDeployed: true,
+    requestFilter,
+    stateHandlers: {
+      /* ... */
+    },
+  });
+}
+
+// In tests/hooks, callers can await setupVerifierOptions():
+// const opts = await setupVerifierOptions();
 ```
 
 _Source: @seontechnologies/pactjs-utils request-filter module, pact-js-example-provider verification tests_

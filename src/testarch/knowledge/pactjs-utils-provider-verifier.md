@@ -265,8 +265,8 @@ const opts: VerifierOptions = {
   providerVersionBranch: process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME,
   consumerVersionSelectors:
     process.env.PACT_BREAKING_CHANGE === 'true'
-      ? [{ mainBranch: true }, { deployedOrReleased: true }]
-      : [{ mainBranch: true }, { deployedOrReleased: true }, { matchingBranch: true }],
+      ? [{ matchingBranch: true }]
+      : [{ matchingBranch: true }, { mainBranch: true }, { deployedOrReleased: true }],
   pactUrls: process.env.PACT_PAYLOAD_URL ? [process.env.PACT_PAYLOAD_URL] : undefined,
   stateHandlers: {
     /* ... */

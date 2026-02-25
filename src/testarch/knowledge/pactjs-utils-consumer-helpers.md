@@ -154,6 +154,7 @@ await provider
 - **Null handling**: `null` becomes `"null"` string in JsonMap (Pact requirement)
 - **Date handling**: Date objects become ISO 8601 strings
 - **No nested objects in JsonMap**: Nested objects are JSON-stringified — provider state handlers must parse them
+- **Array serialization is lossy**: Arrays are converted via `String()` (e.g., `[1,2,3]` → `"1,2,3"`) — prefer passing arrays as JSON-stringified objects for round-trip safety
 - **Message pacts**: Works identically with `MessageConsumerPact` — same `.given()` API
 
 ## Related Fragments

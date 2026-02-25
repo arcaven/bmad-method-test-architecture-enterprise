@@ -593,7 +593,7 @@ If the BMAD installer can run but cannot fetch the Test Architect module from Gi
 
 **Causes**:
 
-- All 40 fragments loading at once
+- Up to 40 fragments loading at once (depends on workflow and enabled integrations)
 - Large fragment file sizes
 - Disk I/O bottleneck
 
