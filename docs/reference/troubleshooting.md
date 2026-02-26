@@ -536,8 +536,9 @@ If the BMAD installer can run but cannot fetch the Test Architect module from Gi
    {
      "mcpServers": {
        "playwright": {
+         "type": "stdio",
          "command": "npx",
-         "args": ["@playwright/mcp@latest"]
+         "args": ["-y", "@playwright/mcp@latest"]
        }
      }
    }
