@@ -234,7 +234,7 @@ post-install-notes:
     mcp: |
       SmartBear MCP Setup (PactFlow integration):
         Install: npm install -g @smartbear/mcp
-        Claude Code: claude mcp add --transport stdio smartbear -- npx -y @smartbear/mcp@latest
+        Claude Code (global): claude mcp add-json -s user smartbear '{"type":"stdio","command":"npx","args":["-y","@smartbear/mcp@latest"],"env":{"PACT_BROKER_BASE_URL":"https://{tenant}.pactflow.io","PACT_BROKER_TOKEN":"<your-api-token>"}}'
         Required env vars:
           PACT_BROKER_BASE_URL=https://{tenant}.pactflow.io
           PACT_BROKER_TOKEN=<your-api-token>

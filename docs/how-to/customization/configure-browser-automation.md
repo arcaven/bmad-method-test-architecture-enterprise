@@ -43,14 +43,17 @@ Add these MCP server entries to your tool's configuration file:
 {
   "mcpServers": {
     "playwright": {
+      "type": "stdio",
       "command": "npx",
-      "args": ["@playwright/mcp@latest"]
+      "args": ["-y", "@playwright/mcp@latest"]
     },
     "playwright-test": {
+      "type": "stdio",
       "command": "npx",
       "args": ["playwright", "run-test-mcp-server"]
     },
     "smartbear": {
+      "type": "stdio",
       "command": "npx",
       "args": ["-y", "@smartbear/mcp@latest"],
       "env": {
@@ -66,31 +69,32 @@ The `smartbear` server is optional — only needed if you use the [Pact MCP inte
 
 #### Where to put the config
 
-| Tool        | Config File                           | Format                 |
-| ----------- | ------------------------------------- | ---------------------- |
-| Claude Code | `~/.claude.json`                      | JSON (`mcpServers`)    |
-| Codex       | `~/.codex/config.toml`                | TOML (`[mcp_servers]`) |
-| Gemini CLI  | `~/.gemini/settings.json`             | JSON (`mcpServers`)    |
-| Cursor      | `~/.cursor/mcp.json`                  | JSON (`mcpServers`)    |
-| Windsurf    | `~/.codeium/windsurf/mcp_config.json` | JSON (`mcpServers`)    |
+| Tool              | Config File                           | Format                 |
+| ----------------- | ------------------------------------- | ---------------------- |
+| Claude Code       | `~/.claude.json`                      | JSON (`mcpServers`)    |
+| Codex             | `~/.codex/config.toml`                | TOML (`[mcp_servers]`) |
+| Gemini CLI        | `~/.gemini/settings.json`             | JSON (`mcpServers`)    |
+| Cursor            | `~/.cursor/mcp.json`                  | JSON (`mcpServers`)    |
+| Windsurf          | `~/.codeium/windsurf/mcp_config.json` | JSON (`mcpServers`)    |
+| VS Code (Copilot) | `.vscode/mcp.json`                    | JSON (`servers`)       |
+
+> **Claude Code tip**: Prefer the `claude mcp add` CLI over manual JSON editing — it sets the correct `type` field and validates the config. Use `-s user` for global (all projects) or omit for per-project (default).
 
 #### CLI shortcuts
 
 Claude Code and Codex support adding MCP servers from the command line:
 
 ```bash
-# Claude Code — Playwright
-claude mcp add playwright -- npx @playwright/mcp@latest
-claude mcp add playwright-test -- npx playwright run-test-mcp-server
+# Claude Code — Playwright (use -s user for global, omit for per-project)
+claude mcp add -s user --transport stdio playwright -- npx -y @playwright/mcp@latest
+claude mcp add -s user --transport stdio playwright-test -- npx playwright run-test-mcp-server
 
-# Claude Code — SmartBear (Pact)
-claude mcp add smartbear --scope user \
-  -e PACT_BROKER_BASE_URL=https://{tenant}.pactflow.io \
-  -e PACT_BROKER_TOKEN=<your-token> \
-  -- npx -y @smartbear/mcp@latest
+# Claude Code — SmartBear (Pact) — use add-json for servers with env vars
+claude mcp add-json -s user smartbear \
+  '{"type":"stdio","command":"npx","args":["-y","@smartbear/mcp@latest"],"env":{"PACT_BROKER_BASE_URL":"https://{tenant}.pactflow.io","PACT_BROKER_TOKEN":"<your-token>"}}'
 
 # Codex — Playwright
-codex mcp add playwright -- npx @playwright/mcp@latest
+codex mcp add playwright -- npx -y @playwright/mcp@latest
 codex mcp add playwright-test -- npx playwright run-test-mcp-server
 
 # Codex — SmartBear (Pact)
@@ -104,7 +108,7 @@ Codex uses TOML instead of JSON. If editing the config file manually:
 ```toml
 [mcp_servers.playwright]
 command = "npx"
-args = ["@playwright/mcp@latest"]
+args = ["-y", "@playwright/mcp@latest"]
 
 [mcp_servers.playwright-test]
 command = "npx"

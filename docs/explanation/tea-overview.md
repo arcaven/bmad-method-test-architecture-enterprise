@@ -396,7 +396,7 @@ Optional MCP integration for design-time broker interaction in contract testing 
 **Setup:**
 
 - Install: `npm install -g @smartbear/mcp` (or use `npx -y @smartbear/mcp@latest`)
-- Claude Code example: `claude mcp add --transport stdio smartbear -- npx -y @smartbear/mcp@latest`
+- Claude Code (global): `claude mcp add-json -s user smartbear '{"type":"stdio","command":"npx","args":["-y","@smartbear/mcp@latest"],"env":{"PACT_BROKER_BASE_URL":"...","PACT_BROKER_TOKEN":"..."}}'`
 - Required broker env vars: `PACT_BROKER_BASE_URL` and token/basic-auth credentials
 
 **Which workflows benefit:**
