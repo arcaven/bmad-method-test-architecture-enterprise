@@ -60,7 +60,7 @@ flowchart LR
 4. **Step-by-step execution** — Only the current step file is in context (just-in-time loading). Each step explicitly names the next one (`nextStepFile: './step-02-...'`). The LLM reads, executes, saves output, then loads the next step. No future steps are ever preloaded.
 5. **Knowledge injection** — Step-01 reads `tea-index.csv` and selectively loads fragments by **tier** (core = always, extended = on-demand, specialized = only when relevant) and **config flags** (e.g., `tea_use_pactjs_utils`). This is deliberate context engineering: a backend project loads ~1,800 lines of fragments; a fullstack project loads ~4,500 lines. Conditional loading cuts context usage by 40-50%.
 6. **Templates** — When a step produces output (e.g., a traceability matrix or test review report), it reads the `*-template.md` file and fills in the `{PLACEHOLDER}` values with computed results. The template provides consistent structure; the step provides the content.
-7. **Subprocess isolation** — Heavy workflows (e.g., `automate`) spawn parallel subprocesses that each run in an isolated context. Subprocesses write structured JSON to temp files. An aggregation step reads the JSON outputs — only the results enter the main context, not the full subprocess history.
+7. **Subagent isolation** — Heavy workflows (e.g., `automate`) spawn parallel subagents that each run in an isolated context. Subagents write structured JSON to temp files. An aggregation step reads the JSON outputs — only the results enter the main context, not the full subagent history.
 8. **Progress tracking** — Each step appends to an output file with YAML frontmatter (`stepsCompleted`, `lastStep`, `lastSaved`). Resume mode reads this frontmatter and routes to the next incomplete step.
 9. **Validation** — The `steps-v/` mode reads `checklist.md` and evaluates the workflow's output against its criteria, producing a pass/fail validation report.
 
@@ -73,7 +73,7 @@ BMad workflows and Claude Code Skills solve different problems at different scal
 | **Execution**     | Single prompt, one shot     | 5-9 sequential steps with explicit handoffs                                  |
 | **State**         | Stateless                   | YAML frontmatter tracking (`stepsCompleted`, `lastStep`) with resume         |
 | **Knowledge**     | Whatever fits in one prompt | Tiered index (40 fragments), conditional loading by config + stack detection |
-| **Context mgmt**  | Everything in one shot      | Just-in-time step loading, subprocess isolation (separate contexts)          |
+| **Context mgmt**  | Everything in one shot      | Just-in-time step loading, subagent isolation (separate contexts)            |
 | **Output**        | Freeform                    | Templates with `{PLACEHOLDER}` vars filled by specific steps                 |
 | **Validation**    | None                        | Dedicated mode (`steps-v/`) evaluating against checklists                    |
 | **Configuration** | None                        | `module.yaml` with prompted config flags driving conditional behavior        |

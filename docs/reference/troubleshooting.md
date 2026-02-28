@@ -241,24 +241,25 @@ If the BMAD installer can run but cannot fetch the Test Architect module from Gi
    # Look for: "✓ Test design complete" or similar
    ```
 
-### Subprocess Fails to Execute
+### Subagent Fails to Execute
 
-**Symptom**: Workflow reports subprocess failure, e.g., "API test generation subprocess failed".
+**Symptom**: Workflow reports subagent failure, e.g., "API test generation subagent failed".
 
 **Causes**:
 
-- Subprocess step file missing
+- Subagent step file missing
 - Temp file write permissions issue
-- Invalid subprocess output format
+- Invalid subagent output format
+- Requested execution mode not supported by runtime
 
 **Solutions**:
 
-1. Verify subprocess step files exist:
+1. Verify subagent step files exist:
 
    ```bash
    # For automate workflow
    ls -la _bmad/tea/workflows/testarch/automate/steps-c/step-03*.md
-   # Should show: step-03a-subprocess-api.md, step-03b-subprocess-e2e.md, step-03c-aggregate.md
+   # Should show: step-03a-*.md, step-03b-*.md, step-03c-aggregate.md
    ```
 
 2. Check temp file directory permissions:
@@ -268,9 +269,23 @@ If the BMAD installer can run but cannot fetch the Test Architect module from Gi
    # Should show temp files if workflow ran
    ```
 
-3. Look for error messages in subprocess output:
+3. Look for error messages in subagent output:
+
    ```
    # Check Claude's response for specific error details
+   ```
+
+4. Check TEA orchestration mode in config:
+
+   ```bash
+   grep -E "tea_execution_mode|tea_capability_probe" _bmad/tea/config.yaml
+   ```
+
+5. If runtime does not support parallel worker launch, use deterministic fallback:
+
+   ```yaml
+   tea_execution_mode: 'sequential'
+   tea_capability_probe: true
    ```
 
 ### Knowledge Fragments Not Loading
@@ -566,7 +581,7 @@ If the BMAD installer can run but cannot fetch the Test Architect module from Gi
 
 - Large codebase exploration
 - Many test files to review
-- Subprocess execution overhead
+- Subagent execution overhead
 - Network latency (if using web-based Claude)
 
 **Solutions**:
@@ -702,7 +717,7 @@ Check these first:
 
 **Fix**: Validate YAML syntax: `node tools/validate-agent-schema.js`
 
-### "Subprocess execution timeout"
+### "Subagent execution timeout"
 
 **Fix**: Large codebases may timeout. Scope workflow to smaller directory.
 

@@ -13,7 +13,9 @@ default_selected: false
 ## project_root
 
 # TEA-specific configuration variables
-# IMPORTANT: tea_use_playwright_utils, tea_use_pactjs_utils, tea_pact_mcp, tea_browser_automation, test_stack_type, ci_platform, and test_framework are ACTIVELY USED in workflows
+# IMPORTANT: tea_use_playwright_utils, tea_use_pactjs_utils, tea_pact_mcp, tea_browser_automation,
+# tea_execution_mode, tea_capability_probe, test_stack_type, ci_platform,
+# and test_framework are ACTIVELY USED in workflows
 # Other variables are FUTURE placeholders for Phase 10 enhancements
 
 test_artifacts:
@@ -74,6 +76,35 @@ tea_browser_automation:
       label: "MCP only - Playwright MCP servers"
     - value: "none"
       label: "None - No live browser interaction"
+
+# ✅ ACTIVELY USED - Orchestration strategy for workflow execution
+# Controls whether TEA runs orchestration steps sequentially, with subagents, or with agent teams
+# CRITICAL: Must be a string value: "auto" | "subagent" | "agent-team" | "sequential"
+tea_execution_mode:
+  prompt: "How should TEA orchestrate multi-step generation and evaluation?"
+  default: "auto"
+  result: "{value}"
+  single-select:
+    - value: "auto"
+      label: "Auto - Probe capabilities and pick best mode (Recommended)"
+    - value: "subagent"
+      label: "Subagent workers - Isolated parallel workers only"
+    - value: "agent-team"
+      label: "Agent Team - Team/delegate mode when available"
+    - value: "sequential"
+      label: "Sequential - Deterministic single-threaded execution"
+
+# ✅ ACTIVELY USED - Probe runtime capabilities before selecting execution mode
+# When true, TEA checks whether subagent/agent-team execution is actually supported and falls back safely.
+tea_capability_probe:
+  prompt: "Probe runtime capabilities before selecting execution mode?"
+  default: true
+  result: "{value}"
+  single-select:
+    - value: true
+      label: "Yes - Probe and fallback automatically (Recommended)"
+    - value: false
+      label: "No - Honor configured mode strictly"
 
 # ✅ ACTIVELY USED - Stack type detection for multi-framework support
 test_stack_type:
@@ -217,6 +248,28 @@ post-install-notes:
         2. playwright-test — npx playwright run-test-mcp-server
         Configure both MCP servers in your IDE settings.
         See: https://github.com/microsoft/playwright-mcp
+
+  tea_execution_mode:
+    auto: |
+      Execution Mode (Auto):
+        TEA probes runtime capabilities at orchestration steps.
+        Selection order:
+          1. agent-team (if supported)
+          2. subagent (if supported)
+          3. sequential (fallback)
+        This keeps behavior portable across Codex, Claude Code, and other runtimes.
+    subagent: |
+      Execution Mode (Subagent):
+        TEA will prefer isolated subagent workers for parallel orchestration.
+        If capability probing is enabled and subagent support is unavailable, TEA falls back safely.
+    agent-team: |
+      Execution Mode (Agent Team):
+        TEA will prefer team/delegation orchestration when runtime supports it.
+        If capability probing is enabled and agent-team support is unavailable, TEA falls back safely.
+    sequential: |
+      Execution Mode (Sequential):
+        TEA disables parallel orchestration and runs worker steps one by one.
+        Useful for deterministic debugging and constrained environments.
 
   tea_use_pactjs_utils:
     true: |

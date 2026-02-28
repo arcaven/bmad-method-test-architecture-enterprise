@@ -138,8 +138,8 @@ export default defineConfig({
             { label: 'Network-First Patterns', slug: 'explanation/network-first-patterns' },
             { label: 'Fixture Architecture', slug: 'explanation/fixture-architecture' },
             { label: 'Step-File Architecture', slug: 'explanation/step-file-architecture' },
-            { label: 'Subprocess Architecture', slug: 'explanation/subprocess-architecture' },
-            { label: 'Subprocess Implementation Status', slug: 'explanation/subprocess-implementation-status' },
+            { label: 'Subagent Architecture', slug: 'explanation/subagent-architecture' },
+            { label: 'Subagent Implementation Status', slug: 'explanation/subagent-implementation-status' },
           ],
         },
         {
