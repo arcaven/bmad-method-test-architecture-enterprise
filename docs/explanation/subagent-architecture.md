@@ -1,580 +1,189 @@
 ---
 title: Subagent Architecture
-description: Parallel execution pattern for TEA workflows
+description: How TEA uses subagents and agent teams across workflows
 ---
 
-# Subagent Architecture for TEA Workflows
+# Subagents and Agent Teams in TEA
 
-**Version**: 1.0
-**Date**: 2026-01-27
-**Status**: Implementation Guide
+This guide explains how TEA orchestrates work when a workflow can split into
+worker steps (independent workers or dependency-ordered work units).
 
----
+## Scope
 
-## Overview
+This applies to these workflows:
 
-TEA workflows use **subagent patterns** to parallelize independent tasks, improving performance and maintaining clean separation of concerns. Five workflows benefit from this architecture:
+- `automate`
+- `atdd`
+- `test-review`
+- `nfr-assess`
+- `framework`
+- `ci`
+- `test-design`
+- `trace`
 
-1. **automate** - Parallel test generation (API + E2E)
-2. **atdd** - Parallel failing test generation (API + E2E)
-3. **test-review** - Parallel quality dimension checks
-4. **nfr-assess** - Parallel NFR domain assessments
-5. **trace** - Two-phase workflow separation
-
----
-
-## Core Subagent Pattern
-
-### Architecture
-
-```
-Main Workflow (Orchestrator)
-├── Step 1: Setup & Context Loading
-├── Step 2: Launch Subagents
-│   ├── Subagent A → temp-file-a.json
-│   ├── Subagent B → temp-file-b.json
-│   ├── Subagent C → temp-file-c.json
-│   └── (All run in parallel, isolated 200k containers)
-└── Step 3: Aggregate Results
-    ├── Read all temp files
-    ├── Merge/synthesize outputs
-    └── Generate final artifact
-```
-
-### Key Principles
-
-1. **Independence**: Each subagent is completely independent (no shared state)
-2. **Isolation**: Each subagent runs in separate 200k context container
-3. **Output Format**: All subagents output structured JSON to temp files
-4. **Aggregation**: Main workflow reads temp files and synthesizes final output
-5. **Error Handling**: Each subagent reports success/failure in JSON output
+It does not apply to `teach-me-testing`.
 
 ---
 
-## Workflow-Specific Designs
+## Core Model
 
-### 1. automate - Parallel Test Generation
+TEA orchestration has three parts:
 
-**Goal**: Generate API and E2E tests in parallel
+1. Resolve execution mode (`tea_execution_mode` + optional runtime probe)
+2. Dispatch worker steps (independent or dependency-ordered, depending on workflow)
+3. Aggregate worker outputs into one deterministic final artifact
 
-#### Architecture
-
-```
-automate workflow
-├── Step 1: Analyze codebase & identify features
-├── Step 2: Load relevant knowledge fragments
-├── Step 3: Launch parallel test generation
-│   ├── Subagent A: Generate API tests → /tmp/api-tests-{timestamp}.json
-│   └── Subagent B: Generate E2E tests → /tmp/e2e-tests-{timestamp}.json
-├── Step 4: Aggregate tests
-│   ├── Read API tests JSON
-│   ├── Read E2E tests JSON
-│   └── Generate fixtures (if needed)
-├── Step 5: Verify all tests pass
-└── Step 6: Generate DoD summary
-```
-
-#### Subagent A: API Tests
-
-**Input** (passed via temp file):
-
-```json
-{
-  "features": ["feature1", "feature2"],
-  "knowledge_fragments": ["api-request", "data-factories"],
-  "config": {
-    "use_playwright_utils": true,
-    "framework": "playwright"
-  }
-}
-```
-
-**Output** (`/tmp/api-tests-{timestamp}.json`):
-
-```json
-{
-  "success": true,
-  "tests": [
-    {
-      "file": "tests/api/feature1.spec.ts",
-      "content": "import { test, expect } from '@playwright/test';\n...",
-      "description": "API tests for feature1"
-    }
-  ],
-  "fixtures": [],
-  "summary": "Generated 5 API test cases"
-}
-```
-
-#### Subagent B: E2E Tests
-
-**Input** (passed via temp file):
-
-```json
-{
-  "features": ["feature1", "feature2"],
-  "knowledge_fragments": ["fixture-architecture", "network-first"],
-  "config": {
-    "use_playwright_utils": true,
-    "framework": "playwright"
-  }
-}
-```
-
-**Output** (`/tmp/e2e-tests-{timestamp}.json`):
-
-```json
-{
-  "success": true,
-  "tests": [
-    {
-      "file": "tests/e2e/feature1.spec.ts",
-      "content": "import { test, expect } from '@playwright/test';\n...",
-      "description": "E2E tests for feature1 user journey"
-    }
-  ],
-  "fixtures": ["authFixture", "dataFixture"],
-  "summary": "Generated 8 E2E test cases"
-}
-```
-
-#### Step 4: Aggregation Logic
-
-```javascript
-// Read both subagent outputs
-const apiTests = JSON.parse(fs.readFileSync('/tmp/api-tests-{timestamp}.json', 'utf8'));
-const e2eTests = JSON.parse(fs.readFileSync('/tmp/e2e-tests-{timestamp}.json', 'utf8'));
-
-// Merge test suites
-const allTests = [...apiTests.tests, ...e2eTests.tests];
-
-// Collect unique fixtures
-const allFixtures = [...new Set([...apiTests.fixtures, ...e2eTests.fixtures])];
-
-// Generate combined DoD summary
-const summary = {
-  total_tests: allTests.length,
-  api_tests: apiTests.tests.length,
-  e2e_tests: e2eTests.tests.length,
-  fixtures: allFixtures,
-  status: apiTests.success && e2eTests.success ? 'PASS' : 'FAIL',
-};
-```
+Workers are isolated and exchange data through structured outputs that the
+aggregation step validates.
 
 ---
 
-### 2. atdd - Parallel Failing Test Generation
+## Execution Modes
 
-**Goal**: Generate failing API and E2E tests in parallel (TDD red phase)
+TEA supports four modes:
 
-#### Architecture
+- `auto`
+- `agent-team`
+- `subagent`
+- `sequential`
 
-```
-atdd workflow
-├── Step 1: Load story acceptance criteria
-├── Step 2: Load relevant knowledge fragments
-├── Step 3: Launch parallel test generation
-│   ├── Subagent A: Generate failing API tests → /tmp/atdd-api-{timestamp}.json
-│   └── Subagent B: Generate failing E2E tests → /tmp/atdd-e2e-{timestamp}.json
-├── Step 4: Aggregate tests
-├── Step 5: Verify tests fail (red phase)
-└── Step 6: Output ATDD checklist
-```
+### What Each Mode Means
 
-**Key Difference from automate**: Tests must be written to **fail** before implementation exists.
+- `auto`: Choose the best supported mode at runtime.
+- `agent-team`: Prefer team/delegation orchestration when runtime supports it.
+- `subagent`: Prefer isolated worker orchestration when runtime supports it.
+- `sequential`: Run worker steps one-by-one.
 
-#### Subagent Outputs
+### Fallback Behavior
 
-Same JSON structure as automate, but:
+When `tea_capability_probe: true`, TEA can fallback safely:
 
-- Tests include failing assertions (e.g., `expect(response.status).toBe(200)` when endpoint doesn't exist yet)
-- Summary includes: `"expected_to_fail": true`
+- `auto` falls back in order: `agent-team` -> `subagent` -> `sequential`
+- explicit `agent-team` or `subagent` falls back to next supported mode
+- `sequential` always stays sequential
 
----
+When `tea_capability_probe: false`, TEA honors the requested mode strictly and
+fails if runtime cannot execute it.
 
-### 3. test-review - Parallel Quality Dimension Checks
+### Runtime Scheduling
 
-**Goal**: Run independent quality checks in parallel, aggregate into 0-100 score
-
-#### Architecture
-
-```
-test-review workflow
-├── Step 1: Load test files & context
-├── Step 2: Launch parallel quality checks
-│   ├── Subagent A: Determinism check → /tmp/determinism-{timestamp}.json
-│   ├── Subagent B: Isolation check → /tmp/isolation-{timestamp}.json
-│   ├── Subagent C: Maintainability check → /tmp/maintainability-{timestamp}.json
-│   ├── Subagent D: Coverage check → /tmp/coverage-{timestamp}.json
-│   └── Subagent E: Performance check → /tmp/performance-{timestamp}.json
-└── Step 3: Aggregate findings
-    ├── Calculate weighted score (0-100)
-    ├── Synthesize violations
-    └── Generate review report with suggestions
-```
-
-#### Subagent Output Format
-
-Each quality dimension subagent outputs:
-
-```json
-{
-  "dimension": "determinism",
-  "score": 85,
-  "max_score": 100,
-  "violations": [
-    {
-      "file": "tests/api/user.spec.ts",
-      "line": 42,
-      "severity": "HIGH",
-      "description": "Test uses Math.random() - non-deterministic",
-      "suggestion": "Use faker with fixed seed"
-    }
-  ],
-  "passed_checks": 12,
-  "failed_checks": 3,
-  "summary": "Tests are mostly deterministic with 3 violations"
-}
-```
-
-#### Step 3: Aggregation Logic
-
-```javascript
-// Read all dimension outputs
-const dimensions = ['determinism', 'isolation', 'maintainability', 'coverage', 'performance'];
-const results = dimensions.map((d) => JSON.parse(fs.readFileSync(`/tmp/${d}-{timestamp}.json`, 'utf8')));
-
-// Calculate weighted score
-const weights = { determinism: 0.25, isolation: 0.25, maintainability: 0.2, coverage: 0.15, performance: 0.15 };
-const totalScore = results.reduce((sum, r) => sum + r.score * weights[r.dimension], 0);
-
-// Aggregate violations by severity
-const allViolations = results.flatMap((r) => r.violations);
-const highSeverity = allViolations.filter((v) => v.severity === 'HIGH');
-const mediumSeverity = allViolations.filter((v) => v.severity === 'MEDIUM');
-const lowSeverity = allViolations.filter((v) => v.severity === 'LOW');
-
-// Generate final report
-const report = {
-  overall_score: Math.round(totalScore),
-  grade: getGrade(totalScore), // A/B/C/D/F
-  dimensions: results,
-  violations_summary: {
-    high: highSeverity.length,
-    medium: mediumSeverity.length,
-    low: lowSeverity.length,
-    total: allViolations.length,
-  },
-  top_suggestions: prioritizeSuggestions(allViolations),
-};
-```
+In `agent-team` and `subagent` modes, runtime decides concurrency and timing.
+TEA does not impose its own parallel worker limit.
 
 ---
 
-### 4. nfr-assess - Parallel NFR Domain Assessments
+## Verbal Override Rules
 
-**Goal**: Assess independent NFR domains in parallel
+During a run, explicit user phrasing can override config for that run only.
 
-#### Architecture
+Supported normalized terms:
 
-```
-nfr-assess workflow
-├── Step 1: Load system context
-├── Step 2: Launch parallel NFR assessments
-│   ├── Subagent A: Security assessment → /tmp/nfr-security-{timestamp}.json
-│   ├── Subagent B: Performance assessment → /tmp/nfr-performance-{timestamp}.json
-│   ├── Subagent C: Reliability assessment → /tmp/nfr-reliability-{timestamp}.json
-│   └── Subagent D: Scalability assessment → /tmp/nfr-scalability-{timestamp}.json
-└── Step 3: Aggregate NFR report
-    ├── Synthesize domain assessments
-    ├── Identify cross-domain risks
-    └── Generate compliance documentation
-```
+- `agent team` or `agent teams` -> `agent-team`
+- `agentteam` -> `agent-team`
+- `subagent`, `subagents`, `sub agent`, or `sub agents` -> `subagent`
+- `sequential` -> `sequential`
+- `auto` -> `auto`
 
-#### Subagent Output Format
+Resolution precedence:
 
-Each NFR domain subagent outputs:
-
-```json
-{
-  "domain": "security",
-  "risk_level": "MEDIUM",
-  "findings": [
-    {
-      "category": "Authentication",
-      "status": "PASS",
-      "description": "OAuth2 with JWT tokens implemented",
-      "recommendations": []
-    },
-    {
-      "category": "Data Encryption",
-      "status": "CONCERN",
-      "description": "Database encryption at rest not enabled",
-      "recommendations": ["Enable database encryption", "Use AWS KMS for key management"]
-    }
-  ],
-  "compliance": {
-    "SOC2": "PARTIAL",
-    "GDPR": "PASS",
-    "HIPAA": "N/A"
-  },
-  "priority_actions": ["Enable database encryption within 30 days"]
-}
-```
-
-#### Step 3: Aggregation Logic
-
-```javascript
-// Read all NFR domain outputs
-const domains = ['security', 'performance', 'reliability', 'scalability'];
-const assessments = domains.map((d) => JSON.parse(fs.readFileSync(`/tmp/nfr-${d}-{timestamp}.json`, 'utf8')));
-
-// Calculate overall risk
-const riskLevels = { HIGH: 3, MEDIUM: 2, LOW: 1, NONE: 0 };
-const maxRiskLevel = Math.max(...assessments.map((a) => riskLevels[a.risk_level]));
-const overallRisk = Object.keys(riskLevels).find((k) => riskLevels[k] === maxRiskLevel);
-
-// Aggregate compliance status
-const allCompliance = assessments.flatMap((a) => Object.entries(a.compliance));
-const complianceSummary = {};
-allCompliance.forEach(([std, status]) => {
-  if (!complianceSummary[std]) complianceSummary[std] = [];
-  complianceSummary[std].push(status);
-});
-
-// Synthesize cross-domain risks
-const crossDomainRisks = identifyCrossDomainRisks(assessments); // e.g., "Performance + scalability concern"
-
-// Generate final report
-const report = {
-  overall_risk: overallRisk,
-  domains: assessments,
-  compliance_summary: complianceSummary,
-  cross_domain_risks: crossDomainRisks,
-  priority_actions: assessments.flatMap((a) => a.priority_actions),
-  executive_summary: generateExecutiveSummary(assessments),
-};
-```
+1. Explicit run-level request (if present)
+2. `tea_execution_mode` in config
+3. Runtime fallback (when probing is enabled)
 
 ---
 
-### 5. trace - Two-Phase Workflow Separation
+## Workflow Coverage Map
 
-**Goal**: Clean separation of coverage matrix generation and gate decision
+### `automate`
 
-#### Architecture
+- Worker split: API + E2E/backend test generation workers
+- Aggregation: merges generated tests, fixtures, and summary stats
+- Mode effect: changes orchestration style only, not output contract
 
-```
-trace workflow
-├── Phase 1: Coverage Matrix
-│   ├── Step 1: Load requirements
-│   ├── Step 2: Analyze test suite
-│   └── Step 3: Generate traceability matrix → /tmp/trace-matrix-{timestamp}.json
-└── Phase 2: Gate Decision (depends on Phase 1 output)
-    ├── Step 4: Read coverage matrix
-    ├── Step 5: Apply decision tree logic
-    ├── Step 6: Calculate coverage percentages
-    └── Step 7: Generate gate decision (PASS/CONCERNS/FAIL/WAIVED)
-```
+### `atdd`
 
-**Note**: This isn't parallel subagents, but subagent-like **phase separation** where Phase 2 depends on Phase 1 output.
+- Worker split: failing API + failing E2E test generation workers
+- Aggregation: validates red-phase output and merges artifacts
+- Mode effect: changes orchestration style only, not red-phase requirements
 
-#### Phase 1 Output Format
+### `test-review`
 
-```json
-{
-  "requirements": [
-    {
-      "id": "REQ-001",
-      "description": "User can login with email/password",
-      "priority": "P0",
-      "tests": ["tests/auth/login.spec.ts::should login with valid credentials"],
-      "coverage": "FULL"
-    },
-    {
-      "id": "REQ-002",
-      "description": "User can reset password",
-      "priority": "P1",
-      "tests": [],
-      "coverage": "NONE"
-    }
-  ],
-  "total_requirements": 50,
-  "covered_requirements": 42,
-  "coverage_percentage": 84
-}
-```
+- Worker split: quality-dimension evaluations (determinism, isolation,
+  maintainability, performance)
+- Aggregation: computes combined quality score/report
+- Mode effect: changes orchestration style only, not scoring schema
 
-#### Phase 2: Gate Decision Logic
+### `nfr-assess`
 
-```javascript
-// Read Phase 1 output
-const matrix = JSON.parse(fs.readFileSync('/tmp/trace-matrix-{timestamp}.json', 'utf8'));
+- Worker split: security, performance, reliability, scalability assessments
+- Aggregation: computes overall risk, compliance summary, priority actions
+- Mode effect: changes orchestration style only, not report schema
 
-// Apply decision tree
-const p0Coverage = matrix.requirements.filter((r) => r.priority === 'P0' && r.coverage === 'FULL').length;
-const totalP0 = matrix.requirements.filter((r) => r.priority === 'P0').length;
+### `framework`
 
-let gateDecision;
-if (p0Coverage === totalP0 && matrix.coverage_percentage >= 90) {
-  gateDecision = 'PASS';
-} else if (p0Coverage === totalP0 && matrix.coverage_percentage >= 75) {
-  gateDecision = 'CONCERNS';
-} else if (p0Coverage < totalP0) {
-  gateDecision = 'FAIL';
-} else {
-  gateDecision = 'WAIVED'; // Manual review required
-}
+- Worker split: scaffold work units (structure/config, fixtures, samples)
+- Aggregation: consolidates generated framework setup outputs
+- Mode effect: changes orchestration style only
 
-// Generate gate report
-const report = {
-  decision: gateDecision,
-  coverage_matrix: matrix,
-  p0_coverage: `${p0Coverage}/${totalP0}`,
-  overall_coverage: `${matrix.coverage_percentage}%`,
-  recommendations: generateRecommendations(matrix, gateDecision),
-  uncovered_requirements: matrix.requirements.filter((r) => r.coverage === 'NONE'),
-};
-```
+### `ci`
+
+- Worker split: orchestration-capable mode resolution for pipeline generation
+- Aggregation: deterministic single pipeline artifact
+- Mode effect: mostly impacts orchestration policy; final pipeline contract is
+  unchanged
+
+### `test-design`
+
+- Worker split: orchestration-capable mode resolution for output generation
+- Aggregation: deterministic design artifact output
+- Mode effect: orchestration policy only; output schema unchanged
+
+### `trace`
+
+- Worker split: phase/work-unit separation with dependency ordering
+- Aggregation: merges gap analysis + coverage/gate data
+- Mode effect: orchestration policy only; final decision/report contract
+  unchanged
 
 ---
 
-## Implementation Guidelines
+## Design Guarantees
 
-### Temp File Management
+TEA maintains these guarantees across all modes:
 
-**Naming Convention**:
+- Same output schema for a given workflow
+- Same validation and aggregation rules
+- Same deterministic fallback semantics
+- Same failure behavior for missing/invalid worker outputs
 
-```
-/tmp/{workflow}-{subagent-name}-{timestamp}.json
-```
+Mode selection changes orchestration behavior, not artifact contracts.
 
-**Examples**:
+---
 
-- `/tmp/automate-api-tests-20260127-143022.json`
-- `/tmp/test-review-determinism-20260127-143022.json`
-- `/tmp/nfr-security-20260127-143022.json`
+## Practical Guidance
 
-**Cleanup**:
+Recommended defaults:
 
-- Temp files should be cleaned up after successful aggregation
-- Keep temp files on error for debugging
-- Implement retry logic for temp file reads (race conditions)
-
-### Error Handling
-
-Each subagent JSON output must include:
-
-```json
-{
-  "success": true|false,
-  "error": "Error message if failed",
-  "data": { ... }
-}
+```yaml
+tea_execution_mode: 'auto'
+tea_capability_probe: true
 ```
 
-Main workflow aggregation step must:
+Use `sequential` when you need strict single-threaded execution or debugging
+clarity.
 
-1. Check `success` field for each subagent
-2. If any subagent failed, aggregate error messages
-3. Decide whether to continue (partial success) or fail (critical subagent failed)
-
-### Performance Considerations
-
-**Subagent Isolation**:
-
-- Each subagent runs in separate 200k context container
-- No shared memory or state
-- Communication only via JSON files
-
-**Parallelization**:
-
-- Resolve execution mode via config (`tea_execution_mode`, `tea_capability_probe`)
-- Probe runtime support for agent-team and subagent launch before dispatch
-- Fallback order in `auto` mode: `agent-team` → `subagent` → `sequential`
-- Ensure temp file paths are unique (timestamp-based)
-- Implement proper synchronization (wait for all subagents to complete)
+Use explicit `agent-team` or `subagent` only when you intentionally want that
+mode and understand runtime support in your environment.
 
 ---
 
-## Testing Subagent Workflows
+## Troubleshooting Signals
 
-### Test Checklist
+Common causes of orchestration confusion:
 
-For each workflow with subagents:
+- Explicit run-level override text was provided and took precedence over config
+- Runtime did not support requested mode and fallback changed final mode
+- Probe disabled (`tea_capability_probe: false`) with unsupported explicit mode
 
-- [ ] **Unit Test**: Test each subagent in isolation
-  - Provide mock input JSON
-  - Verify output JSON structure
-  - Test error scenarios
-
-- [ ] **Integration Test**: Test full workflow
-  - Launch all subagents
-  - Verify parallel execution
-  - Verify aggregation logic
-  - Test with real project data
-
-- [ ] **Performance Test**: Measure speedup
-  - Benchmark sequential vs parallel
-  - Measure subagent overhead
-  - Verify memory usage acceptable
-
-- [ ] **Error Handling Test**: Test failure scenarios
-  - One subagent fails
-  - Multiple subagents fail
-  - Temp file read/write errors
-  - Timeout scenarios
-
-### Expected Performance Gains
-
-**automate**:
-
-- Sequential: ~5-10 minutes (API then E2E)
-- Parallel: ~3-6 minutes (both at once)
-- **Speedup: ~40-50%**
-
-**test-review**:
-
-- Sequential: ~3-5 minutes (5 quality checks)
-- Parallel: ~1-2 minutes (all checks at once)
-- **Speedup: ~60-70%**
-
-**nfr-assess**:
-
-- Sequential: ~8-12 minutes (4 NFR domains)
-- Parallel: ~3-5 minutes (all domains at once)
-- **Speedup: ~60-70%**
-
----
-
-## Documentation for Users
-
-Users don't need to know about subagent implementation details, but they should know:
-
-1. **Performance**: Certain workflows are optimized for parallel execution
-2. **Temp Files**: Workflows create temporary files during execution (cleaned up automatically)
-3. **Progress**: When running workflows, they may see multiple "subagent" indicators
-4. **Debugging**: If workflow fails, temp files may be preserved for troubleshooting
-
----
-
-## Future Enhancements
-
-1. **Subagent Pooling**: Reuse subagent containers for multiple operations
-2. **Adaptive Parallelization**: Dynamically decide whether to parallelize based on workload
-3. **Progress Reporting**: Real-time progress updates from each subagent
-4. **Caching**: Cache subagent outputs for identical inputs (idempotent operations)
-5. **Distributed Execution**: Run subagents on different machines for massive parallelization
-
----
-
-## References
-
-- BMad Builder subagent examples: `_bmad/bmb/workflows/*/subagent-*.md`
-- Runtime-specific agent/subagent documentation (Codex, Claude Code, etc.)
-- TEA Workflow validation reports (proof of 100% compliance)
-
----
-
-**Status**: Ready for implementation across 5 workflows
-**Next Steps**: Implement subagent patterns in workflow step files, test, document
+Check resolved mode logs in the workflow execution report to confirm what mode
+actually ran.

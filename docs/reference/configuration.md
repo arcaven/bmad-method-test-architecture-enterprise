@@ -338,7 +338,7 @@ tea_browser_automation: 'none'
 
 ### tea_execution_mode
 
-Execution strategy for multi-worker orchestration steps in TEA workflows.
+Execution strategy for orchestration-capable TEA workflows.
 
 **Schema Location:** `src/module.yaml` (TEA module config)
 
@@ -356,47 +356,60 @@ Execution strategy for multi-worker orchestration steps in TEA workflows.
 How should TEA orchestrate multi-step generation and evaluation?
 ```
 
-**Purpose:** Controls orchestration behavior in workflows that can launch worker steps (currently `automate`, `atdd`, `test-review`, `nfr-assess`, `framework`, `ci`, `test-design`, and `trace`).
+**Purpose:** Defines how TEA orchestrates worker-style steps in these workflows:
 
-| Mode         | Behavior                                                                                                         |
-| ------------ | ---------------------------------------------------------------------------------------------------------------- |
-| `auto`       | Probes runtime support and selects best mode. Order: `agent-team` → `subagent` → `sequential`. **Recommended**   |
-| `subagent`   | Uses isolated subagent-style workers (parallel where applicable). Verbal request term: `subagent` / `subagents`. |
-| `agent-team` | Uses runtime delegation/team workers when available. Verbal request terms: `agent team` / `agent teams`.         |
-| `sequential` | Runs worker steps one by one. Most deterministic, slowest.                                                       |
+- `automate`
+- `atdd`
+- `test-review`
+- `nfr-assess`
+- `framework`
+- `ci`
+- `test-design`
+- `trace`
 
-**Runtime terminology note:** Claude terminology is `subagents` and `agent teams`. TEA uses `subagent` and `agent-team` as user-facing terms.
+`teach-me-testing` does not use this setting.
 
-**Resolution Order:**
+**Mode behavior:**
 
-1. Normalize explicit run-level override text (if present):
-   - `agent team` / `agent teams` → `agent-team`
-   - `subagent` / `subagents` → `subagent`
-   - `sequential` → `sequential`
-   - `auto` → `auto`
-2. If no explicit run-level override is present, read `tea_execution_mode` from `_bmad/tea/config.yaml`.
+| Mode         | Behavior                                                                                         |
+| ------------ | ------------------------------------------------------------------------------------------------ |
+| `auto`       | Recommended. TEA picks best supported mode using runtime capability checks (if probing enabled). |
+| `agent-team` | Prefer runtime team/delegation orchestration.                                                    |
+| `subagent`   | Prefer isolated subagent-style orchestration.                                                    |
+| `sequential` | Force one-by-one execution. Most deterministic, typically slowest.                               |
+
+**Important:** In `agent-team` and `subagent` modes, runtime decides scheduling and concurrency. TEA does not enforce a separate parallel-worker cap.
+
+**Per-workflow effect:**
+
+| Workflow      | Orchestrated unit                              | What mode changes    |
+| ------------- | ---------------------------------------------- | -------------------- |
+| `automate`    | API + E2E/backend generation workers           | Dispatch style only  |
+| `atdd`        | failing API + failing E2E workers              | Dispatch style only  |
+| `test-review` | quality-dimension workers                      | Dispatch style only  |
+| `nfr-assess`  | domain assessment workers                      | Dispatch style only  |
+| `framework`   | scaffold work units                            | Dispatch style only  |
+| `ci`          | orchestration-capable pipeline generation step | Orchestration policy |
+| `test-design` | orchestration-capable output generation step   | Orchestration policy |
+| `trace`       | phase/work-unit separation with dependencies   | Orchestration policy |
+
+Output contracts remain the same across modes for a given workflow.
+
+**Resolution order:**
+
+1. Normalize explicit run-level wording (if present):
+   - `agent team` / `agent teams` / `agentteam` -> `agent-team`
+   - `subagent` / `subagents` / `sub agent` / `sub agents` -> `subagent`
+   - `sequential` -> `sequential`
+   - `auto` -> `auto`
+2. If no explicit override exists, use `tea_execution_mode` from `_bmad/tea/config.yaml`.
 3. If `tea_capability_probe: true`, detect runtime support for `agent-team` and `subagent`.
-4. Resolve final mode:
-   - `auto` → `agent-team` → `subagent` → `sequential`
-   - `agent-team`/`subagent` → fallback to next supported mode when probing is enabled
-   - `sequential` → always sequential
-5. Execute the same workflow output contract in the resolved mode.
+4. Resolve mode:
+   - `auto` -> `agent-team` -> `subagent` -> `sequential`
+   - explicit `agent-team`/`subagent` -> fallback only when probing is enabled
+   - `sequential` -> always sequential
 
-**Verbal Request vs Config:**
-
-During workflow execution, explicit user text can override config for that run.
-
-Resolution precedence:
-
-1. Explicit user request in the active run (normalized):
-   - `agent team` / `agent teams` => `agent-team`
-   - `subagent` / `subagents` => `subagent`
-   - `sequential` => `sequential`
-   - `auto` => `auto`
-2. `tea_execution_mode` from `_bmad/tea/config.yaml`
-3. Runtime capability fallback when `tea_capability_probe: true`
-
-Default behavior when user says nothing is `auto` (or the configured value if explicitly set).
+Default when no explicit run request is given: configured value (typically `auto`).
 
 **Example (Recommended):**
 
