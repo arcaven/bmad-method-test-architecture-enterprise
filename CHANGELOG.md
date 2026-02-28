@@ -33,6 +33,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - All browser-touching workflow steps updated with CLI/MCP/auto branching
 - Subagent context passes `browser_automation` instead of `use_mcp_enhancements`
 - Module subheader updated to reference Playwright CLI
+- **Breaking**: Orchestration terminology standardized to `subagent` / `agent-team` (removed `subprocess` wording)
+  - Renamed worker step files from `*-subprocess-*` to `*-subagent-*` in `automate`, `atdd`, `nfr-assess`, and `test-review`
+  - Updated orchestration mode resolution examples to use `subagent` only
+  - Renamed architecture docs: `subprocess-architecture.md` -> `subagent-architecture.md`, `subprocess-implementation-status.md` -> `subagent-implementation-status.md`
+  - Updated docs navigation, troubleshooting references, and workflow/resource indexes to new names
+  - Updated workflow contract labels/examples from `subprocess` to `subagent` (for example `subagent_execution`, `subagentType`)
 
 ### Deprecated
 
