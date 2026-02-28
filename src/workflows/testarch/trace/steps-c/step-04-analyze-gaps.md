@@ -1,6 +1,6 @@
 ---
 name: 'step-04-analyze-gaps'
-description: 'Complete Phase 1: Generate coverage matrix with gap analysis'
+description: 'Complete Phase 1 with adaptive orchestration (agent-team, subagent, or sequential)'
 nextStepFile: './step-05-gate-decision.md'
 outputFile: '{test_artifacts}/traceability-report.md'
 tempOutputFile: '/tmp/tea-trace-coverage-matrix-{{timestamp}}.json'
@@ -19,6 +19,8 @@ tempOutputFile: '/tmp/tea-trace-coverage-matrix-{{timestamp}}.json'
 - 📖 Read the entire step file before acting
 - ✅ Speak in `{communication_language}`
 - ✅ Output coverage matrix to temp file
+- ✅ Resolve execution mode from explicit user request first, then config
+- ✅ Apply fallback rules deterministically when requested mode is unsupported
 - ❌ Do NOT make gate decision (that's Phase 2 - Step 5)
 
 ---
@@ -38,6 +40,72 @@ tempOutputFile: '/tmp/tea-trace-coverage-matrix-{{timestamp}}.json'
 ---
 
 ## MANDATORY SEQUENCE
+
+### 0. Resolve Execution Mode (User Override First)
+
+```javascript
+const orchestrationContext = {
+  config: {
+    execution_mode: config.tea_execution_mode || 'auto', // "auto" | "subagent" | "agent-team" | "sequential"
+    capability_probe: config.tea_capability_probe !== false, // true by default
+    max_parallel_agents: Number(config.tea_max_parallel_agents || 4),
+  },
+  timestamp: new Date().toISOString().replace(/[:.]/g, '-'),
+};
+
+const normalizeUserExecutionMode = (mode) => {
+  if (typeof mode !== 'string') return null;
+  const normalized = mode.trim().toLowerCase().replace(/[-_]/g, ' ').replace(/\s+/g, ' ');
+
+  if (normalized === 'auto') return 'auto';
+  if (normalized === 'sequential') return 'sequential';
+  if (normalized === 'subagent' || normalized === 'sub agent' || normalized === 'subagents' || normalized === 'sub agents') {
+    return 'subagent';
+  }
+  if (normalized === 'agent team' || normalized === 'agent teams' || normalized === 'agentteam') {
+    return 'agent-team';
+  }
+
+  return null;
+};
+
+const normalizeConfigExecutionMode = (mode) => {
+  if (mode === 'subagent') return 'subagent';
+  if (mode === 'auto' || mode === 'sequential' || mode === 'subagent' || mode === 'agent-team') {
+    return mode;
+  }
+  return null;
+};
+
+// Explicit user instruction in the active run takes priority over config.
+const explicitModeFromUser = normalizeUserExecutionMode(runtime.getExplicitExecutionModeHint?.() || null);
+
+const requestedMode = explicitModeFromUser || normalizeConfigExecutionMode(orchestrationContext.config.execution_mode) || 'auto';
+const probeEnabled = orchestrationContext.config.capability_probe;
+
+const supports = { subagent: false, agentTeam: false };
+if (probeEnabled) {
+  supports.subagent = runtime.canLaunchSubagents?.() === true;
+  supports.agentTeam = runtime.canLaunchAgentTeams?.() === true;
+}
+
+let resolvedMode = requestedMode;
+if (requestedMode === 'auto') {
+  if (supports.agentTeam) resolvedMode = 'agent-team';
+  else if (supports.subagent) resolvedMode = 'subagent';
+  else resolvedMode = 'sequential';
+} else if (probeEnabled && requestedMode === 'agent-team' && !supports.agentTeam) {
+  resolvedMode = supports.subagent ? 'subagent' : 'sequential';
+} else if (probeEnabled && requestedMode === 'subagent' && !supports.subagent) {
+  resolvedMode = 'sequential';
+}
+```
+
+Resolution precedence:
+
+1. Explicit user request in this run (`agent team` => `agent-team`; `subagent` => `subagent`; `sequential`; `auto`)
+2. `tea_execution_mode` from config
+3. Runtime capability fallback (when probing enabled)
 
 ### 1. Gap Analysis
 
@@ -269,6 +337,19 @@ console.log(`✅ Phase 1 Complete: Coverage matrix saved to ${outputPath}`);
 
 🔄 Phase 2: Gate decision (next step)
 ```
+
+### Orchestration Notes for This Step
+
+When `resolvedMode` is `agent-team` or `subagent`, sections 1-4 can be executed as independent workers and merged in section 5:
+
+- Worker A: gap classification (section 1)
+- Worker B: heuristics gap extraction (section 2)
+- Worker C: recommendation synthesis (section 3)
+- Worker D: coverage statistics (section 4)
+
+Section 5 remains the deterministic merge point.
+
+If `resolvedMode` is `sequential`, execute sections 1→7 in order.
 
 ---
 

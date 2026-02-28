@@ -1,6 +1,6 @@
 ---
 name: 'step-03c-aggregate'
-description: 'Aggregate subprocess outputs and complete test infrastructure'
+description: 'Aggregate subagent outputs and complete test infrastructure'
 outputFile: '{test_artifacts}/automation-summary.md'
 nextStepFile: './step-04-validate-and-summarize.md'
 ---
@@ -9,7 +9,7 @@ nextStepFile: './step-04-validate-and-summarize.md'
 
 ## STEP GOAL
 
-Read outputs from parallel subprocesses (API + E2E and/or Backend test generation based on `{detected_stack}`), aggregate results, and create supporting infrastructure (fixtures, helpers).
+Read outputs from parallel subagents (API + E2E and/or Backend test generation based on `{detected_stack}`), aggregate results, and create supporting infrastructure (fixtures, helpers).
 
 ---
 
@@ -17,10 +17,10 @@ Read outputs from parallel subprocesses (API + E2E and/or Backend test generatio
 
 - 📖 Read the entire step file before acting
 - ✅ Speak in `{communication_language}`
-- ✅ Read subprocess outputs from temp files
-- ✅ Generate shared fixtures based on fixture needs from both subprocesses
+- ✅ Read subagent outputs from temp files
+- ✅ Generate shared fixtures based on fixture needs from both subagents
 - ✅ Write all generated test files to disk
-- ❌ Do NOT regenerate tests (use subprocess outputs)
+- ❌ Do NOT regenerate tests (use subagent outputs)
 - ❌ Do NOT run tests yet (that's step 4)
 
 ---
@@ -33,10 +33,10 @@ Read outputs from parallel subprocesses (API + E2E and/or Backend test generatio
 
 ## CONTEXT BOUNDARIES:
 
-- Available context: config, subprocess outputs from temp files
+- Available context: config, subagent outputs from temp files
 - Focus: aggregation and fixture generation only
 - Limits: do not execute future steps
-- Dependencies: Step 3A and 3B subprocess outputs
+- Dependencies: Step 3A and 3B subagent outputs
 
 ---
 
@@ -44,16 +44,16 @@ Read outputs from parallel subprocesses (API + E2E and/or Backend test generatio
 
 **CRITICAL:** Follow this sequence exactly. Do not skip, reorder, or improvise.
 
-### 1. Read Subprocess Outputs
+### 1. Read Subagent Outputs
 
-**Read API test subprocess output (always):**
+**Read API test subagent output (always):**
 
 ```javascript
 const apiTestsPath = '/tmp/tea-automate-api-tests-{{timestamp}}.json';
 const apiTestsOutput = JSON.parse(fs.readFileSync(apiTestsPath, 'utf8'));
 ```
 
-**Read E2E test subprocess output (if {detected_stack} is `frontend` or `fullstack`):**
+**Read E2E test subagent output (if {detected_stack} is `frontend` or `fullstack`):**
 
 ```javascript
 let e2eTestsOutput = null;
@@ -63,7 +63,7 @@ if (detected_stack === 'frontend' || detected_stack === 'fullstack') {
 }
 ```
 
-**Read Backend test subprocess output (if {detected_stack} is `backend` or `fullstack`):**
+**Read Backend test subagent output (if {detected_stack} is `backend` or `fullstack`):**
 
 ```javascript
 let backendTestsOutput = null;
@@ -73,7 +73,7 @@ if (detected_stack === 'backend' || detected_stack === 'fullstack') {
 }
 ```
 
-**Verify all launched subprocesses succeeded:**
+**Verify all launched subagents succeeded:**
 
 - Check `apiTestsOutput.success === true`
 - If E2E was launched: check `e2eTestsOutput.success === true`
@@ -119,7 +119,7 @@ if (backendTestsOutput) {
 
 ### 3. Aggregate Fixture Needs
 
-**Collect all fixture needs from all launched subprocesses:**
+**Collect all fixture needs from all launched subagents:**
 
 ```javascript
 const allFixtureNeeds = [
@@ -260,7 +260,7 @@ const summary = {
     ...(e2eTestsOutput ? e2eTestsOutput.knowledge_fragments_used : []),
     ...(backendTestsOutput ? backendTestsOutput.knowledge_fragments_used || [] : []),
   ],
-  subprocess_execution: `PARALLEL (based on ${detected_stack})`,
+  subagent_execution: `PARALLEL (based on ${detected_stack})`,
   performance_gain: '~40-70% faster than sequential',
 };
 ```
@@ -276,13 +276,13 @@ fs.writeFileSync('/tmp/tea-automate-summary-{{timestamp}}.json', JSON.stringify(
 
 ### 6. Optional Cleanup
 
-**Clean up subprocess temp files** (optional - can keep for debugging):
+**Clean up subagent temp files** (optional - can keep for debugging):
 
 ```javascript
 fs.unlinkSync(apiTestsPath);
 if (e2eTestsOutput) fs.unlinkSync('/tmp/tea-automate-e2e-tests-{{timestamp}}.json');
 if (backendTestsOutput) fs.unlinkSync('/tmp/tea-automate-backend-tests-{{timestamp}}.json');
-console.log('✅ Subprocess temp files cleaned up');
+console.log('✅ Subagent temp files cleaned up');
 ```
 
 ---
@@ -362,14 +362,14 @@ Load next step: `{nextStepFile}`
 
 ### ✅ SUCCESS:
 
-- All launched subprocesses succeeded (based on `{detected_stack}`)
+- All launched subagents succeeded (based on `{detected_stack}`)
 - All test files written to disk
-- Fixtures generated based on subprocess needs
+- Fixtures generated based on subagent needs
 - Summary complete and accurate
 
 ### ❌ SYSTEM FAILURE:
 
-- One or more subprocesses failed
+- One or more subagents failed
 - Test files not written to disk
 - Fixtures missing or incomplete
 - Summary missing or inaccurate

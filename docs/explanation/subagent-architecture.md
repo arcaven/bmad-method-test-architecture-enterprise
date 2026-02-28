@@ -1,9 +1,9 @@
 ---
-title: Subprocess Architecture
+title: Subagent Architecture
 description: Parallel execution pattern for TEA workflows
 ---
 
-# Subprocess Architecture for TEA Workflows
+# Subagent Architecture for TEA Workflows
 
 **Version**: 1.0
 **Date**: 2026-01-27
@@ -13,7 +13,7 @@ description: Parallel execution pattern for TEA workflows
 
 ## Overview
 
-TEA workflows use **subprocess patterns** to parallelize independent tasks, improving performance and maintaining clean separation of concerns. Five workflows benefit from this architecture:
+TEA workflows use **subagent patterns** to parallelize independent tasks, improving performance and maintaining clean separation of concerns. Five workflows benefit from this architecture:
 
 1. **automate** - Parallel test generation (API + E2E)
 2. **atdd** - Parallel failing test generation (API + E2E)
@@ -23,17 +23,17 @@ TEA workflows use **subprocess patterns** to parallelize independent tasks, impr
 
 ---
 
-## Core Subprocess Pattern
+## Core Subagent Pattern
 
 ### Architecture
 
 ```
 Main Workflow (Orchestrator)
 ├── Step 1: Setup & Context Loading
-├── Step 2: Launch Subprocesses
-│   ├── Subprocess A → temp-file-a.json
-│   ├── Subprocess B → temp-file-b.json
-│   ├── Subprocess C → temp-file-c.json
+├── Step 2: Launch Subagents
+│   ├── Subagent A → temp-file-a.json
+│   ├── Subagent B → temp-file-b.json
+│   ├── Subagent C → temp-file-c.json
 │   └── (All run in parallel, isolated 200k containers)
 └── Step 3: Aggregate Results
     ├── Read all temp files
@@ -43,11 +43,11 @@ Main Workflow (Orchestrator)
 
 ### Key Principles
 
-1. **Independence**: Each subprocess is completely independent (no shared state)
-2. **Isolation**: Each subprocess runs in separate 200k context container
-3. **Output Format**: All subprocesses output structured JSON to temp files
+1. **Independence**: Each subagent is completely independent (no shared state)
+2. **Isolation**: Each subagent runs in separate 200k context container
+3. **Output Format**: All subagents output structured JSON to temp files
 4. **Aggregation**: Main workflow reads temp files and synthesizes final output
-5. **Error Handling**: Each subprocess reports success/failure in JSON output
+5. **Error Handling**: Each subagent reports success/failure in JSON output
 
 ---
 
@@ -64,8 +64,8 @@ automate workflow
 ├── Step 1: Analyze codebase & identify features
 ├── Step 2: Load relevant knowledge fragments
 ├── Step 3: Launch parallel test generation
-│   ├── Subprocess A: Generate API tests → /tmp/api-tests-{timestamp}.json
-│   └── Subprocess B: Generate E2E tests → /tmp/e2e-tests-{timestamp}.json
+│   ├── Subagent A: Generate API tests → /tmp/api-tests-{timestamp}.json
+│   └── Subagent B: Generate E2E tests → /tmp/e2e-tests-{timestamp}.json
 ├── Step 4: Aggregate tests
 │   ├── Read API tests JSON
 │   ├── Read E2E tests JSON
@@ -74,7 +74,7 @@ automate workflow
 └── Step 6: Generate DoD summary
 ```
 
-#### Subprocess A: API Tests
+#### Subagent A: API Tests
 
 **Input** (passed via temp file):
 
@@ -106,7 +106,7 @@ automate workflow
 }
 ```
 
-#### Subprocess B: E2E Tests
+#### Subagent B: E2E Tests
 
 **Input** (passed via temp file):
 
@@ -141,7 +141,7 @@ automate workflow
 #### Step 4: Aggregation Logic
 
 ```javascript
-// Read both subprocess outputs
+// Read both subagent outputs
 const apiTests = JSON.parse(fs.readFileSync('/tmp/api-tests-{timestamp}.json', 'utf8'));
 const e2eTests = JSON.parse(fs.readFileSync('/tmp/e2e-tests-{timestamp}.json', 'utf8'));
 
@@ -174,8 +174,8 @@ atdd workflow
 ├── Step 1: Load story acceptance criteria
 ├── Step 2: Load relevant knowledge fragments
 ├── Step 3: Launch parallel test generation
-│   ├── Subprocess A: Generate failing API tests → /tmp/atdd-api-{timestamp}.json
-│   └── Subprocess B: Generate failing E2E tests → /tmp/atdd-e2e-{timestamp}.json
+│   ├── Subagent A: Generate failing API tests → /tmp/atdd-api-{timestamp}.json
+│   └── Subagent B: Generate failing E2E tests → /tmp/atdd-e2e-{timestamp}.json
 ├── Step 4: Aggregate tests
 ├── Step 5: Verify tests fail (red phase)
 └── Step 6: Output ATDD checklist
@@ -183,7 +183,7 @@ atdd workflow
 
 **Key Difference from automate**: Tests must be written to **fail** before implementation exists.
 
-#### Subprocess Outputs
+#### Subagent Outputs
 
 Same JSON structure as automate, but:
 
@@ -202,20 +202,20 @@ Same JSON structure as automate, but:
 test-review workflow
 ├── Step 1: Load test files & context
 ├── Step 2: Launch parallel quality checks
-│   ├── Subprocess A: Determinism check → /tmp/determinism-{timestamp}.json
-│   ├── Subprocess B: Isolation check → /tmp/isolation-{timestamp}.json
-│   ├── Subprocess C: Maintainability check → /tmp/maintainability-{timestamp}.json
-│   ├── Subprocess D: Coverage check → /tmp/coverage-{timestamp}.json
-│   └── Subprocess E: Performance check → /tmp/performance-{timestamp}.json
+│   ├── Subagent A: Determinism check → /tmp/determinism-{timestamp}.json
+│   ├── Subagent B: Isolation check → /tmp/isolation-{timestamp}.json
+│   ├── Subagent C: Maintainability check → /tmp/maintainability-{timestamp}.json
+│   ├── Subagent D: Coverage check → /tmp/coverage-{timestamp}.json
+│   └── Subagent E: Performance check → /tmp/performance-{timestamp}.json
 └── Step 3: Aggregate findings
     ├── Calculate weighted score (0-100)
     ├── Synthesize violations
     └── Generate review report with suggestions
 ```
 
-#### Subprocess Output Format
+#### Subagent Output Format
 
-Each quality dimension subprocess outputs:
+Each quality dimension subagent outputs:
 
 ```json
 {
@@ -281,19 +281,19 @@ const report = {
 nfr-assess workflow
 ├── Step 1: Load system context
 ├── Step 2: Launch parallel NFR assessments
-│   ├── Subprocess A: Security assessment → /tmp/nfr-security-{timestamp}.json
-│   ├── Subprocess B: Performance assessment → /tmp/nfr-performance-{timestamp}.json
-│   ├── Subprocess C: Reliability assessment → /tmp/nfr-reliability-{timestamp}.json
-│   └── Subprocess D: Scalability assessment → /tmp/nfr-scalability-{timestamp}.json
+│   ├── Subagent A: Security assessment → /tmp/nfr-security-{timestamp}.json
+│   ├── Subagent B: Performance assessment → /tmp/nfr-performance-{timestamp}.json
+│   ├── Subagent C: Reliability assessment → /tmp/nfr-reliability-{timestamp}.json
+│   └── Subagent D: Scalability assessment → /tmp/nfr-scalability-{timestamp}.json
 └── Step 3: Aggregate NFR report
     ├── Synthesize domain assessments
     ├── Identify cross-domain risks
     └── Generate compliance documentation
 ```
 
-#### Subprocess Output Format
+#### Subagent Output Format
 
-Each NFR domain subprocess outputs:
+Each NFR domain subagent outputs:
 
 ```json
 {
@@ -377,7 +377,7 @@ trace workflow
     └── Step 7: Generate gate decision (PASS/CONCERNS/FAIL/WAIVED)
 ```
 
-**Note**: This isn't parallel subprocesses, but subprocess-like **phase separation** where Phase 2 depends on Phase 1 output.
+**Note**: This isn't parallel subagents, but subagent-like **phase separation** where Phase 2 depends on Phase 1 output.
 
 #### Phase 1 Output Format
 
@@ -446,7 +446,7 @@ const report = {
 **Naming Convention**:
 
 ```
-/tmp/{workflow}-{subprocess-name}-{timestamp}.json
+/tmp/{workflow}-{subagent-name}-{timestamp}.json
 ```
 
 **Examples**:
@@ -463,7 +463,7 @@ const report = {
 
 ### Error Handling
 
-Each subprocess JSON output must include:
+Each subagent JSON output must include:
 
 ```json
 {
@@ -475,51 +475,53 @@ Each subprocess JSON output must include:
 
 Main workflow aggregation step must:
 
-1. Check `success` field for each subprocess
-2. If any subprocess failed, aggregate error messages
-3. Decide whether to continue (partial success) or fail (critical subprocess failed)
+1. Check `success` field for each subagent
+2. If any subagent failed, aggregate error messages
+3. Decide whether to continue (partial success) or fail (critical subagent failed)
 
 ### Performance Considerations
 
-**Subprocess Isolation**:
+**Subagent Isolation**:
 
-- Each subprocess runs in separate 200k context container
+- Each subagent runs in separate 200k context container
 - No shared memory or state
 - Communication only via JSON files
 
 **Parallelization**:
 
-- Use Claude Code's subprocess/agent launching capabilities
+- Resolve execution mode via config (`tea_execution_mode`, `tea_capability_probe`, `tea_max_parallel_agents`)
+- Probe runtime support for agent-team and subagent launch before dispatch
+- Fallback order in `auto` mode: `agent-team` → `subagent` → `sequential`
 - Ensure temp file paths are unique (timestamp-based)
-- Implement proper synchronization (wait for all subprocesses to complete)
+- Implement proper synchronization (wait for all subagents to complete)
 
 ---
 
-## Testing Subprocess Workflows
+## Testing Subagent Workflows
 
 ### Test Checklist
 
-For each workflow with subprocesses:
+For each workflow with subagents:
 
-- [ ] **Unit Test**: Test each subprocess in isolation
+- [ ] **Unit Test**: Test each subagent in isolation
   - Provide mock input JSON
   - Verify output JSON structure
   - Test error scenarios
 
 - [ ] **Integration Test**: Test full workflow
-  - Launch all subprocesses
+  - Launch all subagents
   - Verify parallel execution
   - Verify aggregation logic
   - Test with real project data
 
 - [ ] **Performance Test**: Measure speedup
   - Benchmark sequential vs parallel
-  - Measure subprocess overhead
+  - Measure subagent overhead
   - Verify memory usage acceptable
 
 - [ ] **Error Handling Test**: Test failure scenarios
-  - One subprocess fails
-  - Multiple subprocesses fail
+  - One subagent fails
+  - Multiple subagents fail
   - Temp file read/write errors
   - Timeout scenarios
 
@@ -547,32 +549,32 @@ For each workflow with subprocesses:
 
 ## Documentation for Users
 
-Users don't need to know about subprocess implementation details, but they should know:
+Users don't need to know about subagent implementation details, but they should know:
 
 1. **Performance**: Certain workflows are optimized for parallel execution
 2. **Temp Files**: Workflows create temporary files during execution (cleaned up automatically)
-3. **Progress**: When running workflows, they may see multiple "subprocess" indicators
+3. **Progress**: When running workflows, they may see multiple "subagent" indicators
 4. **Debugging**: If workflow fails, temp files may be preserved for troubleshooting
 
 ---
 
 ## Future Enhancements
 
-1. **Subprocess Pooling**: Reuse subprocess containers for multiple operations
+1. **Subagent Pooling**: Reuse subagent containers for multiple operations
 2. **Adaptive Parallelization**: Dynamically decide whether to parallelize based on workload
-3. **Progress Reporting**: Real-time progress updates from each subprocess
-4. **Caching**: Cache subprocess outputs for identical inputs (idempotent operations)
-5. **Distributed Execution**: Run subprocesses on different machines for massive parallelization
+3. **Progress Reporting**: Real-time progress updates from each subagent
+4. **Caching**: Cache subagent outputs for identical inputs (idempotent operations)
+5. **Distributed Execution**: Run subagents on different machines for massive parallelization
 
 ---
 
 ## References
 
-- BMad Builder subprocess examples: `_bmad/bmb/workflows/*/subprocess-*.md`
-- Claude Code agent/subprocess documentation
+- BMad Builder subagent examples: `_bmad/bmb/workflows/*/subagent-*.md`
+- Runtime-specific agent/subagent documentation (Codex, Claude Code, etc.)
 - TEA Workflow validation reports (proof of 100% compliance)
 
 ---
 
 **Status**: Ready for implementation across 5 workflows
-**Next Steps**: Implement subprocess patterns in workflow step files, test, document
+**Next Steps**: Implement subagent patterns in workflow step files, test, document

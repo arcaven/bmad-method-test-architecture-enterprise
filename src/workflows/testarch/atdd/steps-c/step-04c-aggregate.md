@@ -1,6 +1,6 @@
 ---
 name: 'step-04c-aggregate'
-description: 'Aggregate subprocess outputs and complete ATDD test infrastructure'
+description: 'Aggregate subagent outputs and complete ATDD test infrastructure'
 outputFile: '{test_artifacts}/atdd-checklist-{story_id}.md'
 nextStepFile: './step-05-validate-and-complete.md'
 ---
@@ -9,7 +9,7 @@ nextStepFile: './step-05-validate-and-complete.md'
 
 ## STEP GOAL
 
-Read outputs from parallel subprocesses (API + E2E failing test generation), aggregate results, verify TDD red phase compliance, and create supporting infrastructure.
+Read outputs from parallel subagents (API + E2E failing test generation), aggregate results, verify TDD red phase compliance, and create supporting infrastructure.
 
 ---
 
@@ -17,7 +17,7 @@ Read outputs from parallel subprocesses (API + E2E failing test generation), agg
 
 - 📖 Read the entire step file before acting
 - ✅ Speak in `{communication_language}`
-- ✅ Read subprocess outputs from temp files
+- ✅ Read subagent outputs from temp files
 - ✅ Verify all tests are marked with test.skip() (TDD red phase)
 - ✅ Generate shared fixtures based on fixture needs
 - ✅ Write all generated test files to disk
@@ -34,10 +34,10 @@ Read outputs from parallel subprocesses (API + E2E failing test generation), agg
 
 ## CONTEXT BOUNDARIES:
 
-- Available context: config, subprocess outputs from temp files
+- Available context: config, subagent outputs from temp files
 - Focus: aggregation and TDD validation
 - Limits: do not execute future steps
-- Dependencies: Step 4A and 4B subprocess outputs
+- Dependencies: Step 4A and 4B subagent outputs
 
 ---
 
@@ -45,23 +45,23 @@ Read outputs from parallel subprocesses (API + E2E failing test generation), agg
 
 **CRITICAL:** Follow this sequence exactly. Do not skip, reorder, or improvise.
 
-### 1. Read Subprocess Outputs
+### 1. Read Subagent Outputs
 
-**Read API test subprocess output:**
+**Read API test subagent output:**
 
 ```javascript
 const apiTestsPath = '/tmp/tea-atdd-api-tests-{{timestamp}}.json';
 const apiTestsOutput = JSON.parse(fs.readFileSync(apiTestsPath, 'utf8'));
 ```
 
-**Read E2E test subprocess output:**
+**Read E2E test subagent output:**
 
 ```javascript
 const e2eTestsPath = '/tmp/tea-atdd-e2e-tests-{{timestamp}}.json';
 const e2eTestsOutput = JSON.parse(fs.readFileSync(e2eTestsPath, 'utf8'));
 ```
 
-**Verify both subprocesses succeeded:**
+**Verify both subagents succeeded:**
 
 - Check `apiTestsOutput.success === true`
 - Check `e2eTestsOutput.success === true`
@@ -148,7 +148,7 @@ e2eTestsOutput.tests.forEach((test) => {
 
 ### 4. Aggregate Fixture Needs
 
-**Collect all fixture needs from both subprocesses:**
+**Collect all fixture needs from both subagents:**
 
 ```javascript
 const allFixtureNeeds = [...apiTestsOutput.fixture_needs, ...e2eTestsOutput.fixture_needs];
@@ -243,7 +243,7 @@ const summary = {
     ...e2eTestsOutput.tests.flatMap((t) => t.acceptance_criteria_covered),
   ],
   knowledge_fragments_used: [...apiTestsOutput.knowledge_fragments_used, ...e2eTestsOutput.knowledge_fragments_used],
-  subprocess_execution: 'PARALLEL (API + E2E)',
+  subagent_execution: 'PARALLEL (API + E2E)',
   performance_gain: '~50% faster than sequential',
 };
 ```
@@ -337,7 +337,7 @@ Load next step: `{nextStepFile}`
 
 ### ✅ SUCCESS:
 
-- Both subprocesses succeeded
+- Both subagents succeeded
 - All tests have test.skip() (TDD red phase compliant)
 - All tests assert expected behavior (not placeholders)
 - All test files written to disk
@@ -345,7 +345,7 @@ Load next step: `{nextStepFile}`
 
 ### ❌ SYSTEM FAILURE:
 
-- One or both subprocesses failed
+- One or both subagents failed
 - Tests missing test.skip() (would break CI)
 - Tests have placeholder assertions
 - Test files not written to disk

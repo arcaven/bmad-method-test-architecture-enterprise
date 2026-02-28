@@ -72,7 +72,7 @@ workflow/
 - Granular instructions → LLM focuses on one task
 - Clear exit conditions → LLM knows when to stop
 - Repeated context → LLM has all necessary info
-- Subprocess support → Parallel execution possible
+- Subagent support → Parallel execution possible
 
 ---
 
@@ -153,19 +153,19 @@ Example:
 - ❌ Do NOT add features not requested
 ```
 
-### 5. Subprocess Support
+### 5. Subagent Support
 
-**Independent steps can run in parallel subprocesses** - massive performance gain.
+**Independent steps can run in parallel subagents** - massive performance gain.
 
 Example (automate workflow):
 
 ```
 Step 1-2: Sequential (setup)
-Step 3: Subprocess A (API tests) + Subprocess B (E2E tests) - PARALLEL
+Step 3: Subagent A (API tests) + Subagent B (E2E tests) - PARALLEL
 Step 4: Sequential (aggregate)
 ```
 
-See [subprocess-architecture.md](./subprocess-architecture.md) for details.
+See [subagent-architecture.md](./subagent-architecture.md) for details.
 
 ---
 
@@ -193,8 +193,8 @@ Step 1: Setup → Step 2: Configure → Step 3: Generate → Step 4: Validate
 Step 1: Setup
 Step 2: Load knowledge
 Step 3: PARALLEL
-  ├── Subprocess A: Generate API tests
-  └── Subprocess B: Generate E2E tests
+  ├── Subagent A: Generate API tests
+  └── Subagent B: Generate E2E tests
 Step 4: Aggregate + validate
 ```
 
@@ -211,9 +211,9 @@ Step 4: Aggregate + validate
 ```
 Step 1: Load context
 Step 2: PARALLEL
-  ├── Subprocess A: Check dimension 1
-  ├── Subprocess B: Check dimension 2
-  ├── Subprocess C: Check dimension 3
+  ├── Subagent A: Check dimension 1
+  ├── Subagent B: Check dimension 2
+  ├── Subagent C: Check dimension 3
   └── (etc.)
 Step 3: Aggregate scores
 ```
@@ -237,7 +237,7 @@ Phase 2: Read matrix → Apply decision tree → Generate gate decision
 
 - Phase 2 depends on Phase 1 output
 - Not parallel, but clean separation of concerns
-- Subprocess-like phase isolation
+- Subagent-like phase isolation
 
 ### Pattern 5: Risk-Based Planning (Design Workflows)
 
@@ -354,7 +354,7 @@ Load `steps/step-[N+1]-[action].md` and execute.
 ### Example: Step File for API Test Generation
 
 ````markdown
-# Step 3A: Generate API Tests (Subprocess)
+# Step 3A: Generate API Tests (Subagent)
 
 ## Context (from previous steps)
 
@@ -397,7 +397,7 @@ Generate API tests for the 3 features identified above.
 
 ## What You MUST NOT Do
 
-- ❌ Do NOT generate E2E tests (that's Step 3B - parallel subprocess)
+- ❌ Do NOT generate E2E tests (that's Step 3B - parallel subagent)
 - ❌ Do NOT generate fixtures yet (that's Step 4)
 - ❌ Do NOT run tests yet (that's Step 5)
 - ❌ Do NOT use custom fetch/axios (use apiRequest helper)
@@ -425,14 +425,14 @@ Output JSON to `/tmp/automate-api-tests-{timestamp}.json`:
 
 ## Exit Condition
 
-You may finish this subprocess when:
+You may finish this subagent when:
 
 - ✅ All 3 features have API test files
 - ✅ All tests use Playwright Utils helpers
 - ✅ All tests use data factories
 - ✅ JSON output file written to /tmp/
 
-Subprocess complete. Main workflow will read output and proceed.
+Subagent complete. Main workflow will read output and proceed.
 
 ````
 
@@ -450,7 +450,7 @@ All 9 TEA workflows score **100%** on BMad Builder validation. Validation report
 - ✅ Explicit exit conditions (LLM knows when to stop)
 - ✅ Context injection (each step self-contained)
 - ✅ Strict action boundaries (prevents improvisation)
-- ✅ Subprocess support (where applicable)
+- ✅ Subagent support (where applicable)
 
 ### Real-Project Testing
 
@@ -479,7 +479,7 @@ Update step files when:
 1. **Knowledge fragments change**: Update fragment loading instructions
 2. **New patterns emerge**: Add new requirements/patterns to steps
 3. **LLM improvises**: Add stricter boundaries to prevent improvisation
-4. **Performance issues**: Split steps further or add subprocesses
+4. **Performance issues**: Split steps further or add subagents
 5. **User feedback**: Clarify ambiguous instructions
 
 ### Best Practices
@@ -510,7 +510,7 @@ Update step files when:
 - test-review: ~5 minutes (5 quality checks sequentially)
 - nfr-assess: ~12 minutes (4 NFR domains sequentially)
 
-**After Step Files (Parallel Subprocesses)**:
+**After Step Files (Parallel Subagents)**:
 
 - automate: ~5 minutes (API + E2E in parallel) - **50% faster**
 - test-review: ~2 minutes (all checks in parallel) - **60% faster**
@@ -538,9 +538,9 @@ When running workflows, users see:
 ```
 ✓ Step 1: Setup complete
 ✓ Step 2: Knowledge fragments loaded
-⟳ Step 3: Generating tests (2 subprocesses running)
-  ├── Subprocess A: API tests... ✓
-  └── Subprocess B: E2E tests... ✓
+⟳ Step 3: Generating tests (2 subagents running)
+  ├── Subagent A: API tests... ✓
+  └── Subagent B: E2E tests... ✓
 ✓ Step 4: Aggregating results
 ✓ Step 5: Validation complete
 ```
@@ -556,7 +556,7 @@ When running workflows, users see:
 - **Diagnosis**: Step instructions too vague
 - **Fix**: Add more explicit requirements and forbidden actions
 
-**Issue**: Subprocess output not aggregating correctly
+**Issue**: Subagent output not aggregating correctly
 
 - **Diagnosis**: Temp file path mismatch or JSON parsing error
 - **Fix**: Check temp file naming convention, verify JSON format
@@ -566,16 +566,16 @@ When running workflows, users see:
 - **Diagnosis**: Fragment loading instructions unclear
 - **Fix**: Make fragment usage requirements more explicit
 
-**Issue**: Workflow too slow despite subprocesses
+**Issue**: Workflow too slow despite subagents
 
 - **Diagnosis**: Not enough parallelization
-- **Fix**: Identify more independent steps for subprocess pattern
+- **Fix**: Identify more independent steps for subagent pattern
 
 ---
 
 ## References
 
-- **Subprocess Architecture**: [subprocess-architecture.md](./subprocess-architecture.md)
+- **Subagent Architecture**: [subagent-architecture.md](./subagent-architecture.md)
 - **Knowledge Base System**: [knowledge-base-system.md](./knowledge-base-system.md)
 - **BMad Builder Validation Reports**: `src/workflows/testarch/*/validation-report-*.md`
 - **TEA Workflow Examples**: `src/workflows/testarch/*/steps/*.md`
@@ -595,5 +595,5 @@ When running workflows, users see:
 **Status**: Production-ready, 100% LLM compliance achieved
 **Validation**: All 9 workflows score 100% on BMad Builder validation
 **Testing**: All 9 workflows tested with real projects, zero improvisation issues
-**Next Steps**: Implement subprocess patterns (see subprocess-architecture.md)
+**Next Steps**: Implement subagent patterns (see subagent-architecture.md)
 ````

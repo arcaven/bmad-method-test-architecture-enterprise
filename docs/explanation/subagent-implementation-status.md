@@ -1,12 +1,12 @@
 ---
-title: Subprocess Implementation Status
-description: Status of subprocess implementation across workflows
+title: Subagent Implementation Status
+description: Status of subagent implementation across workflows
 ---
 
-# Subprocess Pattern Implementation Status
+# Subagent Pattern Implementation Status
 
 **Date**: 2026-01-27
-**Status**: Phase 5 - Subprocess Patterns
+**Status**: Phase 5 - Subagent Patterns
 
 ---
 
@@ -18,15 +18,15 @@ description: Status of subprocess implementation across workflows
 
 **Files Created**:
 
-- `src/workflows/testarch/automate/steps-c/step-03a-subprocess-api.md`
-- `src/workflows/testarch/automate/steps-c/step-03b-subprocess-e2e.md`
+- `src/workflows/testarch/automate/steps-c/step-03a-*.md` (API subagent step)
+- `src/workflows/testarch/automate/steps-c/step-03b-*.md` (E2E subagent step)
 - `src/workflows/testarch/automate/steps-c/step-03c-aggregate.md`
 - Updated: `src/workflows/testarch/automate/steps-c/step-03-generate-tests.md`
 
-**Subprocesses**:
+**Subagents**:
 
-- Subprocess A: API test generation → `/tmp/tea-automate-api-tests-{{timestamp}}.json`
-- Subprocess B: E2E test generation → `/tmp/tea-automate-e2e-tests-{{timestamp}}.json`
+- Subagent A: API test generation → `/tmp/tea-automate-api-tests-{{timestamp}}.json`
+- Subagent B: E2E test generation → `/tmp/tea-automate-e2e-tests-{{timestamp}}.json`
 - Aggregation: Reads both outputs, writes tests to disk, generates fixtures
 
 **Performance**: ~50% faster (parallel vs sequential)
@@ -39,15 +39,15 @@ description: Status of subprocess implementation across workflows
 
 **Files Created**:
 
-- `src/workflows/testarch/atdd/steps-c/step-04a-subprocess-api-failing.md`
-- `src/workflows/testarch/atdd/steps-c/step-04b-subprocess-e2e-failing.md`
+- `src/workflows/testarch/atdd/steps-c/step-04a-*.md` (API subagent step)
+- `src/workflows/testarch/atdd/steps-c/step-04b-*.md` (E2E subagent step)
 - `src/workflows/testarch/atdd/steps-c/step-04c-aggregate.md`
 - Updated: `src/workflows/testarch/atdd/steps-c/step-04-generate-tests.md`
 
-**Subprocesses**:
+**Subagents**:
 
-- Subprocess A: API failing tests (with test.skip()) → `/tmp/tea-atdd-api-tests-{{timestamp}}.json`
-- Subprocess B: E2E failing tests (with test.skip()) → `/tmp/tea-atdd-e2e-tests-{{timestamp}}.json`
+- Subagent A: API failing tests (with test.skip()) → `/tmp/tea-atdd-api-tests-{{timestamp}}.json`
+- Subagent B: E2E failing tests (with test.skip()) → `/tmp/tea-atdd-e2e-tests-{{timestamp}}.json`
 - Aggregation: TDD red phase validation, writes tests, generates ATDD checklist
 
 **Performance**: ~50% faster (parallel vs sequential)
@@ -62,21 +62,21 @@ description: Status of subprocess implementation across workflows
 
 **Pattern**: 5 parallel quality dimension checks
 
-**Subprocess Architecture**:
+**Subagent Architecture**:
 
 ```
 test-review/
-├── step-XX-orchestrate.md (updated to launch subprocesses)
-├── step-XXa-subprocess-determinism.md
-├── step-XXb-subprocess-isolation.md
-├── step-XXc-subprocess-maintainability.md
-├── step-XXd-subprocess-coverage.md
-├── step-XXe-subprocess-performance.md
+├── step-XX-orchestrate.md (updated to launch subagents)
+├── step-XXa-determinism.md
+├── step-XXb-isolation.md
+├── step-XXc-maintainability.md
+├── step-XXd-coverage.md
+├── step-XXe-performance.md
 └── step-XXz-aggregate-scores.md
 ```
 
-**Subprocess Outputs**:
-Each subprocess outputs JSON with:
+**Subagent Outputs**:
+Each subagent outputs JSON with:
 
 ```json
 {
@@ -108,10 +108,10 @@ Each subprocess outputs JSON with:
 
 **Implementation Steps**:
 
-1. Create 5 subprocess step files (one per quality dimension)
-2. Each subprocess analyzes test files for its specific dimension
+1. Create 5 subagent step files (one per quality dimension)
+2. Each subagent analyzes test files for its specific dimension
 3. Create aggregation step to calculate overall score
-4. Update orchestration step to launch all 5 subprocesses in parallel
+4. Update orchestration step to launch all 5 subagents in parallel
 
 ---
 
@@ -119,20 +119,20 @@ Each subprocess outputs JSON with:
 
 **Pattern**: 4 parallel NFR domain assessments
 
-**Subprocess Architecture**:
+**Subagent Architecture**:
 
 ```
 nfr-assess/
-├── step-XX-orchestrate.md (updated to launch subprocesses)
-├── step-XXa-subprocess-security.md
-├── step-XXb-subprocess-performance.md
-├── step-XXc-subprocess-reliability.md
-├── step-XXd-subprocess-scalability.md
+├── step-XX-orchestrate.md (updated to launch subagents)
+├── step-XXa-security.md
+├── step-XXb-performance.md
+├── step-XXc-reliability.md
+├── step-XXd-scalability.md
 └── step-XXz-aggregate-report.md
 ```
 
-**Subprocess Outputs**:
-Each subprocess outputs JSON with:
+**Subagent Outputs**:
+Each subagent outputs JSON with:
 
 ```json
 {
@@ -173,10 +173,10 @@ Each subprocess outputs JSON with:
 
 **Implementation Steps**:
 
-1. Create 4 subprocess step files (one per NFR domain)
-2. Each subprocess assesses system for its specific domain
+1. Create 4 subagent step files (one per NFR domain)
+2. Each subagent assesses system for its specific domain
 3. Create aggregation step to synthesize findings
-4. Update orchestration step to launch all 4 subprocesses in parallel
+4. Update orchestration step to launch all 4 subagents in parallel
 
 ---
 
@@ -184,7 +184,7 @@ Each subprocess outputs JSON with:
 
 **Pattern**: Two-phase workflow separation (not parallel, but clean separation)
 
-**Subprocess Architecture**:
+**Subagent Architecture**:
 
 ```
 trace/
@@ -235,13 +235,13 @@ trace/
 1. Split current trace workflow into 2 phases
 2. Phase 1: Generate coverage matrix to temp file
 3. Phase 2: Read matrix, apply gate logic, generate report
-4. Subprocess-like isolation without actual parallel execution
+4. Subagent-like isolation without actual parallel execution
 
 ---
 
 ## 📊 Implementation Summary
 
-| Workflow        | Status          | Subprocesses           | Performance Gain | Complexity |
+| Workflow        | Status          | Subagents              | Performance Gain | Complexity |
 | --------------- | --------------- | ---------------------- | ---------------- | ---------- |
 | **automate**    | ✅ Complete     | 2 (API, E2E)           | ~50%             | Medium     |
 | **atdd**        | ✅ Complete     | 2 (API RED, E2E RED)   | ~50%             | Medium     |
@@ -274,16 +274,16 @@ trace/
 ### For test-review Implementation:
 
 1. Identify which step currently does quality checks
-2. Create 5 subprocess step files (determinism, isolation, maintainability, coverage, performance)
-3. Each subprocess analyzes test files for specific quality dimension
+2. Create 5 subagent step files (determinism, isolation, maintainability, coverage, performance)
+3. Each subagent analyzes test files for specific quality dimension
 4. Create aggregation step to calculate 0-100 score
 5. Update orchestration step to launch all 5 in parallel
 
 ### For nfr-assess Implementation:
 
 1. Identify which step currently does NFR assessment
-2. Create 4 subprocess step files (security, performance, reliability, scalability)
-3. Each subprocess assesses system for specific NFR domain
+2. Create 4 subagent step files (security, performance, reliability, scalability)
+3. Each subagent assesses system for specific NFR domain
 4. Create aggregation step to synthesize findings
 5. Update orchestration step to launch all 4 in parallel
 
@@ -301,20 +301,20 @@ trace/
 
 After implementing each workflow:
 
-- [ ] Create subprocess step files
+- [ ] Create subagent step files
 - [ ] Update orchestration step
 - [ ] Test with real project data
-- [ ] Verify subprocess outputs are valid JSON
+- [ ] Verify subagent outputs are valid JSON
 - [ ] Verify aggregation logic works correctly
 - [ ] Measure performance improvement
 - [ ] Run BMad Builder validation (should score 100%)
-- [ ] Document in subprocess-architecture.md
+- [ ] Document in subagent-architecture.md
 
 ---
 
 ## 🔗 References
 
-- **Subprocess Architecture**: `docs/explanation/subprocess-architecture.md`
+- **Subagent Architecture**: `docs/explanation/subagent-architecture.md`
 - **Step-File Architecture**: `docs/explanation/step-file-architecture.md`
 - **Completed Examples**:
   - `src/workflows/testarch/automate/steps-c/step-03*`

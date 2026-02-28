@@ -22,7 +22,7 @@ Please check all that apply:
 
 - [ ] Workflows (test-design, automate, atdd, test-review, trace, nfr-assess, ci, framework)
 - [ ] Knowledge Base (new testing patterns or fragments)
-- [ ] Subprocess Architecture (parallel execution)
+- [ ] Subagent Architecture (parallel execution)
 - [ ] Configuration (module variables or settings)
 - [ ] Documentation (guides, tutorials, or references)
 - [ ] Integrations (Playwright Utils, MCP, or other tools)

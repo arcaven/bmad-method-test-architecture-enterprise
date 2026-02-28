@@ -31,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `true` -> `"auto"` (recommended), `false` -> `"none"`
 - All workflow preflight steps updated to read `tea_browser_automation`
 - All browser-touching workflow steps updated with CLI/MCP/auto branching
-- Subprocess context passes `browser_automation` instead of `use_mcp_enhancements`
+- Subagent context passes `browser_automation` instead of `use_mcp_enhancements`
 - Module subheader updated to reference Playwright CLI
 
 ### Deprecated
@@ -83,17 +83,17 @@ All workflows implement the **trivariate step pattern** (Create/Edit/Validate):
 
 4. **ATDD (`AT` / `/bmad:tea:atdd`)**
    - Generate failing acceptance tests (TDD red phase)
-   - **Subprocess Architecture**: Parallel API + E2E test generation
+   - **Subagent Architecture**: Parallel API + E2E test generation
    - Acceptance criteria validation checklist
 
 5. **Test Automation (`TA` / `/bmad:tea:automate`)**
    - Expand automation coverage systematically
-   - **Subprocess Architecture**: Parallel API + E2E test generation
+   - **Subagent Architecture**: Parallel API + E2E test generation
    - Coverage gap analysis and prioritization
 
 6. **Test Review (`RV` / `/bmad:tea:test-review`)**
    - Comprehensive test quality audit (0-100 scoring)
-   - **Subprocess Architecture**: Parallel evaluation across 5 quality dimensions
+   - **Subagent Architecture**: Parallel evaluation across 5 quality dimensions
      - Determinism
      - Isolation
      - Maintainability
@@ -108,24 +108,24 @@ All workflows implement the **trivariate step pattern** (Create/Edit/Validate):
 
 8. **NFR Assessment (`NR` / `/bmad:tea:nfr-assess`)**
    - Non-functional requirements evaluation
-   - **Subprocess Architecture**: Parallel assessment across 4 NFR domains
+   - **Subagent Architecture**: Parallel assessment across 4 NFR domains
      - Security
      - Performance
      - Reliability
      - Scalability
    - Evidence-based scoring with recommendations
 
-#### Subprocess Architecture (Phase 5)
+#### Subagent Architecture (Phase 5)
 
-- **19 Subprocess Step Files** for parallel execution:
-  - `automate`: 3 subprocess files (2 parallel + aggregate)
-  - `atdd`: 3 subprocess files (2 parallel + aggregate)
-  - `test-review`: 6 subprocess files (5 parallel + aggregate)
-  - `nfr-assess`: 5 subprocess files (4 parallel + aggregate)
+- **19 Subagent Step Files** for parallel execution:
+  - `automate`: 3 subagent files (2 parallel + aggregate)
+  - `atdd`: 3 subagent files (2 parallel + aggregate)
+  - `test-review`: 6 subagent files (5 parallel + aggregate)
+  - `nfr-assess`: 5 subagent files (4 parallel + aggregate)
   - `trace`: Two-phase separation (coverage → gate decision)
-- **Temp File Outputs**: Each subprocess writes to `/tmp/bmad-tea-*` files
-- **Aggregation Step**: Consolidates subprocess results into final output
-- **Documentation**: Complete subprocess architecture documentation in `docs/explanation/`
+- **Temp File Outputs**: Each subagent writes to `/tmp/bmad-tea-*` files
+- **Aggregation Step**: Consolidates subagent results into final output
+- **Documentation**: Complete subagent architecture documentation in `docs/explanation/`
 
 #### Knowledge Base System
 
@@ -197,7 +197,7 @@ All workflows implement the **trivariate step pattern** (Create/Edit/Validate):
   - `steps-v/` (Validate mode) - 1 step per workflow
 - **Validation Reports**: Comprehensive validation with checklist scoring
 - **Documentation Links**: All internal links validated and fixed (309 → 0 broken links)
-- **Subprocess Optimization**: Parallel execution for faster workflow completion
+- **Subagent Optimization**: Parallel execution for faster workflow completion
 
 ### Fixed
 
@@ -238,7 +238,7 @@ For users migrating from BMM-embedded TEA, see [`docs/MIGRATION.md`](docs/MIGRAT
 
 - **1.0.0** (2026-01-XX) - TEA Module Independence Release
   - Standalone module extraction from BMAD Method
-  - 9 workflows with subprocess architecture
+  - 9 workflows with subagent architecture
   - 34 knowledge base fragments
   - Complete documentation suite
 

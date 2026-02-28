@@ -33,6 +33,9 @@ tea_use_playwright_utils: true
 tea_use_pactjs_utils: true
 tea_pact_mcp: 'mcp'
 tea_browser_automation: 'auto'
+tea_execution_mode: 'auto'
+tea_capability_probe: true
+tea_max_parallel_agents: 4
 ```
 
 ### Canonical Schema (Source of Truth)
@@ -161,7 +164,7 @@ Enable Pact.js Utils integration for contract testing?
 
 - `framework` - Creates pact test folders and pactjs-utils sample patterns
 - `atdd` - Loads pactjs-utils fragments for contract-aware generation context
-- `automate` - Loads pactjs-utils fragments and passes pact config to subprocesses
+- `automate` - Loads pactjs-utils fragments and passes pact config to subagents
 - `test-design` - Loads pactjs-utils fragments for system/epic planning
 - `test-review` - Uses pactjs-utils provider/review patterns
 - `ci` - Adds contract-test stage and quality gates
@@ -331,6 +334,132 @@ tea_browser_automation: 'none'
 
 - [Configure Browser Automation Guide](/docs/how-to/customization/configure-browser-automation.md)
 - [TEA Overview - Browser Automation](/docs/explanation/tea-overview.md#browser-automation-playwright-cli-mcp)
+
+---
+
+### tea_execution_mode
+
+Execution strategy for multi-worker orchestration steps in TEA workflows.
+
+**Schema Location:** `src/module.yaml` (TEA module config)
+
+**User Config:** `_bmad/tea/config.yaml`
+
+**Type:** `string`
+
+**Default:** `"auto"`
+
+**Options:** `"auto"` | `"subagent"` | `"agent-team"` | `"sequential"`
+
+**Installer Prompt:**
+
+```
+How should TEA orchestrate multi-step generation and evaluation?
+```
+
+**Purpose:** Controls orchestration behavior in workflows that can launch worker steps (currently `automate`, `atdd`, `test-review`, `nfr-assess`, `framework`, `ci`, `test-design`, and `trace`).
+
+| Mode         | Behavior                                                                                                         |
+| ------------ | ---------------------------------------------------------------------------------------------------------------- |
+| `auto`       | Probes runtime support and selects best mode. Order: `agent-team` → `subagent` → `sequential`. **Recommended**   |
+| `subagent`   | Uses isolated subagent-style workers (parallel where applicable). Verbal request term: `subagent` / `subagents`. |
+| `agent-team` | Uses runtime delegation/team workers when available. Verbal request terms: `agent team` / `agent teams`.         |
+| `sequential` | Runs worker steps one by one. Most deterministic, slowest.                                                       |
+
+**Runtime terminology note:** Claude terminology is `subagents` and `agent teams`. TEA uses `subagent` and `agent-team` as user-facing terms.
+
+**Resolution Order:**
+
+1. Normalize explicit run-level override text (if present):
+   - `agent team` / `agent teams` → `agent-team`
+   - `subagent` / `subagents` → `subagent`
+   - `sequential` → `sequential`
+   - `auto` → `auto`
+2. If no explicit run-level override is present, read `tea_execution_mode` from `_bmad/tea/config.yaml`.
+3. If `tea_capability_probe: true`, detect runtime support for `agent-team` and `subagent`.
+4. Resolve final mode:
+   - `auto` → `agent-team` → `subagent` → `sequential`
+   - `agent-team`/`subagent` → fallback to next supported mode when probing is enabled
+   - `sequential` → always sequential
+5. Execute the same workflow output contract in the resolved mode.
+
+**Verbal Request vs Config:**
+
+During workflow execution, explicit user text can override config for that run.
+
+Resolution precedence:
+
+1. Explicit user request in the active run (normalized):
+   - `agent team` / `agent teams` => `agent-team`
+   - `subagent` / `subagents` => `subagent`
+   - `sequential` => `sequential`
+   - `auto` => `auto`
+2. `tea_execution_mode` from `_bmad/tea/config.yaml`
+3. Runtime capability fallback when `tea_capability_probe: true`
+
+Default behavior when user says nothing is `auto` (or the configured value if explicitly set).
+
+**Example (Recommended):**
+
+```yaml
+tea_execution_mode: 'auto'
+```
+
+**Example (Force Sequential):**
+
+```yaml
+tea_execution_mode: 'sequential'
+```
+
+---
+
+### tea_capability_probe
+
+Whether TEA should probe runtime capabilities before resolving execution mode.
+
+**Schema Location:** `src/module.yaml` (TEA module config)
+
+**User Config:** `_bmad/tea/config.yaml`
+
+**Type:** `boolean`
+
+**Default:** `true`
+
+**Purpose:** When enabled, TEA checks whether `agent-team` or `subagent` execution is actually supported and falls back safely. When disabled, TEA honors configured mode strictly and fails if unsupported.
+
+**Example (Recommended):**
+
+```yaml
+tea_capability_probe: true
+```
+
+**Example (Strict):**
+
+```yaml
+tea_capability_probe: false
+```
+
+---
+
+### tea_max_parallel_agents
+
+Maximum number of parallel workers TEA should launch for orchestration steps.
+
+**Schema Location:** `src/module.yaml` (TEA module config)
+
+**User Config:** `_bmad/tea/config.yaml`
+
+**Type:** `number`
+
+**Default:** `4`
+
+**Purpose:** Concurrency ceiling for subagent/agent-team execution to prevent over-parallelization.
+
+**Example:**
+
+```yaml
+tea_max_parallel_agents: 4
+```
 
 ---
 
@@ -615,6 +744,7 @@ project_name: team-project
 output_folder: _bmad-output
 tea_use_playwright_utils: true
 tea_browser_automation: 'none'
+tea_execution_mode: 'sequential'
 ```
 
 **Individual config (typically gitignored):**
@@ -624,6 +754,7 @@ tea_browser_automation: 'none'
 user_name: John Doe
 user_skill_level: expert
 tea_browser_automation: 'auto' # Individual preference
+tea_execution_mode: 'auto' # Capability-aware preference
 ```
 
 ### Monorepo Configuration
@@ -688,6 +819,7 @@ _bmad/tea/config.yaml            # User-specific values
    - Set user_name
    - Enable tea_use_playwright_utils if using playwright-utils
    - Set tea_browser_automation mode (auto, cli, mcp, or none)
+   - Set tea_execution_mode (auto, subagent, agent-team, or sequential)
 ```
 
 ### 3. Validate Configuration
@@ -720,12 +852,14 @@ implementation_artifacts: custom/implementation
 project_knowledge: custom/docs
 tea_use_playwright_utils: true
 tea_browser_automation: "auto"
+tea_execution_mode: "auto"
 communication_language: english
 document_output_language: english
 # Overriding 11 config options when most can use defaults
 
 # ✅ Good - only essential overrides
 tea_use_playwright_utils: true
+tea_execution_mode: "auto"
 output_folder: docs/testing
 # Only override what differs from defaults
 ```
@@ -757,7 +891,7 @@ npm install -g js-yaml
 js-yaml _bmad/tea/config.yaml
 
 # Check for typos (compare to module.yaml)
-diff _bmad/tea/config.yaml src/bmm/module.yaml
+diff _bmad/tea/config.yaml src/module.yaml
 ```
 
 ### Playwright Utils Not Working
@@ -839,6 +973,9 @@ tea_use_playwright_utils: true # Recommended
 tea_use_pactjs_utils: true # Recommended - production-ready contract testing utilities
 tea_pact_mcp: 'mcp' # Recommended - SmartBear MCP for PactFlow/Broker interaction
 tea_browser_automation: 'auto' # Recommended
+tea_execution_mode: 'auto' # Recommended - capability-aware mode selection
+tea_capability_probe: true # Recommended - fallback safely if mode unsupported
+tea_max_parallel_agents: 4 # Recommended - balanced throughput
 ```
 
 **Why recommended:**
@@ -873,6 +1010,8 @@ tea_use_playwright_utils: false
 tea_use_pactjs_utils: false
 tea_pact_mcp: 'none'
 tea_browser_automation: 'none'
+tea_execution_mode: 'sequential'
+tea_capability_probe: true
 ```
 
 **Best for:**
@@ -896,6 +1035,8 @@ output_folder: _bmad-output
 tea_use_playwright_utils: true
 tea_use_pactjs_utils: true
 tea_pact_mcp: 'mcp'
+tea_execution_mode: 'auto'
+tea_max_parallel_agents: 4
 ```
 
 **Package configs:**
@@ -911,6 +1052,7 @@ output_folder: ../../_bmad-output/api
 tea_use_playwright_utils: false  # Using vanilla Playwright only
 tea_use_pactjs_utils: true       # API service uses contract testing utilities
 tea_pact_mcp: 'mcp'              # Optional broker interaction via MCP
+tea_execution_mode: 'subagent' # Prefer subagent orchestration in API package
 ```
 
 ---
@@ -936,6 +1078,9 @@ tea_use_playwright_utils: true # Recommended - production-ready utilities
 tea_use_pactjs_utils: true # Recommended - production-ready contract testing utilities
 tea_pact_mcp: 'mcp' # Recommended - SmartBear MCP for broker integration
 tea_browser_automation: 'auto' # Recommended - smart CLI/MCP selection
+tea_execution_mode: 'auto' # Recommended - capability-aware team/subagent fallback
+tea_capability_probe: true # Recommended - safe fallback
+tea_max_parallel_agents: 4 # Recommended
 
 # Languages
 communication_language: english
