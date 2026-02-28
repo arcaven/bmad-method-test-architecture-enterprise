@@ -489,7 +489,7 @@ Main workflow aggregation step must:
 
 **Parallelization**:
 
-- Resolve execution mode via config (`tea_execution_mode`, `tea_capability_probe`, `tea_max_parallel_agents`)
+- Resolve execution mode via config (`tea_execution_mode`, `tea_capability_probe`)
 - Probe runtime support for agent-team and subagent launch before dispatch
 - Fallback order in `auto` mode: `agent-team` → `subagent` → `sequential`
 - Ensure temp file paths are unique (timestamp-based)

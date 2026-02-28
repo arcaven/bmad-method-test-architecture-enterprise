@@ -14,7 +14,7 @@ Select execution mode deterministically, then generate tests using agent-team, s
 
 - 📖 Read the entire step file before acting
 - ✅ Speak in `{communication_language}`
-- ✅ Resolve execution mode from config (`tea_execution_mode`, `tea_capability_probe`, `tea_max_parallel_agents`)
+- ✅ Resolve execution mode from config (`tea_execution_mode`, `tea_capability_probe`)
 - ✅ Apply fallback rules deterministically when requested mode is unsupported
 - ✅ Preserve output schema and temp file naming across all modes
 - ❌ Do NOT skip capability checks when probing is enabled
@@ -74,7 +74,6 @@ const subagentContext = {
     detected_stack: '{detected_stack}',  // "frontend" | "backend" | "fullstack"
     execution_mode: config.tea_execution_mode || 'auto',  // "auto" | "subagent" | "agent-team" | "sequential"
     capability_probe: parseBooleanFlag(config.tea_capability_probe, true),  // supports booleans and "false"/"true" strings
-    max_parallel_agents: Number(config.tea_max_parallel_agents || 4)
   },
   timestamp: timestamp
 };
@@ -143,7 +142,6 @@ subagentContext.execution = {
   resolvedMode,
   probeEnabled,
   supports,
-  maxParallelAgents: subagentContext.config.max_parallel_agents,
 };
 ```
 
@@ -164,7 +162,6 @@ Report selected mode before dispatch:
 - Supports agent-team: {supports.agentTeam}
 - Supports subagent: {supports.subagent}
 - Resolved: {resolvedMode}
-- Max parallel workers: {maxParallelAgents}
 ```
 
 ---
@@ -179,25 +176,9 @@ Report selected mode before dispatch:
 | `backend`          | Launch           | Skip             | Launch             |
 | `fullstack`        | Launch           | Launch           | Launch             |
 
-### 3A. Enforce Max Parallel Workers
+### 3A. Runtime-Managed Parallelism
 
-When `resolvedMode` is `agent-team` or `subagent`, do not launch more than `subagentContext.execution.maxParallelAgents` workers concurrently.
-
-```javascript
-const selectedWorkers = buildWorkersFromDetectedStack(detected_stack); // A, B, B-backend per matrix
-const parallelModes = resolvedMode === 'agent-team' || resolvedMode === 'subagent';
-const concurrencyLimit = parallelModes ? Math.max(1, Math.min(subagentContext.execution.maxParallelAgents, selectedWorkers.length)) : 1;
-
-const running = new Set();
-for (const worker of selectedWorkers) {
-  while (running.size >= concurrencyLimit) {
-    await Promise.race(running);
-  }
-  const launchPromise = launchWorker(worker).finally(() => running.delete(launchPromise));
-  running.add(launchPromise);
-}
-await Promise.all(running);
-```
+When `resolvedMode` is `agent-team` or `subagent`, let the runtime decide concurrency and scheduling. TEA does not impose an additional worker ceiling.
 
 ---
 

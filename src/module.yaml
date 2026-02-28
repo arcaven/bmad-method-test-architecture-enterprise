@@ -14,7 +14,7 @@ default_selected: false
 
 # TEA-specific configuration variables
 # IMPORTANT: tea_use_playwright_utils, tea_use_pactjs_utils, tea_pact_mcp, tea_browser_automation,
-# tea_execution_mode, tea_capability_probe, tea_max_parallel_agents, test_stack_type, ci_platform,
+# tea_execution_mode, tea_capability_probe, test_stack_type, ci_platform,
 # and test_framework are ACTIVELY USED in workflows
 # Other variables are FUTURE placeholders for Phase 10 enhancements
 
@@ -105,24 +105,6 @@ tea_capability_probe:
       label: "Yes - Probe and fallback automatically (Recommended)"
     - value: false
       label: "No - Honor configured mode strictly"
-
-# ✅ ACTIVELY USED - Concurrency ceiling for subagent/agent-team orchestration
-# CRITICAL: Used as an upper bound to avoid over-parallelization in large projects.
-tea_max_parallel_agents:
-  prompt: "What is the maximum number of parallel workers TEA should launch?"
-  default: 4
-  result: "{value}"
-  single-select:
-    - value: 2
-      label: "2 workers - Conservative"
-    - value: 3
-      label: "3 workers - Balanced"
-    - value: 4
-      label: "4 workers - Recommended"
-    - value: 6
-      label: "6 workers - Aggressive"
-    - value: 8
-      label: "8 workers - High throughput"
 
 # ✅ ACTIVELY USED - Stack type detection for multi-framework support
 test_stack_type:

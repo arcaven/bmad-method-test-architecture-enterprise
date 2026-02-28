@@ -45,7 +45,6 @@ const orchestrationContext = {
   config: {
     execution_mode: config.tea_execution_mode || 'auto', // "auto" | "subagent" | "agent-team" | "sequential"
     capability_probe: config.tea_capability_probe !== false, // true by default
-    max_parallel_agents: Number(config.tea_max_parallel_agents || 4),
   },
   timestamp: new Date().toISOString().replace(/[:.]/g, '-'),
 };

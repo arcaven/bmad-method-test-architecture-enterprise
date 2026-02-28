@@ -14,7 +14,7 @@ Select execution mode deterministically, then generate FAILING API and E2E tests
 
 - 📖 Read the entire step file before acting
 - ✅ Speak in `{communication_language}`
-- ✅ Resolve execution mode from config (`tea_execution_mode`, `tea_capability_probe`, `tea_max_parallel_agents`)
+- ✅ Resolve execution mode from config (`tea_execution_mode`, `tea_capability_probe`)
 - ✅ Apply fallback rules deterministically when requested mode is unsupported
 - ✅ Generate FAILING tests only (TDD red phase)
 - ✅ Wait for required worker steps to complete
@@ -74,7 +74,6 @@ const subagentContext = {
     browser_automation: config.tea_browser_automation,
     execution_mode: config.tea_execution_mode || 'auto',  // "auto" | "subagent" | "agent-team" | "sequential"
     capability_probe: parseBooleanFlag(config.tea_capability_probe, true),  // supports booleans and "false"/"true" strings
-    max_parallel_agents: Number(config.tea_max_parallel_agents || 4)
   },
   timestamp: timestamp
 };
@@ -137,7 +136,6 @@ subagentContext.execution = {
   resolvedMode,
   probeEnabled,
   supports,
-  maxParallelAgents: subagentContext.config.max_parallel_agents,
 };
 
 if (!probeEnabled && (requestedMode === 'agent-team' || requestedMode === 'subagent')) {

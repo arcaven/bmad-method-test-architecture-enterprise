@@ -21,7 +21,7 @@ Coverage is intentionally excluded from this workflow and handled by `trace`.
 
 - 📖 Read the entire step file before acting
 - ✅ Speak in `{communication_language}`
-- ✅ Resolve execution mode from config (`tea_execution_mode`, `tea_capability_probe`, `tea_max_parallel_agents`)
+- ✅ Resolve execution mode from config (`tea_execution_mode`, `tea_capability_probe`)
 - ✅ Apply fallback rules deterministically when requested mode is unsupported
 - ✅ Wait for required worker steps to complete
 - ❌ Do NOT skip capability checks when probing is enabled
@@ -72,7 +72,6 @@ const subagentContext = {
   config: {
     execution_mode: config.tea_execution_mode || 'auto',  // "auto" | "subagent" | "agent-team" | "sequential"
     capability_probe: parseBooleanFlag(config.tea_capability_probe, true),  // supports booleans and "false"/"true" strings
-    max_parallel_agents: Number(config.tea_max_parallel_agents || 4)
   },
   timestamp: timestamp
 };
@@ -140,7 +139,6 @@ subagentContext.execution = {
   resolvedMode,
   probeEnabled,
   supports,
-  maxParallelAgents: subagentContext.config.max_parallel_agents,
 };
 ```
 
@@ -183,23 +181,7 @@ If probing is disabled, honor the requested mode strictly. If that mode cannot b
 - Output: `/tmp/tea-test-review-performance-${timestamp}.json`
 - Status: Running... ⟳
 
-Use `subagentContext.execution.maxParallelAgents` to cap concurrent launches in `agent-team`/`subagent` modes:
-
-```javascript
-const selectedWorkers = ['determinism', 'isolation', 'maintainability', 'performance'];
-const parallelModes = resolvedMode === 'agent-team' || resolvedMode === 'subagent';
-const concurrencyLimit = parallelModes ? Math.max(1, Math.min(subagentContext.execution.maxParallelAgents, selectedWorkers.length)) : 1;
-
-const running = new Set();
-for (const worker of selectedWorkers) {
-  while (running.size >= concurrencyLimit) {
-    await Promise.race(running);
-  }
-  const launchPromise = launchWorker(worker).finally(() => running.delete(launchPromise));
-  running.add(launchPromise);
-}
-await Promise.all(running);
-```
+In `agent-team` and `subagent` modes, runtime decides worker scheduling and concurrency.
 
 ---
 

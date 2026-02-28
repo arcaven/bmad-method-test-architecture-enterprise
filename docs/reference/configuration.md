@@ -35,7 +35,6 @@ tea_pact_mcp: 'mcp'
 tea_browser_automation: 'auto'
 tea_execution_mode: 'auto'
 tea_capability_probe: true
-tea_max_parallel_agents: 4
 ```
 
 ### Canonical Schema (Source of Truth)
@@ -437,28 +436,6 @@ tea_capability_probe: true
 
 ```yaml
 tea_capability_probe: false
-```
-
----
-
-### tea_max_parallel_agents
-
-Maximum number of parallel workers TEA should launch for orchestration steps.
-
-**Schema Location:** `src/module.yaml` (TEA module config)
-
-**User Config:** `_bmad/tea/config.yaml`
-
-**Type:** `number`
-
-**Default:** `4`
-
-**Purpose:** Concurrency ceiling for subagent/agent-team execution to prevent over-parallelization.
-
-**Example:**
-
-```yaml
-tea_max_parallel_agents: 4
 ```
 
 ---
@@ -975,7 +952,6 @@ tea_pact_mcp: 'mcp' # Recommended - SmartBear MCP for PactFlow/Broker interactio
 tea_browser_automation: 'auto' # Recommended
 tea_execution_mode: 'auto' # Recommended - capability-aware mode selection
 tea_capability_probe: true # Recommended - fallback safely if mode unsupported
-tea_max_parallel_agents: 4 # Recommended - balanced throughput
 ```
 
 **Why recommended:**
@@ -1036,7 +1012,6 @@ tea_use_playwright_utils: true
 tea_use_pactjs_utils: true
 tea_pact_mcp: 'mcp'
 tea_execution_mode: 'auto'
-tea_max_parallel_agents: 4
 ```
 
 **Package configs:**
@@ -1080,7 +1055,6 @@ tea_pact_mcp: 'mcp' # Recommended - SmartBear MCP for broker integration
 tea_browser_automation: 'auto' # Recommended - smart CLI/MCP selection
 tea_execution_mode: 'auto' # Recommended - capability-aware team/subagent fallback
 tea_capability_probe: true # Recommended - safe fallback
-tea_max_parallel_agents: 4 # Recommended
 
 # Languages
 communication_language: english

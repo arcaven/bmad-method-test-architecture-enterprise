@@ -278,7 +278,7 @@ If the BMAD installer can run but cannot fetch the Test Architect module from Gi
 4. Check TEA orchestration mode in config:
 
    ```bash
-   grep -E "tea_execution_mode|tea_capability_probe|tea_max_parallel_agents" _bmad/tea/config.yaml
+   grep -E "tea_execution_mode|tea_capability_probe" _bmad/tea/config.yaml
    ```
 
 5. If runtime does not support parallel worker launch, use deterministic fallback:
