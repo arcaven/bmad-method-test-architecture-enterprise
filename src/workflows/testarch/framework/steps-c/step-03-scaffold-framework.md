@@ -42,10 +42,20 @@ Generate the test directory structure, configuration files, fixtures, factories,
 ## 0. Resolve Execution Mode (User Override First)
 
 ```javascript
+const parseBooleanFlag = (value, defaultValue = true) => {
+  if (typeof value === 'string') {
+    const normalized = value.trim().toLowerCase();
+    if (['false', '0', 'off', 'no'].includes(normalized)) return false;
+    if (['true', '1', 'on', 'yes'].includes(normalized)) return true;
+  }
+  if (value === undefined || value === null) return defaultValue;
+  return Boolean(value);
+};
+
 const orchestrationContext = {
   config: {
     execution_mode: config.tea_execution_mode || 'auto', // "auto" | "subagent" | "agent-team" | "sequential"
-    capability_probe: config.tea_capability_probe !== false, // true by default
+    capability_probe: parseBooleanFlag(config.tea_capability_probe, true), // supports booleans and "false"/"true" strings
     max_parallel_agents: Number(config.tea_max_parallel_agents || 4),
   },
   timestamp: new Date().toISOString().replace(/[:.]/g, '-'),
@@ -267,6 +277,24 @@ For this step, treat these work units as parallelizable when `resolvedMode` is `
 - Worker A: directory + framework config + env setup (sections 1-3)
 - Worker B: fixtures + factories (section 4)
 - Worker C: sample tests + helpers (section 5)
+
+When running in a parallel-capable mode, enforce `orchestrationContext.config.max_parallel_agents` as a hard concurrency ceiling:
+
+```javascript
+const workUnits = ['A', 'B', 'C'];
+const parallelMode = resolvedMode === 'agent-team' || resolvedMode === 'subagent';
+const concurrencyLimit = parallelMode ? Math.max(1, Math.min(orchestrationContext.config.max_parallel_agents, workUnits.length)) : 1;
+
+const running = new Set();
+for (const unit of workUnits) {
+  while (running.size >= concurrencyLimit) {
+    await Promise.race(running);
+  }
+  const launchPromise = launchWorkUnit(unit).finally(() => running.delete(launchPromise));
+  running.add(launchPromise);
+}
+await Promise.all(running);
+```
 
 If `resolvedMode` is `sequential`, execute sections 1→5 in order.
 

@@ -52,6 +52,16 @@ const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
 **Prepare input context for subagents:**
 
 ```javascript
+const parseBooleanFlag = (value, defaultValue = true) => {
+  if (typeof value === 'string') {
+    const normalized = value.trim().toLowerCase();
+    if (['false', '0', 'off', 'no'].includes(normalized)) return false;
+    if (['true', '1', 'on', 'yes'].includes(normalized)) return true;
+  }
+  if (value === undefined || value === null) return defaultValue;
+  return Boolean(value);
+};
+
 const subagentContext = {
   features: /* from Step 2 coverage plan */,
   knowledge_fragments_loaded: /* list of fragments */,
@@ -63,7 +73,7 @@ const subagentContext = {
     browser_automation: config.tea_browser_automation,  // "auto" | "cli" | "mcp" | "none"
     detected_stack: '{detected_stack}',  // "frontend" | "backend" | "fullstack"
     execution_mode: config.tea_execution_mode || 'auto',  // "auto" | "subagent" | "agent-team" | "sequential"
-    capability_probe: config.tea_capability_probe !== false,  // true by default
+    capability_probe: parseBooleanFlag(config.tea_capability_probe, true),  // supports booleans and "false"/"true" strings
     max_parallel_agents: Number(config.tea_max_parallel_agents || 4)
   },
   timestamp: timestamp
@@ -168,6 +178,26 @@ Report selected mode before dispatch:
 | `frontend`         | Launch           | Launch           | Skip               |
 | `backend`          | Launch           | Skip             | Launch             |
 | `fullstack`        | Launch           | Launch           | Launch             |
+
+### 3A. Enforce Max Parallel Workers
+
+When `resolvedMode` is `agent-team` or `subagent`, do not launch more than `subagentContext.execution.maxParallelAgents` workers concurrently.
+
+```javascript
+const selectedWorkers = buildWorkersFromDetectedStack(detected_stack); // A, B, B-backend per matrix
+const parallelModes = resolvedMode === 'agent-team' || resolvedMode === 'subagent';
+const concurrencyLimit = parallelModes ? Math.max(1, Math.min(subagentContext.execution.maxParallelAgents, selectedWorkers.length)) : 1;
+
+const running = new Set();
+for (const worker of selectedWorkers) {
+  while (running.size >= concurrencyLimit) {
+    await Promise.race(running);
+  }
+  const launchPromise = launchWorker(worker).finally(() => running.delete(launchPromise));
+  running.add(launchPromise);
+}
+await Promise.all(running);
+```
 
 ---
 
@@ -304,29 +334,12 @@ if (!apiOutputExists) throw new Error('API subagent output missing!');
 
 ### Subagent Output Schema Contract
 
-Both `step-03b-subagent-e2e.md` and `step-03b-subagent-backend.md` MUST write JSON to their output file with identical schema:
+The aggregate step expects both outputs to include `success`, but the payload shapes are intentionally different:
 
-```json
-{
-  "subagentType": "e2e | backend",
-  "testsGenerated": [
-    {
-      "file": "path/to/test-file",
-      "content": "[full test file content]",
-      "description": "Test description",
-      "priority_coverage": { "P0": 0, "P1": 0, "P2": 0, "P3": 0 }
-    }
-  ],
-  "coverageSummary": {
-    "totalTests": 0,
-    "testLevels": ["unit", "integration", "api", "e2e"],
-    "fixtureNeeds": []
-  },
-  "status": "complete | partial"
-}
-```
+- `step-03b-subagent-e2e.md` output includes `success`, `subagent`, `tests`, `fixture_needs`, `knowledge_fragments_used`, `test_count`, and `summary`.
+- `step-03b-subagent-backend.md` output includes `success`, `subagent`, `subagentType`, `testsGenerated`, `coverageSummary` (with `fixtureNeeds`), `status`, `knowledge_fragments_used`, and `summary`.
 
-The aggregate step reads whichever output file(s) exist based on `{detected_stack}`.
+The aggregate step reads whichever output file(s) exist based on `{detected_stack}` and must use the matching schema per subagent type.
 
 ---
 

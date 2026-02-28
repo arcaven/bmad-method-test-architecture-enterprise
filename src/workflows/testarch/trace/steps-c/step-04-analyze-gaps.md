@@ -44,10 +44,20 @@ tempOutputFile: '/tmp/tea-trace-coverage-matrix-{{timestamp}}.json'
 ### 0. Resolve Execution Mode (User Override First)
 
 ```javascript
+const parseBooleanFlag = (value, defaultValue = true) => {
+  if (typeof value === 'string') {
+    const normalized = value.trim().toLowerCase();
+    if (['false', '0', 'off', 'no'].includes(normalized)) return false;
+    if (['true', '1', 'on', 'yes'].includes(normalized)) return true;
+  }
+  if (value === undefined || value === null) return defaultValue;
+  return Boolean(value);
+};
+
 const orchestrationContext = {
   config: {
     execution_mode: config.tea_execution_mode || 'auto', // "auto" | "subagent" | "agent-team" | "sequential"
-    capability_probe: config.tea_capability_probe !== false, // true by default
+    capability_probe: parseBooleanFlag(config.tea_capability_probe, true), // supports booleans and "false"/"true" strings
     max_parallel_agents: Number(config.tea_max_parallel_agents || 4),
   },
   timestamp: new Date().toISOString().replace(/[:.]/g, '-'),
@@ -340,14 +350,15 @@ console.log(`✅ Phase 1 Complete: Coverage matrix saved to ${outputPath}`);
 
 ### Orchestration Notes for This Step
 
-When `resolvedMode` is `agent-team` or `subagent`, sections 1-4 can be executed as independent workers and merged in section 5:
+When `resolvedMode` is `agent-team` or `subagent`, parallelize only dependency-safe sections:
 
 - Worker A: gap classification (section 1)
 - Worker B: heuristics gap extraction (section 2)
-- Worker C: recommendation synthesis (section 3)
-- Worker D: coverage statistics (section 4)
+- Worker C: coverage statistics (section 4)
 
-Section 5 remains the deterministic merge point.
+Section 3 (recommendation synthesis) depends on outputs from sections 1 and 2, so run it only after Workers A and B complete.
+
+Section 5 remains the deterministic merge point after sections 1-4 are finished.
 
 If `resolvedMode` is `sequential`, execute sections 1→7 in order.
 

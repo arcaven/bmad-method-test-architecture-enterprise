@@ -137,6 +137,23 @@ const prioritizedActions = allPriorityActions.sort((a, b) => (a.urgency === 'URG
 ### 6. Generate Executive Summary
 
 ```javascript
+const resolvedMode = subagentContext?.execution?.resolvedMode ?? 'unknown';
+const subagentExecutionLabel =
+  resolvedMode === 'sequential'
+    ? 'SEQUENTIAL (4 NFR domains)'
+    : resolvedMode === 'agent-team'
+      ? 'AGENT-TEAM (4 NFR domains)'
+      : resolvedMode === 'subagent'
+        ? 'SUBAGENT (4 NFR domains)'
+        : 'MODE-DEPENDENT (4 NFR domains)';
+
+const performanceGainLabel =
+  resolvedMode === 'sequential'
+    ? 'baseline (no parallel speedup)'
+    : resolvedMode === 'agent-team' || resolvedMode === 'subagent'
+      ? '~67% faster than sequential'
+      : 'mode-dependent';
+
 const executiveSummary = {
   overall_risk: overallRisk,
   assessment_date: new Date().toISOString(),
@@ -156,8 +173,8 @@ const executiveSummary = {
     scalability: assessments.scalability.risk_level,
   },
 
-  subagent_execution: 'PARALLEL (4 NFR domains)',
-  performance_gain: '~67% faster than sequential',
+  subagent_execution: subagentExecutionLabel,
+  performance_gain: performanceGainLabel,
 };
 
 // Save for Step 5 (report generation)
@@ -169,7 +186,7 @@ fs.writeFileSync('/tmp/tea-nfr-summary-{{timestamp}}.json', JSON.stringify(execu
 ### 7. Display Summary to User
 
 ```
-✅ NFR Assessment Complete (Parallel Execution)
+✅ NFR Assessment Complete ({subagentExecutionLabel})
 
 🎯 Overall Risk Level: {overallRisk}
 
@@ -186,7 +203,7 @@ fs.writeFileSync('/tmp/tea-nfr-summary-{{timestamp}}.json', JSON.stringify(execu
 
 🎯 Priority Actions: {priority_action_count}
 
-🚀 Performance: Parallel execution ~67% faster
+🚀 Performance: {performanceGainLabel}
 
 ✅ Ready for report generation (Step 5)
 ```

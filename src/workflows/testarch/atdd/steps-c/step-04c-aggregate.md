@@ -230,6 +230,22 @@ fs.writeFileSync(`{test_artifacts}/atdd-checklist-{story-id}.md`, checklistConte
 **Aggregate test counts:**
 
 ```javascript
+const resolvedMode = subagentContext?.execution?.resolvedMode; // Provided by Step 4's orchestration context
+const subagentExecutionLabel =
+  resolvedMode === 'sequential'
+    ? 'SEQUENTIAL (API → E2E)'
+    : resolvedMode === 'agent-team'
+      ? 'AGENT-TEAM (API + E2E)'
+      : resolvedMode === 'subagent'
+        ? 'SUBAGENT (API + E2E)'
+        : 'PARALLEL (API + E2E)';
+const performanceGainLabel =
+  resolvedMode === 'sequential'
+    ? 'baseline (no parallel speedup)'
+    : resolvedMode === 'agent-team' || resolvedMode === 'subagent'
+      ? '~50% faster than sequential'
+      : 'mode-dependent';
+
 const summary = {
   tdd_phase: 'RED',
   total_tests: apiTestsOutput.test_count + e2eTestsOutput.test_count,
@@ -243,8 +259,8 @@ const summary = {
     ...e2eTestsOutput.tests.flatMap((t) => t.acceptance_criteria_covered),
   ],
   knowledge_fragments_used: [...apiTestsOutput.knowledge_fragments_used, ...e2eTestsOutput.knowledge_fragments_used],
-  subagent_execution: 'PARALLEL (API + E2E)',
-  performance_gain: '~50% faster than sequential',
+  subagent_execution: subagentExecutionLabel,
+  performance_gain: performanceGainLabel,
 };
 ```
 
@@ -275,7 +291,7 @@ Display to user:
 ✅ Acceptance Criteria Coverage:
 {list all covered criteria}
 
-🚀 Performance: Parallel execution ~50% faster than sequential
+🚀 Performance: {performance_gain}
 
 📂 Generated Files:
 - tests/api/[feature].spec.ts (with test.skip())

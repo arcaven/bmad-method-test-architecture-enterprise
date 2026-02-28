@@ -54,6 +54,16 @@ const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
 **Prepare input context for both subagents:**
 
 ```javascript
+const parseBooleanFlag = (value, defaultValue = true) => {
+  if (typeof value === 'string') {
+    const normalized = value.trim().toLowerCase();
+    if (['false', '0', 'off', 'no'].includes(normalized)) return false;
+    if (['true', '1', 'on', 'yes'].includes(normalized)) return true;
+  }
+  if (value === undefined || value === null) return defaultValue;
+  return Boolean(value);
+};
+
 const subagentContext = {
   story_acceptance_criteria: /* from Step 1 */,
   test_strategy: /* from Step 3 */,
@@ -63,7 +73,7 @@ const subagentContext = {
     use_playwright_utils: config.tea_use_playwright_utils,
     browser_automation: config.tea_browser_automation,
     execution_mode: config.tea_execution_mode || 'auto',  // "auto" | "subagent" | "agent-team" | "sequential"
-    capability_probe: config.tea_capability_probe !== false,  // true by default
+    capability_probe: parseBooleanFlag(config.tea_capability_probe, true),  // supports booleans and "false"/"true" strings
     max_parallel_agents: Number(config.tea_max_parallel_agents || 4)
   },
   timestamp: timestamp
@@ -106,14 +116,9 @@ const requestedMode = explicitModeFromUser || normalizeConfigExecutionMode(subag
 const probeEnabled = subagentContext.config.capability_probe;
 
 const supports = {
-  subagent: false,
-  agentTeam: false,
+  subagent: runtime.canLaunchSubagents?.() === true,
+  agentTeam: runtime.canLaunchAgentTeams?.() === true,
 };
-
-if (probeEnabled) {
-  supports.subagent = runtime.canLaunchSubagents?.() === true;
-  supports.agentTeam = runtime.canLaunchAgentTeams?.() === true;
-}
 
 let resolvedMode = requestedMode;
 
@@ -134,6 +139,16 @@ subagentContext.execution = {
   supports,
   maxParallelAgents: subagentContext.config.max_parallel_agents,
 };
+
+if (!probeEnabled && (requestedMode === 'agent-team' || requestedMode === 'subagent')) {
+  const unsupportedRequestedMode =
+    (requestedMode === 'agent-team' && !supports.agentTeam) || (requestedMode === 'subagent' && !supports.subagent);
+
+  if (unsupportedRequestedMode) {
+    subagentContext.execution.error = `Requested execution mode "${requestedMode}" is unavailable because capability probing is disabled.`;
+    throw new Error(subagentContext.execution.error);
+  }
+}
 ```
 
 Resolution precedence:

@@ -190,7 +190,7 @@ Subagent completes when:
 - ✅ All tests use `test.skip()` (documented failing tests)
 - ✅ All tests assert EXPECTED behavior (not placeholder assertions)
 - ✅ JSON output written to temp file
-- ✅ Fixture needs tracked
+- ✅ Fixture needs to be tracked
 
 **Subagent terminates here.** Parent workflow will read output and proceed to aggregation.
 

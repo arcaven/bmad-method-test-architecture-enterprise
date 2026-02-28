@@ -42,13 +42,23 @@ const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
 **Prepare context:**
 
 ```javascript
+const parseBooleanFlag = (value, defaultValue = true) => {
+  if (typeof value === 'string') {
+    const normalized = value.trim().toLowerCase();
+    if (['false', '0', 'off', 'no'].includes(normalized)) return false;
+    if (['true', '1', 'on', 'yes'].includes(normalized)) return true;
+  }
+  if (value === undefined || value === null) return defaultValue;
+  return Boolean(value);
+};
+
 const subagentContext = {
   system_context: /* from Step 1 */,
   nfr_thresholds: /* from Step 2 */,
   evidence_gathered: /* from Step 3 */,
   config: {
     execution_mode: config.tea_execution_mode || 'auto',  // "auto" | "subagent" | "agent-team" | "sequential"
-    capability_probe: config.tea_capability_probe !== false,  // true by default
+    capability_probe: parseBooleanFlag(config.tea_capability_probe, true),  // supports booleans and "false"/"true" strings
     max_parallel_agents: Number(config.tea_max_parallel_agents || 4)
   },
   timestamp: timestamp
@@ -159,6 +169,24 @@ If probing is disabled, honor the requested mode strictly. If that mode cannot b
 - File: `./step-04d-subagent-scalability.md`
 - Output: `/tmp/tea-nfr-scalability-${timestamp}.json`
 - Status: Running... ⟳
+
+Use `subagentContext.execution.maxParallelAgents` to cap concurrent launches in `agent-team`/`subagent` modes:
+
+```javascript
+const selectedWorkers = ['security', 'performance', 'reliability', 'scalability'];
+const parallelModes = resolvedMode === 'agent-team' || resolvedMode === 'subagent';
+const concurrencyLimit = parallelModes ? Math.max(1, Math.min(subagentContext.execution.maxParallelAgents, selectedWorkers.length)) : 1;
+
+const running = new Set();
+for (const worker of selectedWorkers) {
+  while (running.size >= concurrencyLimit) {
+    await Promise.race(running);
+  }
+  const launchPromise = launchWorker(worker).finally(() => running.delete(launchPromise));
+  running.add(launchPromise);
+}
+await Promise.all(running);
+```
 
 ---
 

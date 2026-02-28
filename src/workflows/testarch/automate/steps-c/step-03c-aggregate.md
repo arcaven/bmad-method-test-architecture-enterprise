@@ -227,6 +227,22 @@ export const waitForApiResponse = async (page: Page, urlPattern: string) => {
 const e2eCount = e2eTestsOutput ? e2eTestsOutput.test_count : 0;
 const backendCount = backendTestsOutput ? (backendTestsOutput.coverageSummary?.totalTests ?? 0) : 0;
 
+const resolvedMode = subagentContext?.execution?.resolvedMode;
+const subagentExecutionLabel =
+  resolvedMode === 'sequential'
+    ? 'SEQUENTIAL (API then dependent workers)'
+    : resolvedMode === 'agent-team'
+      ? 'AGENT-TEAM (parallel worker squad)'
+      : resolvedMode === 'subagent'
+        ? 'SUBAGENT (parallel subagents)'
+        : `PARALLEL (based on ${detected_stack})`;
+const performanceGainLabel =
+  resolvedMode === 'sequential'
+    ? 'baseline (no parallel speedup)'
+    : resolvedMode === 'agent-team' || resolvedMode === 'subagent'
+      ? '~40-70% faster than sequential'
+      : 'mode-dependent';
+
 const summary = {
   detected_stack: '{detected_stack}',
   total_tests: apiTestsOutput.test_count + e2eCount + backendCount,
@@ -260,8 +276,8 @@ const summary = {
     ...(e2eTestsOutput ? e2eTestsOutput.knowledge_fragments_used : []),
     ...(backendTestsOutput ? backendTestsOutput.knowledge_fragments_used || [] : []),
   ],
-  subagent_execution: `PARALLEL (based on ${detected_stack})`,
-  performance_gain: '~40-70% faster than sequential',
+  subagent_execution: subagentExecutionLabel,
+  performance_gain: performanceGainLabel,
 };
 ```
 
@@ -292,7 +308,7 @@ console.log('✅ Subagent temp files cleaned up');
 Display to user:
 
 ```
-✅ Test Generation Complete (Parallel Execution)
+✅ Test Generation Complete ({subagent_execution})
 
 📊 Summary:
 - Stack Type: {detected_stack}
@@ -307,7 +323,7 @@ Display to user:
   - P2 (Medium): {P2} tests
   - P3 (Low): {P3} tests
 
-🚀 Performance: Parallel execution ~40-70% faster than sequential
+🚀 Performance: {performance_gain}
 
 📂 Generated Files:
 - tests/api/[feature].spec.ts                                [always]

@@ -29,7 +29,7 @@ This is an **isolated subagent** running in parallel with API test generation (a
 - Output structured JSON to temp file using the subagent output schema contract
 - Follow knowledge fragment patterns
 - Do NOT generate API endpoint tests (that's subagent 3A)
-- Do NOT generate E2E tests (that's subagent 3B)
+- Do NOT generate E2E tests (that's subagent 3B-E2E)
 - Do NOT run tests (that's step 4)
 - Do NOT generate fixtures yet (that's step 3C aggregation)
 
