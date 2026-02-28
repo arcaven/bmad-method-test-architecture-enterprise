@@ -139,7 +139,6 @@ export default defineConfig({
             { label: 'Fixture Architecture', slug: 'explanation/fixture-architecture' },
             { label: 'Step-File Architecture', slug: 'explanation/step-file-architecture' },
             { label: 'Subagent Architecture', slug: 'explanation/subagent-architecture' },
-            { label: 'Subagent Implementation Status', slug: 'explanation/subagent-implementation-status' },
           ],
         },
         {
