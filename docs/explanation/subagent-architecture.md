@@ -6,7 +6,7 @@ description: How TEA uses subagents and agent teams across workflows
 # Subagents and Agent Teams in TEA
 
 This guide explains how TEA orchestrates work when a workflow can split into
-independent worker steps.
+worker steps (independent workers or dependency-ordered work units).
 
 ## Scope
 
@@ -30,7 +30,7 @@ It does not apply to `teach-me-testing`.
 TEA orchestration has three parts:
 
 1. Resolve execution mode (`tea_execution_mode` + optional runtime probe)
-2. Dispatch independent worker steps (when the workflow has them)
+2. Dispatch worker steps (independent or dependency-ordered, depending on workflow)
 3. Aggregate worker outputs into one deterministic final artifact
 
 Workers are isolated and exchange data through structured outputs that the
@@ -79,7 +79,8 @@ During a run, explicit user phrasing can override config for that run only.
 Supported normalized terms:
 
 - `agent team` or `agent teams` -> `agent-team`
-- `subagent` or `subagents` -> `subagent`
+- `agentteam` -> `agent-team`
+- `subagent`, `subagents`, `sub agent`, or `sub agents` -> `subagent`
 - `sequential` -> `sequential`
 - `auto` -> `auto`
 

@@ -398,8 +398,8 @@ Output contracts remain the same across modes for a given workflow.
 **Resolution order:**
 
 1. Normalize explicit run-level wording (if present):
-   - `agent team` / `agent teams` -> `agent-team`
-   - `subagent` / `subagents` -> `subagent`
+   - `agent team` / `agent teams` / `agentteam` -> `agent-team`
+   - `subagent` / `subagents` / `sub agent` / `sub agents` -> `subagent`
    - `sequential` -> `sequential`
    - `auto` -> `auto`
 2. If no explicit override exists, use `tea_execution_mode` from `_bmad/tea/config.yaml`.
