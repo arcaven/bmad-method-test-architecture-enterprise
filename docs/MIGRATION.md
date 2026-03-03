@@ -36,6 +36,10 @@ All TEA commands have changed namespace from `/bmad:bmm:tea:*` to `/bmad:tea:*`.
 | `TF`, `CI`, `TD`, `AT`, `TA`   | Same                     |
 | `RV`, `TR`, `NR`               | Same                     |
 
+Codex skill-mode workflow equivalents: `framework` → `$bmad-tea-testarch-framework`, `ci` → `$bmad-tea-testarch-ci`, `test-design` → `$bmad-tea-testarch-test-design`, `atdd` → `$bmad-tea-testarch-atdd`, `automate` → `$bmad-tea-testarch-automate`, `test-review` → `$bmad-tea-testarch-test-review`, `trace` → `$bmad-tea-testarch-trace`, `nfr-assess` → `$bmad-tea-testarch-nfr`, `teach-me-testing` → `$bmad-tea-teach-me-testing`.
+
+Clarification: short triggers like `TD` and `TA` are agent menu triggers after TEA activation; invocation differs by tool (slash commands vs Codex skill calls).
+
 **Action Required**: Update any saved prompts, scripts, or documentation that reference the old commands.
 
 ### 2. Module Installation
@@ -172,6 +176,8 @@ claude "/bmad:bmm:tea:test-design"
 claude "/bmad:tea:test-design"
 ```
 
+Codex skill mode (in Codex chat): `$bmad-tea-testarch-test-design`
+
 **Example: Updating Documentation**
 
 ```markdown
@@ -183,6 +189,8 @@ Run `/bmad:bmm:tea:automate` to expand test coverage.
 
 Run `/bmad:tea:automate` to expand test coverage.
 ```
+
+Codex skill-mode equivalent: use `$bmad-tea-testarch-automate`.
 
 ### Step 4: Verify Installation
 
@@ -353,12 +361,15 @@ See [Configure Browser Automation](/docs/how-to/customization/configure-browser-
 
 **Solution**: Update to new namespace:
 
-```bash
+```text
 # Old (won't work)
 /bmad:bmm:tea:test-design
 
 # New (correct)
 /bmad:tea:test-design
+
+# Codex skill mode
+$bmad-tea-testarch-test-design
 ```
 
 ### Issue: Configuration Variables Not Set
@@ -427,7 +438,7 @@ Use this checklist to ensure a smooth migration:
 - [ ] Verify BMAD Method version is v7.0.0 or later
 - [ ] Install standalone TEA module via `npx bmad-method install`
 - [ ] Configure TEA variables (test_artifacts, Playwright Utils, MCP)
-- [ ] Update saved prompts to use new namespace (`/bmad:tea:*`)
+- [ ] Update saved invocations for your tool (`/bmad:tea:*` for slash-command tools, or `$bmad-tea-*` skills for Codex)
 - [ ] Update documentation references to new commands
 - [ ] Update CI/CD scripts if they invoke TEA commands
 - [ ] Test each workflow you use (e.g., `test-design`, `automate`, `atdd`)
