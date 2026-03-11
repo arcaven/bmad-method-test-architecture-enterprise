@@ -16,7 +16,8 @@ This is an **isolated subagent** running in parallel with E2E failing test gener
 - Story acceptance criteria from Step 1
 - Test strategy and scenarios from Step 3
 - Knowledge fragments loaded: api-request, data-factories, api-testing-patterns
-- Config: test framework, Playwright Utils enabled/disabled
+- Config: test framework, Playwright Utils enabled/disabled, Pact.js Utils enabled/disabled (`use_pactjs_utils`), Pact MCP mode (`pact_mcp`)
+- Provider Endpoint Map (if `use_pactjs_utils` enabled and provider source accessible)
 
 **Your task:** Generate API tests that will FAIL because the feature is not implemented yet (TDD RED PHASE).
 
@@ -113,6 +114,64 @@ test.describe('[Story Name] API Tests (ATDD)', () => {
 - ✅ Use data factories for test data (from data-factories fragment)
 - ✅ Include priority tags [P0], [P1], [P2], [P3]
 
+### 1.5 Provider Source Scrutiny for CDC in TDD Red Phase (If `use_pactjs_utils` Enabled)
+
+When generating Pact consumer contract tests in the ATDD red phase, provider scrutiny applies with TDD-specific rules:
+
+**If provider endpoint already exists** (extending an existing API):
+
+- READ the provider route handler, types, and validation schemas
+- Use actual provider response shapes, field names, status codes, and types
+- Add `// Provider endpoint:` comment and scrutiny evidence block
+- Generate the consumer contract with `test.skip()` wrapping the `executeTest` callback
+
+**If provider endpoint is new** (TDD — endpoint not implemented yet):
+
+- Use acceptance criteria as the source of truth for expected behavior
+- Add `// Provider endpoint: TODO — new endpoint, not yet implemented`
+- Document expected behavior from acceptance criteria in scrutiny evidence block
+- Generate the contract with `test.skip()` and realistic expectations from the story
+
+**Provider endpoint comments are MANDATORY** even in red-phase tests — they document the intent.
+
+**Example: Red-phase Pact test with provider scrutiny:**
+
+```typescript
+// Provider endpoint: TODO — new endpoint, not yet implemented
+/*
+ * Provider Scrutiny Evidence:
+ * - Handler: NEW — not yet implemented (TDD red phase)
+ * - Expected from acceptance criteria:
+ *   - Endpoint: POST /api/v2/users/register
+ *   - Status: 201 for success, 400 for duplicate email, 422 for validation error
+ *   - Response: { id: number, email: string, createdAt: string }
+ */
+test.skip('[P0] should generate consumer contract for user registration', async () => {
+  await provider
+    .given('no users exist')
+    .uponReceiving('a request to register a new user')
+    .withRequest({
+      method: 'POST',
+      path: '/api/v2/users/register',
+      headers: { 'Content-Type': 'application/json' },
+      body: { email: 'newuser@example.com', password: 'SecurePass123!' },
+    })
+    .willRespondWith({
+      status: 201,
+      headers: { 'Content-Type': 'application/json' },
+      body: like({
+        id: integer(1),
+        email: string('newuser@example.com'),
+        createdAt: string('2025-01-15T10:00:00Z'),
+      }),
+    })
+    .executeTest(async (mockServer) => {
+      const result = await registerUser({ email: 'newuser@example.com', password: 'SecurePass123!' }, { baseURL: mockServer.url });
+      expect(result.id).toEqual(expect.any(Number));
+    });
+});
+```
+
 **Why test.skip():**
 
 - Tests are written correctly for EXPECTED behavior
@@ -163,6 +222,7 @@ Write JSON to temp file: `/tmp/tea-atdd-api-tests-{{timestamp}}.json`
   "knowledge_fragments_used": ["api-request", "data-factories", "api-testing-patterns"],
   "test_count": 3,
   "tdd_phase": "RED",
+  "provider_scrutiny": "completed",
   "summary": "Generated 3 FAILING API tests for user registration story"
 }
 ```
@@ -205,6 +265,8 @@ Subagent completes when:
 - JSON output valid and complete
 - No E2E/component/unit tests included (out of scope)
 - Tests follow knowledge fragment patterns
+- Every Pact interaction has `// Provider endpoint:` comment (if CDC enabled)
+- Provider scrutiny completed or TODO markers added for new endpoints (if CDC enabled)
 
 ### ❌ FAILURE:
 
@@ -213,3 +275,4 @@ Subagent completes when:
 - Placeholder assertions (expect(true).toBe(true))
 - Did not follow knowledge fragment patterns
 - Invalid or missing JSON output
+- Pact interactions missing provider endpoint comments (if CDC enabled)
