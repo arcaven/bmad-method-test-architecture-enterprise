@@ -152,7 +152,7 @@ async function runTests() {
       assert(teachMeContent.length > 0, 'bmad-teach-me-testing/workflow.md exists');
       assert(!teachMeContent.includes('_bmad/bmm/'), 'bmad-teach-me-testing has no _bmad/bmm/ references');
     } else {
-      assert(false, 'teach-me-testing workflow exists', 'src/workflows/testarch/bmad-teach-me-testing/workflow.md not found');
+      assert(false, 'bmad-teach-me-testing workflow exists', 'src/workflows/testarch/bmad-teach-me-testing/workflow.md not found');
     }
   } catch (error) {
     assert(false, 'teach-me-testing workflow validates', error.message);

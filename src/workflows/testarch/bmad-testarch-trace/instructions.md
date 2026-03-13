@@ -1,6 +1,6 @@
 # Requirements Traceability & Quality Gate
 
-**Workflow:** `testarch-trace`
+**Workflow:** `bmad-testarch-trace`
 **Version:** 5.0 (Step-File Architecture)
 
 ---

@@ -1,6 +1,6 @@
 # Test Quality Review
 
-**Workflow:** `testarch-test-review`
+**Workflow:** `bmad-testarch-test-review`
 **Version:** 5.0 (Step-File Architecture)
 
 ---

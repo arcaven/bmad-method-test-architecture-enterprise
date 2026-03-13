@@ -1,6 +1,6 @@
 # Non-Functional Requirements Assessment
 
-**Workflow:** `testarch-nfr`
+**Workflow:** `bmad-testarch-nfr`
 **Version:** 5.0 (Step-File Architecture)
 
 ---
